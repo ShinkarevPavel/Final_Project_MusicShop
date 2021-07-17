@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+    <Properties>
+        <property name="pattern_console">%d{yyy-MM-dd HH:mm} %-5level %logger{1} -%msg%n</property>
+    </Properties>
+    <RollingFile name="LogToRollingFile" fileName="logs/log.txt"
+                 filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+        <PatternLayout>
+            <Pattern>%d %p %c [%t] %m%n</Pattern>
+        </PatternLayout>
+        <Policies>
+            <TimeBasedTriggeringPolicy />
+            <SizeBasedTriggeringPolicy size="1 MB"/>
+        </Policies>
+    </RollingFile>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern_console}"/>
+        </Console>
+        <File name="CustomFile" fileName="logs/text.log" bufferedIO="true">
+            <PatternLayout pattern="${pattern_console}"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="CustomFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

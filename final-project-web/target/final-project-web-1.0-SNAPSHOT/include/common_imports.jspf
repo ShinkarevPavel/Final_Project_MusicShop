@@ -1,0 +1,11 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="abs_path">${pageContext.request.contextPath}</c:set>
+<link href="${abs_path}/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="${abs_path}/css/jquery.modal.css" rel="stylesheet" type="text/css"/>
+<link href="${abs_path}/font/css/fontawesome-all.css" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript" src="${abs_path}/js/jquery.min.js"></script>
+<script type="text/javascript" src="${abs_path}/js/popper.min.js"></script>
+<script type="text/javascript" src="${abs_path}/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${abs_path}/js/jquery.modal.js"></script>
