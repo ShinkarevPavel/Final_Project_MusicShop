@@ -106,16 +106,19 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
         User user = null;
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_LOGIN_AND_PASSWORD)) {
-            statement.setString(1, login);
-            statement.setString(2, PasswordHashGenerator.encodePassword(password)); //TODO check DB !!!!!
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                user = UserCreator.createUser(resultSet);
+        if (login != null && password != null) {
+            try (Connection connection = ConnectionPool.getInstance().getConnection();
+                 PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_LOGIN_AND_PASSWORD)) {
+                statement.setString(1, login);
+
+                statement.setString(2, PasswordHashGenerator.encodePassword(password)); //TODO check DB !!!!!
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    user = UserCreator.createUser(resultSet);
+                }
+            } catch (SQLException ex) {
+                throw new DaoException("Error. Impossible get data from data base.", ex);
             }
-        } catch (SQLException ex) {
-            throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return Optional.ofNullable(user);
     }

@@ -12,7 +12,6 @@
 
 <html>
 <head>
-
     <%@include file="/include/header.jsp" %>
 </head>
 <body>
@@ -30,9 +29,8 @@
     </label>
     <span style="color: red">${loginError}</span>
     <br>
-    <a href="${abs_path}/pages/registration.jsp">
+    <input type="hidden" name="command" value="login">
     <button type="submit"><fmt:message key="page.login.sign_in.button"/></button>
-    </a>
 </form>
 
 

@@ -39,7 +39,7 @@ public class LoginCommand implements Command {
         User user;
         String login = request.getParameter(UserValidator.LOGIN.getFieldName());
         String password = request.getParameter(UserValidator.PASSWORD.getFieldName());
-        UserServiceImpl userService = new UserServiceImpl();
+            UserServiceImpl userService = new UserServiceImpl();
         Optional<User> optionalUser = userService.login(login, password);
         if (optionalUser.isPresent()) {
             user = optionalUser.get();

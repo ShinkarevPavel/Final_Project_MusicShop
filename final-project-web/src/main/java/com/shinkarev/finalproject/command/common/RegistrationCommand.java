@@ -42,7 +42,7 @@ public class RegistrationCommand implements Command {
         /*
          *This block checking login on RegEx conformity and unique
          */
-        if (login.matches(LOGIN.getRegExp())) {
+        if (login != null && login.matches(LOGIN.getRegExp())) {
             if (userService.isLoginUnique(login)) {
                 service.put(login, true);
                 request.setAttribute(LOGIN.getFieldName(), login);
@@ -56,7 +56,7 @@ public class RegistrationCommand implements Command {
         /*
          *This block checking password on RegEx conformity and checking equality of two entered passwords
          */
-        if (password.matches(PASSWORD.getRegExp())) {
+        if (password != null && password.matches(PASSWORD.getRegExp())) {
             if (password.equals(checkPassword)) {
                 service.put(password, true);
                 // TODO Q - is should send to jsp password if it is correct?
@@ -70,7 +70,7 @@ public class RegistrationCommand implements Command {
         /*
          *This block checking email on RegEx conformity and unique
          */
-        if (email.matches(EMAIL.getRegExp())) {
+        if (email != null && email.matches(EMAIL.getRegExp())) {
             if (userService.isEmailUnique(email)) {
                 service.put(email, true);
                 request.setAttribute(EMAIL.getFieldName(), email);
@@ -84,7 +84,7 @@ public class RegistrationCommand implements Command {
         /*
          *This block checking nickname on RegEx conformity
          */
-        if (nickname.matches(NICKNAME.getRegExp())) {
+        if (nickname != null && nickname.matches(NICKNAME.getRegExp())) {
             service.put(nickname, true);
             request.setAttribute(NICKNAME.getFieldName(), nickname);
         } else {
