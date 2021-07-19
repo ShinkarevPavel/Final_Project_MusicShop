@@ -20,7 +20,6 @@ public class ChangeLocalCommand implements Command {
         String locale = (String) session.getAttribute(ParamName.LOCALE);
         if (locale == null || RU_LOCALE.equals(locale)) {
             locale = EN_LOCALE;
-
         } else {
             locale = RU_LOCALE;
         }

@@ -9,6 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="abs_path">${pageContext.request.contextPath}</c:set>
+<fmt:setLocale value="${curr_lang}" scope="request"/>
+<fmt:setBundle basename="localization"/>
 
 <html>
 <head>
@@ -27,7 +29,11 @@
     <label for="password"><fmt:message key="page.login.password"/>
         <input type="password" name="password" id="password" required>
     </label>
-    <span style="color: red">${loginError}</span>
+    <span>
+        <strong>
+            <p class="text-danger">${loginError}</p>
+        </strong>
+    </span>
     <br>
     <input type="hidden" name="command" value="login">
     <button type="submit"><fmt:message key="page.login.sign_in.button"/></button>

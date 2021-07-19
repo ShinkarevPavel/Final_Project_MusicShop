@@ -14,15 +14,12 @@
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization"/>
 <fmt:message key="locale.lang" var="curr_lang"/>
-
 <html>
 <head>
 
 </head>
 <body>
-
 <%@include file="../include/common_imports.jspf" %>
-
 <div>
     <c:if test="${not empty sessionScope.user}">
         <form action="${abs_path}/controller" method="post">

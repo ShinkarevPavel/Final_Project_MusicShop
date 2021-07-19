@@ -19,11 +19,13 @@ public class ParamName {
 
     /**/
     public static final String COMMAND_PARAM = "command";
+    public static final String LOCALIZATION = "localization";
     public static final String USER = "user";
     public static final String LOCALE = "locale";
     public static final String REFERER = "referer";
     public static final String USER_LIST_PARAM = "users";
     public static final String REFERER_PARAM = "refererCommand";
-    public static final String EN_LOCALE = "en-EN";
+    public static final String EN_LOCALE = "en-US";
     public static final String RU_LOCALE = "ru-RU";
+    public static final String SUPPORTED_LOCALES = "supported.locales";
 }

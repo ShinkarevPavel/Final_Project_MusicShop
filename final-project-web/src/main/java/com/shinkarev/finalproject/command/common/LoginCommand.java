@@ -4,13 +4,17 @@ import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.ParamName;
 import com.shinkarev.finalproject.command.Router;
+import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.UserValidator;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.entity.UserStatusType;
 import com.shinkarev.musicshop.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 
+import java.util.Enumeration;
+import java.util.Locale;
 import java.util.Optional;
 
 import static com.shinkarev.finalproject.command.PageName.*;
@@ -41,6 +45,10 @@ public class LoginCommand implements Command {
         String password = request.getParameter(UserValidator.PASSWORD.getFieldName());
             UserServiceImpl userService = new UserServiceImpl();
         Optional<User> optionalUser = userService.login(login, password);
+
+
+
+
         if (optionalUser.isPresent()) {
             user = optionalUser.get();
             request.getSession().setAttribute(USER, user);
@@ -58,7 +66,7 @@ public class LoginCommand implements Command {
                 router.setPagePath(PageName.LIMIT_ACCESS_PAGE);
             }
         } else {
-            request.setAttribute(LOGIN_ERROR, MESSAGE_ERROR_LOGIN_PASSWORD);
+            request.setAttribute(LOGIN_ERROR, LocaleSetter.getInstance().getMassage("page.errors.login_password_error", request));
             router.setPagePath(PageName.LOGIN_PAGE);
         }
     }

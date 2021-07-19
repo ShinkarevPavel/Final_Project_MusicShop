@@ -1,7 +1,6 @@
 package com.shinkarev.finalproject.command.common;
 
 import com.shinkarev.finalproject.command.Command;
-import com.shinkarev.finalproject.command.ParamName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.musicshop.dao.impl.UserDaoImpl;
 import com.shinkarev.musicshop.entity.User;
@@ -117,7 +116,6 @@ public class RegistrationCommand implements Command {
         } else {
             router.setPagePath(REGISTRATION_PAGE);
         }
-
         return router;
     }
 }
