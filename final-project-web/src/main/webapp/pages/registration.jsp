@@ -20,31 +20,45 @@
 <form method="post" action="${abs_path}/controller?command=registration">
     <div>
         <span><fmt:message key="page.registration.login"/><input type="text" name="login" pattern="^[\w@#$%^&+=]{7,25}$"
-                                                                 value="${login}"></span>
-        <span style="color: red">${loginError}</span>
+                                                                 value="${login}" required></span>
+            <strong>
+            <p class="text-danger">${loginError}</p>
+        </strong>
         <h6 style="color: forestgreen"><fmt:message key="page.registration.login.requirements"/>
     </div>
     <div>
         <span><fmt:message key="page.registration.password"/><input type="password" name="password"
                                                                     pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{12,45}$"
-                                                                    value="${password}"></span>
-        <span style="color: red">${passwordError}</span>
+                                                                    value="${password}" required></span>
+        <span>
+            <strong>
+            <p class="text-danger">${passwordError}</p>
+        </strong>
+        </span>
         <h6 style="color: forestgreen"><fmt:message key="page.registration.password.requirements"/>
     </div>
     <div>
         <span><fmt:message key="page.registration.confirm_password"/>
-            <input type="password" name="checkPassword" value="${secondPassword}"></span>
+            <input type="password" name="checkPassword" value="${secondPassword}" required></span>
     </div>
     <div>
         <span><fmt:message key="page.registration.email"/>
             <input type="email" name="email" pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
-                   value="${email}"></span>
-        <span style="color: red">${emailError}</span>
+                   value="${email}" required></span>
+        <span>
+            <strong>
+            <p class="text-danger">${emailError}</p>
+        </strong>
+        </span>
     </div>
     <div>
         <span><fmt:message key="page.registration.nickname"/>
-            <input type="text" name="nickname" pattern="^[\w@#$%^&+=]{2,30}$" value="${nickname}"></span>
-        <span style="color: red">${nicknameError}</span>
+            <input type="text" name="nickname" pattern="^[\w@#$%^&+=]{2,30}$" value="${nickname}" required></span>
+        <span>
+            <strong>
+            <p class="text-danger">${nicknameError}</p>
+        </strong>
+        </span>
         <h6 style="color: forestgreen"><fmt:message key="page.registration.nickname.requirements"/>
     </div>
     <div>

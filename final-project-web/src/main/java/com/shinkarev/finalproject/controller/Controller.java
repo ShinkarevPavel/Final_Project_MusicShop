@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Optional;
 
 @WebServlet(name = "controller", urlPatterns = "/controller")
@@ -42,6 +43,8 @@ public class Controller extends HttpServlet {
         } else {
             response.sendRedirect(PageName.ERROR_PAGE);
         }
+        Locale locale = new Locale("en", "US");
+        response.setLocale(locale);
     }
 
     private Optional<CommandName> getCommandName(HttpServletRequest request) {

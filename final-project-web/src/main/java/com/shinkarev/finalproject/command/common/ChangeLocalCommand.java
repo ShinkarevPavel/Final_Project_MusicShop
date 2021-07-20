@@ -15,7 +15,6 @@ public class ChangeLocalCommand implements Command {
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
         router.setRouterType(Router.RouterType.REDIRECT);
-
         HttpSession session = request.getSession();
         String locale = (String) session.getAttribute(ParamName.LOCALE);
         if (locale == null || RU_LOCALE.equals(locale)) {

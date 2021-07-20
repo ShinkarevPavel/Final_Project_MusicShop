@@ -11,6 +11,8 @@ import com.shinkarev.musicshop.entity.UserStatusType;
 import com.shinkarev.musicshop.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 import java.util.Enumeration;
@@ -21,11 +23,14 @@ import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
 public class LoginCommand implements Command {
+    Logger logger = LogManager.getLogger();
 
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
         User user = (User) request.getSession().getAttribute(USER);
+
+
         if (user != null) {
             request.setAttribute(USER, user);
             switch (user.getRole()) {
@@ -40,15 +45,12 @@ public class LoginCommand implements Command {
     }
 
     private void getUser(HttpServletRequest request, Router router) {
+        String locale = (String) request.getSession().getAttribute(LOCALE);
         User user;
         String login = request.getParameter(UserValidator.LOGIN.getFieldName());
         String password = request.getParameter(UserValidator.PASSWORD.getFieldName());
             UserServiceImpl userService = new UserServiceImpl();
         Optional<User> optionalUser = userService.login(login, password);
-
-
-
-
         if (optionalUser.isPresent()) {
             user = optionalUser.get();
             request.getSession().setAttribute(USER, user);
@@ -66,7 +68,7 @@ public class LoginCommand implements Command {
                 router.setPagePath(PageName.LIMIT_ACCESS_PAGE);
             }
         } else {
-            request.setAttribute(LOGIN_ERROR, LocaleSetter.getInstance().getMassage("page.errors.login_password_error", request));
+            request.setAttribute(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(PAGE_ERRORS_LOGIN_PASSWORD, locale));
             router.setPagePath(PageName.LOGIN_PAGE);
         }
     }

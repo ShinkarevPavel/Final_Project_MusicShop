@@ -15,8 +15,16 @@
 <html>
 <head>
     <%@include file="/include/header.jsp" %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
 <body>
+<div class="container">
+    <img src="https://img.kytary.com/eshop_ie/velky_v2/na/637298488625630000/9df4c7ec/64762517/kohala-3-4-size-steel-string-acoustic-guitar.jpg" class="img-responsive" alt="Lights" width="1200" height="452">
+</div>
 <label><fmt:message key="page.head.login"/></label>
 <br/>
 <br/>

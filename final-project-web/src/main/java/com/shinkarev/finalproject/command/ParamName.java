@@ -13,8 +13,8 @@ public class ParamName {
 
     /*Messages*/
     public static final String MESSAGE_ERROR_LOGIN_PASSWORD = "incorrect login/password par";
-    public static final String MESSAGE_ERROR_LOGIN = "this login already use";
-    public static final String MESSAGE_ERROR_EMAIL = "this email already use";
+    public static final String MESSAGE_ERROR_LOGIN = "page.registration.login.message.error";
+    public static final String MESSAGE_ERROR_EMAIL = "page.registration.email.message.error";
 
 
     /**/
@@ -28,4 +28,9 @@ public class ParamName {
     public static final String EN_LOCALE = "en-US";
     public static final String RU_LOCALE = "ru-RU";
     public static final String SUPPORTED_LOCALES = "supported.locales";
+
+
+    /*Properties keys*/
+    public static final String PAGE_ERRORS_LOGIN_PASSWORD = "page.errors.login_password_error";
+
 }

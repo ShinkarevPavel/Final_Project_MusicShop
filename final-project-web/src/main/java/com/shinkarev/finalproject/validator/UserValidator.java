@@ -1,11 +1,11 @@
 package com.shinkarev.finalproject.validator;
 
 public enum UserValidator {
-    EMAIL("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", "email", "email is incorrect"),
-    LOGIN("^[\\w@#$%^&+=]{7,25}$", "login", "login is incorrect"),
-    NICKNAME("^[\\w@#$%^&+=]{2,30}$", "nickname", "nickname is incorrect"),
-    PASSWORD("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{12,45}$", "password", "password is incorrect"),
-    CHECKPASSWORD("checkPassword", "passwords are differ"),
+    EMAIL("^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$", "email", "page.registration.errors.email_error"),
+    LOGIN("^[\\w@#$%^&+=]{7,25}$", "login", "page.registration.errors.login_error"),
+    NICKNAME("^[\\w@#$%^&+=]{2,30}$", "nickname", "page.registration.errors.nickname_error"),
+    PASSWORD("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{12,45}$", "password", "page.registration.errors.password_error"),
+    CHECKPASSWORD("checkPassword", "page.registration.errors.confirm_password_error"),
     NAME("name"),
     SURENAME("surename");
 
