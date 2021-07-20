@@ -2,17 +2,14 @@ package com.shinkarev.finalproject.command.common;
 
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
-import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.RegistrationValidator;
+import com.shinkarev.finalproject.validator.UserValidator;
 import com.shinkarev.musicshop.dao.impl.UserDaoImpl;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.entity.UserRoleType;
 import com.shinkarev.musicshop.entity.UserStatusType;
 import com.shinkarev.musicshop.exception.DaoException;
-import com.shinkarev.musicshop.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import org.apache.logging.log4j.core.config.plugins.validation.validators.RequiredValidator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,20 +34,14 @@ public class RegistrationCommand implements Command {
         String surename = request.getParameter(SURENAME.getFieldName());
         String locale = (String) request.getSession().getAttribute(LOCALE);
 
-        Map<String, Boolean> service = new HashMap<>();
-        service.put(login, false);
-        service.put(password, false);
-        service.put(email, false);
-        service.put(nickname, false);
-
         Map<String, String> registrationValues = new HashMap<>();
-        registrationValues.put("login", login);
-        registrationValues.put("password", password);
-        registrationValues.put("checkpasswrod", checkPassword);
-        registrationValues.put("email", email);
-        registrationValues.put("nickname", nickname);
-        registrationValues.put("name", name);
-        registrationValues.put("surename", surename);
+        registrationValues.put(LOGIN.getFieldName(), login);
+        registrationValues.put(PASSWORD.getFieldName(), password);
+        registrationValues.put(CHECKPASSWORD.getFieldName(), checkPassword);
+        registrationValues.put(EMAIL.getFieldName(), email);
+        registrationValues.put(NICKNAME.getFieldName(), nickname);
+        registrationValues.put(NAME.getFieldName(), name);
+        registrationValues.put(SURENAME.getFieldName(), surename);
 
 
         Map<String, String> result = RegistrationValidator.checkValues(registrationValues, locale);
@@ -75,53 +66,6 @@ public class RegistrationCommand implements Command {
                     //TODO
                 }
             }
-
-
-
-            /*
-             *This block checking password on RegEx conformity and checking equality of two entered passwords
-             */
-            if (password != null && password.matches(PASSWORD.getRegExp())) {
-                if (password.equals(checkPassword)) {
-                    service.put(password, true);
-                } else {
-                    request.setAttribute(PASSWORD_ERROR, LocaleSetter.getInstance().getMassage(CHECKPASSWORD.getMessage(), locale));
-                }
-            } else {
-                request.setAttribute(PASSWORD_ERROR, LocaleSetter.getInstance().getMassage(PASSWORD.getMessage(), locale));
-            }
-
-            /*
-             *This block checking email on RegEx conformity and unique
-             */
-            if (email != null && email.matches(EMAIL.getRegExp())) {
-                if (userService.isEmailUnique(email)) {
-                    service.put(email, true);
-                    request.setAttribute(EMAIL.getFieldName(), email);
-                } else {
-                    request.setAttribute(EMAIL_ERROR, LocaleSetter.getInstance().getMassage(MESSAGE_ERROR_EMAIL, locale));
-                }
-            } else {
-                request.setAttribute(EMAIL_ERROR, LocaleSetter.getInstance().getMassage(EMAIL.getMessage(), locale));
-            }
-
-            /*
-             *This block checking nickname on RegEx conformity
-             */
-            if (nickname != null && nickname.matches(NICKNAME.getRegExp())) {
-                service.put(nickname, true);
-                request.setAttribute(NICKNAME.getFieldName(), nickname);
-            } else {
-                request.setAttribute(NICKNAME_ERROR, LocaleSetter.getInstance().getMassage(NICKNAME.getMessage(), locale));
-            }
-
-            /*
-             *This block checking name availability
-             */
-            if (name != null) {
-                request.setAttribute(NAME.getFieldName(), name);
-            }
-
         }
         return router;
     }
