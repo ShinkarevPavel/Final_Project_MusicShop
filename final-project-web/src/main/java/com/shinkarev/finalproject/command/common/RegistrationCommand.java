@@ -19,9 +19,6 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
 public class RegistrationCommand implements Command {
-
-
-
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
@@ -43,11 +40,9 @@ public class RegistrationCommand implements Command {
         registrationValues.put(NAME.getFieldName(), name);
         registrationValues.put(SURENAME.getFieldName(), surename);
 
-
         Map<String, String> result = RegistrationValidator.checkValues(registrationValues, locale);
-
         if (request.getMethod().equals("POST")) {
-            if (result != null) {
+            if (!result.isEmpty()) {
                 for (Map.Entry<String, String> par : result.entrySet()) {
                     request.setAttribute(par.getKey(), par.getValue());
                 }
