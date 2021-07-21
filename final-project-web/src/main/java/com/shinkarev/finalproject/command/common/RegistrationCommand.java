@@ -19,9 +19,11 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
 public class RegistrationCommand implements Command {
+    private Router router = new Router();
+
     @Override
     public Router execute(HttpServletRequest request) {
-        Router router = new Router();
+
         String login = request.getParameter(LOGIN.getFieldName());
         String password = request.getParameter(PASSWORD.getFieldName());
         String checkPassword = request.getParameter(CHECKPASSWORD.getFieldName());
@@ -31,17 +33,20 @@ public class RegistrationCommand implements Command {
         String surename = request.getParameter(SURENAME.getFieldName());
         String locale = (String) request.getSession().getAttribute(LOCALE);
 
-        Map<String, String> registrationValues = new HashMap<>();
-        registrationValues.put(LOGIN.getFieldName(), login);
-        registrationValues.put(PASSWORD.getFieldName(), password);
-        registrationValues.put(CHECKPASSWORD.getFieldName(), checkPassword);
-        registrationValues.put(EMAIL.getFieldName(), email);
-        registrationValues.put(NICKNAME.getFieldName(), nickname);
-        registrationValues.put(NAME.getFieldName(), name);
-        registrationValues.put(SURENAME.getFieldName(), surename);
+        if (request.getMethod().equals(METHOD_POST)) {
+            Map<String, String> registrationValues = new HashMap<>();
+            registrationValues.put(LOGIN.getFieldName(), login);
+            registrationValues.put(PASSWORD.getFieldName(), password);
+            registrationValues.put(CHECKPASSWORD.getFieldName(), checkPassword);
+            registrationValues.put(EMAIL.getFieldName(), email);
+            registrationValues.put(NICKNAME.getFieldName(), nickname);
+            registrationValues.put(NAME.getFieldName(), name);
+            registrationValues.put(SURENAME.getFieldName(), surename);
+            Map<String, String> result = RegistrationValidator.checkValues(registrationValues, locale);
 
-        Map<String, String> result = RegistrationValidator.checkValues(registrationValues, locale);
-        if (request.getMethod().equals("POST")) {
+
+
+
             if (!result.isEmpty()) {
                 for (Map.Entry<String, String> par : result.entrySet()) {
                     request.setAttribute(par.getKey(), par.getValue());
@@ -49,10 +54,10 @@ public class RegistrationCommand implements Command {
                 router.setPagePath(REGISTRATION_PAGE);
             } else {
                 User user = new User(login, email, nickname, name, surename, UserStatusType.ACTIVE, UserRoleType.CLIENT);
-                UserDaoImpl userDao = new UserDaoImpl();
+                UserDaoImpl userDao = new UserDaoImpl(); //todo to service !!!!
                 try {
                     if (userDao.addUser(user, password)) {
-                        request.setAttribute(USER, user);
+                        request.getSession().setAttribute(USER, user);
                         router.setPagePath(REGISTRATION_IS_DONE);
                     } else {
                         //todo smt write here
@@ -62,6 +67,7 @@ public class RegistrationCommand implements Command {
                 }
             }
         }
-        return router;
+        System.out.println("router " + router.getPagePath());
+        return this.router;
     }
 }

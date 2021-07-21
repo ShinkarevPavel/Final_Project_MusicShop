@@ -70,10 +70,7 @@
                                                                     value="${surename}"></span>
         <h6 style="color: forestgreen"><fmt:message key="page.registration.surename.requirements"/>
     </div>
-    <a href="${abs_path}/pages/registration.jsp">
         <button type="submit"><fmt:message key="page.registration.sign_up"/></button>
-    </a>
-
 </form>
 </body>
 </html>

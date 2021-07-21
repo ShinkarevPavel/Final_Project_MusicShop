@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="abs_path">${pageContext.request.contextPath}</c:set>
 <fmt:setLocale value="${curr_lang}" scope="request"/>
 <fmt:setBundle basename="localization"/>
 <html>
@@ -15,7 +14,8 @@
     <%@include file="/include/header.jsp" %>
 </head>
 <body>
-<label><fmt:message key="page.registration.is_done"/></label>
+<label><fmt:message key="page.registration_is_done"/></label>
+
 <form method="post" action="${abs_path}/pages/login.jsp">
     <button type="submit"><fmt:message key="page.login.login"/></button>
 </form>

@@ -10,7 +10,7 @@
     <c:redirect url="/controller?command=login"/>
 </c:if>
 
-<jsp:forward page="/pages/login.jsp"/>
+<jsp:forward page="/pages/newlogin.jsp"/>
     </body>
     </html>
 

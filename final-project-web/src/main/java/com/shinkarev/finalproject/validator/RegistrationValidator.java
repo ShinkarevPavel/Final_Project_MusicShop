@@ -92,7 +92,7 @@ public class RegistrationValidator {
             result.put(SURENAME.getFieldName(), name);
         }
 
-        if (!isError) {
+        if (isError) {
             result.clear();
         }
         return result;

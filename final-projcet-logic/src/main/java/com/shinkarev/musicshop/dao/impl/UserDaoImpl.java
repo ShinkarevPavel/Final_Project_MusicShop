@@ -169,8 +169,8 @@ public class UserDaoImpl implements UserDao {
                 statement.setString(4, user.getNickname());
                 statement.setString(5, user.getName());
                 statement.setString(6, user.getSurename());
-                statement.setInt(7, UserRoleType.ordinal(user.getRole()));
-                statement.setInt(8, UserStatusType.ordinal(user.getStatus()));
+                statement.setInt(7, UserStatusType.ordinal(user.getStatus()));
+                statement.setInt(8, UserRoleType.ordinal(user.getRole()));
                 statement.executeUpdate();
                 ResultSet resultSet = statement.getGeneratedKeys();
                 if (resultSet.next()) {

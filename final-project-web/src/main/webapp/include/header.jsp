@@ -20,7 +20,7 @@
 </head>
 <body>
 <%@include file="../include/common_imports.jspf" %>
-<div>
+<div id="logout">
     <c:if test="${not empty sessionScope.user}">
         <form action="${abs_path}/controller" method="post">
             <input type="hidden" name="command" value="logout">

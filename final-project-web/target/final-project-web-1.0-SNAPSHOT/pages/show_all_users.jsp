@@ -25,7 +25,7 @@
         <c:forEach items="${users}" var="user">
         <tr>
             <td>
-                <a href="${abs_path}/controller?command=user_info&userId=${user.getId()}">${user.getId()}</a>
+                <a href="${abs_path}/controller?command=user_info&userId=${user.id}">${user.id}</a>
             </td>
             <td>${user.login}</td>
             <td>${user.email}</td>

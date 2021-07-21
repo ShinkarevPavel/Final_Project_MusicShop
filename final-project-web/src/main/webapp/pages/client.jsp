@@ -8,7 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Client page</title>
+    <%@include file="/include/header.jsp" %>
+    Hey, ${sessionScope.get("user").getName()}
 </head>
 <body>
 
