@@ -56,14 +56,7 @@ public class MainProject {
 //            e.printStackTrace();
 //        }
 //        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
-        UserDaoImpl userDao = new UserDaoImpl();
-        UserServiceImpl service = new UserServiceImpl();
-        try {
-            System.out.println(userDao.getUserByLogin("Pavel209"));
-            System.out.println(service.isLoginUnique("Pavel20"));
-        } catch (DaoException e) {
-            e.printStackTrace();
-        }
+
 ////        List<Instrument> instruments = null;
 ////        Optional<Instrument> instrument = null;
 //        try {

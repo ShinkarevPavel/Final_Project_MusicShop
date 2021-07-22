@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends BaseDao<Long, User> {
-    boolean block(User user) throws DaoException;
+    boolean changeUserStatusById(long userId, UserStatusType statusType) throws DaoException;
 
-    boolean unblock(User user) throws DaoException;
+    boolean changeUserRoleById(long userId, UserRoleType roleType) throws DaoException;
 
     Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException;
 

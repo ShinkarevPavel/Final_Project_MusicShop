@@ -15,8 +15,8 @@ class SqlQuery {
             " status_value, role_value FROM users" +
             " LEFT JOIN statuses ON users.status_id=statuses.id LEFT JOIN roles ON users.role_id=roles.id" +
             " WHERE user_id=?";
-    static final String SQL_BLOCKED_USER = "UPDATE users SET status_id=2 WHERE nickname=?";
-    static final String SQL_UNBLOCKED_USER = "UPDATE users SET status_id=1 WHERE nickname=?";
+    static final String SQL_CONTROL_USER_STATUS = "UPDATE users SET status_id=? WHERE user_id=?";
+    static final String SQL_CONTROL_USER_ROLE = "UPDATE users SET role_id=? WHERE user_id=?";
     static final String SQL_ADD_USER = "INSERT INTO users(login, password, email, nickname, name, surename," +
             "  status_id, role_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
     static final String SQL_UPDATE_USER = "UPDATE users SET login=?, email=?, nickname=?, name=?, surename=?, status_id=?, role_id=?  WHERE user_id=?";

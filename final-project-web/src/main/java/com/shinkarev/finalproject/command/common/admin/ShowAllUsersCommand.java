@@ -19,10 +19,9 @@ import static com.shinkarev.finalproject.command.PageName.*;
 public class ShowAllUsersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final UserService service = new UserServiceImpl();
-
+    private Router router = new Router();
     @Override
     public Router execute(HttpServletRequest request) {
-        Router router = new Router();
         List<User> users;
         try {
             users = service.getAllUsers();

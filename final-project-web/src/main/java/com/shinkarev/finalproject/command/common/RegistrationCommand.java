@@ -42,15 +42,12 @@ public class RegistrationCommand implements Command {
             registrationValues.put(NICKNAME.getFieldName(), nickname);
             registrationValues.put(NAME.getFieldName(), name);
             registrationValues.put(SURENAME.getFieldName(), surename);
-            Map<String, String> result = RegistrationValidator.checkValues(registrationValues, locale);
+            Map<String, String> errors = RegistrationValidator.checkValues(registrationValues, locale);
 
 
-
-
-            if (!result.isEmpty()) {
-                for (Map.Entry<String, String> par : result.entrySet()) {
-                    request.setAttribute(par.getKey(), par.getValue());
-                }
+            if (!errors.isEmpty()) {
+                request.setAttribute(REGISTRATION_VALUES, registrationValues);
+                request.setAttribute(ERRORS_LIST, errors);
                 router.setPagePath(REGISTRATION_PAGE);
             } else {
                 User user = new User(login, email, nickname, name, surename, UserStatusType.ACTIVE, UserRoleType.CLIENT);
@@ -67,7 +64,6 @@ public class RegistrationCommand implements Command {
                 }
             }
         }
-        System.out.println("router " + router.getPagePath());
         return this.router;
     }
 }

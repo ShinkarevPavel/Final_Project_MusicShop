@@ -28,9 +28,13 @@ public class ParamName {
     public static final String RU_LOCALE = "ru-RU";
     public static final String SUPPORTED_LOCALES = "supported.locales";
     public static final String METHOD_POST = "POST";
+    public static final String REGISTRATION_VALUES = "registrationValues";
+    public static final String ERRORS_LIST = "errors";
+    public static final String COMMON_PROPERTIES = "common.properties";
 
 
     /*Properties keys*/
     public static final String PAGE_ERRORS_LOGIN_PASSWORD = "page.errors.login_password_error";
+
 
 }

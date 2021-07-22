@@ -38,7 +38,7 @@ public class LocaleSetter {
         List<String> result = new ArrayList<>();
         ResourceManager resourceManager = new ResourceManager();
         try {
-            Properties properties = resourceManager.getValue("common.properties");
+            Properties properties = resourceManager.getValue(COMMON_PROPERTIES);
             String property = properties.getProperty(SUPPORTED_LOCALES);
             for (String next : property.split(",")) {
                 result.add(next.trim());

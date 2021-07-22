@@ -10,14 +10,12 @@
 <c:set var="abs_path">${pageContext.request.contextPath}</c:set>
 <html>
 <head>
-    <title>Title</title>
+
 
 </head>
-<body>
-<%@include file="/include/header.jsp"%>
-
+<body> <%@include file="/include/header.jsp"%>
 ${user.nickname}
-<br>
+
 <a href="${abs_path}/controller?command=show_all_users">
     <button type="button"><fmt:message key="page.admin.show_all_users"/></button>
 </a>

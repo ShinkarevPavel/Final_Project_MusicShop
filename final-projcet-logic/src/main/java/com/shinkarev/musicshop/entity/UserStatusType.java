@@ -7,4 +7,6 @@ public enum UserStatusType {
     public static int ordinal(UserStatusType status) {
         return status.ordinal() + 1;
     }
+
+    
 }

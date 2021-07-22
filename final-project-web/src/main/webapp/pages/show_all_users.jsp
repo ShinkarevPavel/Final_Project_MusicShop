@@ -6,32 +6,52 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="abs_path">${pageContext.request.contextPath}</c:set>
 <html>
 <head>
-    <title>Admin page</title>
+    <%@include file="/include/header.jsp" %>
 </head>
 <body>
-<%@include file="/include/header.jsp" %>
-    <table border="4">
+
+    <table border="4" class="table table-striped">
         <tr>
-            <th>User_id</th>
             <th>Login</th>
             <th>Email</th>
             <th>Role</th>
             <th>Status</th>
+            <th>User_id</th>
         </tr>
         <c:forEach items="${users}" var="user">
         <tr>
+            <td>${user.login}</td>
+            <td>${user.email}</td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            ${user.role}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_role=ADMIN">ADMIN</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_role=CLIENT">CLIENT</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_role=GUEST">GUEST</a></li>
+                    </ul>
+                </div>
+            </td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        ${user.status}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_state=ACTIVE">ACTIVE</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_state=BLOCKED">BLOCKED</a></li>
+                    </ul>
+                </div>
+            </td>
             <td>
                 <a href="${abs_path}/controller?command=user_info&userId=${user.id}">${user.id}</a>
             </td>
-            <td>${user.login}</td>
-            <td>${user.email}</td>
-            <td>${user.role}</td>
-            <td>${user.status}</td>
             </c:forEach>
     </table>
+    <!-- JavaScript Bundle with Popper -->
 </body>
 </html>

@@ -52,11 +52,26 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean block(User user) throws DaoException {
+    public boolean changeUserStatusById(long userId, UserStatusType statusType) throws DaoException {
         int rowsUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_BLOCKED_USER)) {
-            statement.setString(1, user.getNickname());
+             PreparedStatement statement = connection.prepareStatement(SQL_CONTROL_USER_STATUS)) {
+            statement.setString(1, String.valueOf(UserStatusType.ordinal(statusType)));
+            statement.setString(2, String.valueOf(userId));
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible get data from data base.", ex);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public boolean changeUserRoleById(long userId, UserRoleType roleType) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_CONTROL_USER_ROLE)) {
+            statement.setString(1, String.valueOf(UserRoleType.ordinal(roleType)));
+            statement.setString(2, String.valueOf(userId));
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
             throw new DaoException("Error. Impossible get data from data base.", ex);
@@ -83,25 +98,12 @@ public class UserDaoImpl implements UserDao {
             statement.setInt(7, UserRoleType.ordinal(user.getRole()));
             statement.setLong(8, user.getId());
             rowsUpdate = statement.executeUpdate();
-            System.out.println(rowsUpdate);
         } catch (SQLException ex) {
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return rowsUpdate == 1;
     }
 
-    @Override
-    public boolean unblock(User user) throws DaoException {
-        int rowsUpdate;
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_UNBLOCKED_USER)) {
-            statement.setString(1, user.getNickname());
-            rowsUpdate = statement.executeUpdate();
-        } catch (SQLException ex) {
-            throw new DaoException("Error. Impossible get data from data base.", ex);
-        }
-        return rowsUpdate == 1;
-    }
 
     @Override
     public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {

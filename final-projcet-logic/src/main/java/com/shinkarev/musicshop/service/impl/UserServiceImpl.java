@@ -2,6 +2,8 @@ package com.shinkarev.musicshop.service.impl;
 
 import com.shinkarev.musicshop.dao.impl.UserDaoImpl;
 import com.shinkarev.musicshop.entity.User;
+import com.shinkarev.musicshop.entity.UserRoleType;
+import com.shinkarev.musicshop.entity.UserStatusType;
 import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.UserService;
@@ -10,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
-
     @Override
     public Optional<User> login(String login, String password) {
         UserDaoImpl userDao = new UserDaoImpl();
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isLoginUnique(String login) {
+    public boolean isLoginUnique(String login) throws ServiceException {
         UserDaoImpl userDao = new UserDaoImpl();
         boolean isPresent = false;
         try {
@@ -35,8 +36,8 @@ public class UserServiceImpl implements UserService {
             if (!currentUser.isPresent()) {
                 isPresent = true;
             }
-        } catch (DaoException e) {
-            // TODO service EX
+        } catch (DaoException ex) {
+            throw new ServiceException("Error Login checking", ex);
         }
         return isPresent;
     }
@@ -66,5 +67,37 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Error getting users", ex);
         }
         return users;
+    }
+
+    @Override
+    public boolean userStatusController(long userId, UserStatusType statusType) throws ServiceException {
+        boolean isChanged = false;
+        UserDaoImpl userDao = new UserDaoImpl();
+        try {
+            Optional<User> optionalUser = userDao.findEntityById(userId);
+            if (optionalUser.isPresent()) {
+                userDao.changeUserStatusById(userId, statusType);
+                isChanged = true;
+            }
+        } catch (DaoException ex) {
+            throw new ServiceException("Impossible change status for user", ex);
+        }
+        return isChanged;
+    }
+
+    @Override
+    public boolean userRoleController(long userId, UserRoleType roleType) throws ServiceException {
+        boolean isChanged = false;
+        UserDaoImpl userDao = new UserDaoImpl();
+        try {
+            Optional<User> optionalUser = userDao.findEntityById(userId);
+            if (optionalUser.isPresent()) {
+                userDao.changeUserRoleById(userId, roleType);
+                isChanged = true;
+            }
+        } catch (DaoException ex) {
+            throw new ServiceException("Impossible change role for user", ex);
+        }
+        return isChanged;
     }
 }

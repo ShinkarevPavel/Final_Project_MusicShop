@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: pavel
-  Date: 03.07.2021
-  Time: 19:31
+  User: Pavel_Shinkarev
+  Date: 21.07.2021
+  Time: 12:39
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,56 +11,65 @@
 <c:set var="abs_path">${pageContext.request.contextPath}</c:set>
 <fmt:setLocale value="${curr_lang}" scope="request"/>
 <fmt:setBundle basename="localization"/>
-
 <html>
 <head>
     <%@include file="/include/header.jsp" %>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    <br>
+    <br>
+    <br>
+    <link rel="stylesheet" href="https://www.markuptag.com/bootstrap/5/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
-    <img src="https://img.kytary.com/eshop_ie/velky_v2/na/637298488625630000/9df4c7ec/64762517/kohala-3-4-size-steel-string-acoustic-guitar.jpg" class="img-responsive" alt="Lights" width="1200" height="452">
-</div>
-<label><fmt:message key="page.head.login"/></label>
-<br/>
-<br/>
-<form method="post" action="${abs_path}/controller?command=login">
-    <label for="login"><fmt:message key="page.login.login"/>
-        <input type="hidden" name="command" value="login">
-        <input type="text" name="login" id="login" required>
-    </label>
+<section section="vh-100" style="background-color: #cedeea">
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="login-form bg-light mt-4 p-4">
+                <form action="${abs_path}/controller?command=login" method="post" class="row g-3">
+                    <h4 style="color: #084298"><fmt:message key="page.head.login"/></h4>
+                    <div class="col-12">
+                        <label><fmt:message key="page.login.login"/></label>
+                        <input type="text" name="login" class="form-control" placeholder="<fmt:message key="page.login.login"/>" required>
+                        <input type="hidden" name="command"  value="login">
+                    </div>
+                    <div class="col-12">
+                        <label><fmt:message key="page.login.password"/></label>
+                        <input type="password" name="password" class="form-control" placeholder="<fmt:message key="page.login.password"/>" required>
+                    </div>
+                    <div>
+                        <span>
+                            <strong>
+                                <p class="text-danger">${loginError}</p>
+                            </strong>
+                        </span>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe"><fmt:message key="page.head.remember_me"/></label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <input type="hidden" name="command" value="login">
+                        <button type="submit"><fmt:message key="page.login.sign_in.button"/></button>
+                    </div>
+                </form>
+                <hr class="mt-4">
+                <div class="col-12">
+                    <p class="text-center mb-0">
+                        <fmt:message key="page.head.registration_text"/>
+                        <a href="${abs_path}/pages/registration.jsp">
+                            <fmt:message key="page.login.register"/>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
     <br>
-    <label for="password"><fmt:message key="page.login.password"/>
-        <input type="password" name="password" id="password" required>
-    </label>
-    <span>
-        <strong>
-            <p class="text-danger">${loginError}</p>
-        </strong>
-    </span>
     <br>
-    <input type="hidden" name="command" value="login">
-    <button type="submit"><fmt:message key="page.login.sign_in.button"/></button>
-</form>
-
-
-<table>
-    <tr>
-        <th>
-            <form method="post" action="${abs_path}/pages/registration.jsp">
-                <button type="submit"><fmt:message key="page.login.register"/></button>
-            </form>
-        </th>
-        <th>
-            <form method="post" action="${abs_path}/pages/guest.jsp">
-                <button type="submit"><fmt:message key="page.login.guest"/></button>
-            </form>
-        </th>
-    <tr>
-</table>
+    <br>
+    <br>
+</section>
+<script src="https://www.markuptag.com/bootstrap/5/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
