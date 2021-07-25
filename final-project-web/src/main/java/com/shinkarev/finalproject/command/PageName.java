@@ -11,4 +11,6 @@ public class PageName {
     public static final String SHOW_ALL_USERS = "/pages/show_all_users.jsp";
     public static final String ERROR_PAGE = "/pages/error_page.jsp";
     public static final String LIMIT_ACCESS_PAGE = "/pages/limit_access_page.jsp";
+    public static final String USER_INFO_PAGE = "/pages/user_info.jsp";
+    public static final String FIND_USER = "/pages/find_user.jsp";
 }

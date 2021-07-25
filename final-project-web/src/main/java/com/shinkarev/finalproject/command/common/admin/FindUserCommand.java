@@ -1,6 +1,7 @@
 package com.shinkarev.finalproject.command.common.admin;
 
 import com.shinkarev.finalproject.command.Command;
+import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
@@ -9,29 +10,31 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Optional;
 
-import static com.shinkarev.finalproject.command.PageName.*;
-import static com.shinkarev.finalproject.command.ParamName.*;
+import static com.shinkarev.finalproject.command.PageName.ERROR_PAGE;
+import static com.shinkarev.finalproject.command.PageName.USER_INFO_PAGE;
+import static com.shinkarev.finalproject.command.ParamName.USER;
+import static com.shinkarev.finalproject.validator.UserValidator.NICKNAME;
 
-public class UserInfoCommand implements Command {
+public class FindUserCommand implements Command {
     private Router router = new Router();
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String userId = request.getParameter(USER_ID_PARAM);
-        UserServiceImpl userService = new UserServiceImpl();
+        String nickname = request.getParameter(NICKNAME.getFieldName());
         User user;
+        UserServiceImpl userService = new UserServiceImpl();
         try {
-            Optional<User> optionalUser = userService.getUserById(Long.parseLong(userId));
+            Optional<User> optionalUser = userService.getUserByNickName(nickname);
             if (optionalUser.isPresent()) {
                 user = optionalUser.get();
                 request.setAttribute(USER, user);
                 router.setPagePath(USER_INFO_PAGE);
             } else {
-                request.setAttribute("error.message", "User not found");
+                request.setAttribute("error", "There is no user with nickname " + nickname);
                 router.setPagePath(ERROR_PAGE);
             }
-        } catch (ServiceException | NumberFormatException ex) {
-            request.setAttribute("error.message", "Impossible get user info");
+        } catch (ServiceException e) {
+            request.setAttribute("error.message", "Impossible take action");
             router.setPagePath(ERROR_PAGE);
         }
         return router;

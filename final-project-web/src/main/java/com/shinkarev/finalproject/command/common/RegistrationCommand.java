@@ -64,6 +64,6 @@ public class RegistrationCommand implements Command {
                 }
             }
         }
-        return this.router;
+        return router;
     }
 }

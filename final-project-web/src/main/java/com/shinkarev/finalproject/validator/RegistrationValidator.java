@@ -61,7 +61,7 @@ public class RegistrationValidator {
          *This block checking nickname on RegEx conformity
          */
         String nickname = values.get(NICKNAME.getFieldName());
-        if (nickname == null || nickname.matches(NICKNAME.getRegExp())) {
+        if (nickname == null || !nickname.matches(NICKNAME.getRegExp())) {
             result.put(NICKNAME_ERROR, LocaleSetter.getInstance().getMassage(NICKNAME.getMessage(), locale));
         }
         return result;

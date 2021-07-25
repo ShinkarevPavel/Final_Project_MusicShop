@@ -15,4 +15,6 @@ public interface UserService {
     List<User> getAllUsers() throws ServiceException;
     boolean userStatusController(long userId, UserStatusType statusType) throws ServiceException;
     boolean userRoleController(long userId, UserRoleType roleType) throws ServiceException;
+    Optional<User> getUserById(long userId) throws ServiceException;
+    Optional<User> getUserByNickName(String nickname) throws ServiceException;
 }

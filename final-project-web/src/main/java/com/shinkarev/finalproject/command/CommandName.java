@@ -15,6 +15,7 @@ public enum CommandName {
     LOGOUT(new LogoutCommand()),
     USER_STATUS_CONTROL_COMMAND(new UserStatusControlCommand()),
     USER_ROLE_CONTROL_COMMAND(new UserRoleControlCommand()),
+    FIND_USER_COMMAND(new FindUserCommand()),
     UPDATE_USERS(new UpdateUsersCommand());
 
     private Command command;

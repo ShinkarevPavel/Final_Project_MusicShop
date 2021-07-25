@@ -32,6 +32,8 @@ class SqlQuery {
             "status_value, role_value FROM users LEFT JOIN roles ON users.role_id=roles.id LEFT JOIN statuses ON status_id=statuses.id  WHERE login=?";
     static final String SQL_FIND_USER_BY_EMAIL = "SELECT user_id, login, email, nickname, name, surename," +
             "status_value, role_value FROM users LEFT JOIN roles ON users.role_id=roles.id LEFT JOIN statuses ON status_id=statuses.id  WHERE email=?";
+    static final String SQL_FIND_USER_BY_NICKNAME = "SELECT user_id, login, email, nickname, name, surename," +
+            "status_value, role_value FROM users LEFT JOIN roles ON users.role_id=roles.id LEFT JOIN statuses ON status_id=statuses.id  WHERE nickname=?";
     /**
      * Requests to 'instruments' table into musician instruments database
      */

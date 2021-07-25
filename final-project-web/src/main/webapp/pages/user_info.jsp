@@ -11,29 +11,28 @@
     <title>Title</title>
 </head>
 <body>
-<%@include file="/include/header.jsp" %>
+<%@include file="/include/admin_header.jsp" %>
 
-Information about User:
-
-<table border="2">
-    <td>${user.email}</td>
+Information about User: ${user.nickname}
+<br>
+<div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+</div>
+<table border="2" class="table table-striped">
+    <tr>
+        <th>Login</th>
+        <th>Nickname</th>
+        <th>Name</th>
+        <th>Surename</th>
+        <th>Status</th>
+    </tr>
+    <td>${user.login}</td>
     <td>${user.nickname}</td>
     <td>${user.name}</td>
     <td>${user.surename}</td>
     <td>${user.role}</td>
-    <td>${user.status}</td>
-    <td>${user.id}</td>
 
-    <td><select name="role" id="role">
-        <c:forEach var="role" items="${requestScope.roles}">
-            <option value="${role}">${role}</option>
-        </c:forEach>
-    </select></td>
-    <td><select name="status" id="status">
-        <c:forEach var="status" items="${requestScope.statuses}">
-            <option value="${status}">${status}</option>
-        </c:forEach>
-    </select></td>
+
 </table>
 <button type="submit"><fmt:message key="page.admin.update"/></button>
 </body>

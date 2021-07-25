@@ -26,5 +26,7 @@ public interface UserDao extends BaseDao<Long, User> {
     Optional<User> getUserPasswordByLogin(String login) throws DaoException;
 
     Optional<User> findUserByEmail(String email) throws DaoException;
+
+    Optional<User> findUserByNickname(String nickname) throws DaoException;
 }
 

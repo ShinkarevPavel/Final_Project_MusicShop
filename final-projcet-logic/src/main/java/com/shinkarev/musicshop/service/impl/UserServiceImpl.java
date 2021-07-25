@@ -100,4 +100,32 @@ public class UserServiceImpl implements UserService {
         }
         return isChanged;
     }
+
+    @Override
+    public Optional<User> getUserById(long userId) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        Optional<User> optionalUser;
+        User user;
+        try {
+            optionalUser = userDao.findEntityById(userId);
+            user = optionalUser.orElse(null);
+        } catch (DaoException ex) {
+            throw new ServiceException("Impossible get user with " + userId, ex);
+        }
+        return Optional.ofNullable(user);
+    }
+
+    @Override
+    public Optional<User> getUserByNickName(String nickname) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        Optional<User> optionalUser;
+        User user;
+        try {
+            optionalUser = userDao.findUserByNickname(nickname);
+            user = optionalUser.orElse(null);
+        } catch (DaoException ex) {
+            throw new ServiceException("Impossible get user with " + nickname, ex);
+        }
+        return Optional.ofNullable(user);
+    }
 }

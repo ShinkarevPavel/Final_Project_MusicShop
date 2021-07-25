@@ -27,7 +27,6 @@ public class LoginCommand implements Command {
         User user = (User) request.getSession().getAttribute(USER);
         if (user != null) {
             request.setAttribute(USER, user);
-            System.out.println(user.getRole());
             switch (user.getRole()) {
                 case ADMIN -> router.setPagePath(ADMIN_PAGE);
                 case CLIENT -> router.setPagePath(CLIENT_PAGE);

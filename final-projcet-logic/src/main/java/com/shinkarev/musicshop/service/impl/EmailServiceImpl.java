@@ -6,9 +6,9 @@ import com.shinkarev.musicshop.pool.ResourceManager;
 import com.shinkarev.musicshop.service.EmailService;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.Properties;
 
@@ -17,12 +17,14 @@ public class EmailServiceImpl implements EmailService {
     private final static String USER_KEY = "mail.user_name";
     public static final String PASSWORD_KEY = "mail.password";
     public static final String EMAIL_PROPERTIES = "mail.properties";
+    public static final String EMAIL_CONFIRMATION = "Email Confirmation";
+    public static final String CONTENT_TYPE = "text/html";
+    public static final String CONTENT = "Click to confirm email: <a href=http://localhost:8080/final_project_web_war_exploded/pages/login.jsp>link</a>";
 
     @Override
     public boolean sendEmail(String emailTo, String address) throws ServiceException {
         ResourceManager resourceManager = new ResourceManager();
         Properties properties = resourceManager.getValue(EMAIL_PROPERTIES);
-
         final String user = properties != null ? properties.getProperty(USER_KEY) : null;
         final String password = properties != null ? properties.getProperty(PASSWORD_KEY) : null;
         System.out.println(user + password);
@@ -34,16 +36,18 @@ public class EmailServiceImpl implements EmailService {
         });
         Message message = new MimeMessage(session);
         try {
-            message.setFrom(new InternetAddress(user));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
-            final String subject = "Email Confirmation";
-            message.setSubject(subject);
-            final String content = "Click to confirm email: <a href=http://localhost:8080/final_project_web_war_exploded/pages/login.jsp>link</a>";
-            final String contentType = "text/html";
-            message.setContent(content, contentType);
-            Transport.send(message);
-            return true;
+            boolean isSent = false;
+            if (user != null) {
+                message.setFrom(new InternetAddress(user));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
+                message.setSubject(EMAIL_CONFIRMATION);
+                message.setContent(CONTENT, CONTENT_TYPE);
+                Transport.send(message);
+                isSent = true;
+            }
+            return isSent;
         } catch (MessagingException ex) {
+            logger.log(Level.ERROR, "Impossible sent email", ex);
             throw new ServiceException("Impossible sent email", ex);
         }
     }

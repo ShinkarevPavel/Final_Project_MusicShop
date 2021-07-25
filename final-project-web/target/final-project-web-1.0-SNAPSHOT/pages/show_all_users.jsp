@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <%@include file="/include/header.jsp" %>
+    <%@include file="/include/admin_header.jsp" %>
 </head>
 <body>
 
@@ -18,7 +18,7 @@
             <th>Email</th>
             <th>Role</th>
             <th>Status</th>
-            <th>User_id</th>
+            <th>User Control</th>
         </tr>
         <c:forEach items="${users}" var="user">
         <tr>
@@ -30,9 +30,9 @@
                             ${user.role}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_role=ADMIN">ADMIN</a></li>
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_role=CLIENT">CLIENT</a></li>
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_role=GUEST">GUEST</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_role_control_command&userId=${user.id}&new_role=ADMIN">ADMIN</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_role_control_command&userId=${user.id}&new_role=CLIENT">CLIENT</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_role_control_command&userId=${user.id}&new_role=GUEST">GUEST</a></li>
                     </ul>
                 </div>
             </td>
@@ -48,7 +48,7 @@
                 </div>
             </td>
             <td>
-                <a href="${abs_path}/controller?command=user_info&userId=${user.id}">${user.id}</a>
+                <a href="${abs_path}/controller?command=user_info&userId=${user.id}">Control</a>
             </td>
             </c:forEach>
     </table>

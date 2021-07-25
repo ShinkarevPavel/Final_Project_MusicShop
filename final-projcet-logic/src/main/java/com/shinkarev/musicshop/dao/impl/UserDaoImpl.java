@@ -56,8 +56,8 @@ public class UserDaoImpl implements UserDao {
         int rowsUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_CONTROL_USER_STATUS)) {
-            statement.setString(1, String.valueOf(UserStatusType.ordinal(statusType)));
-            statement.setString(2, String.valueOf(userId));
+            statement.setInt(1, UserStatusType.ordinal(statusType));
+            statement.setLong(2, userId);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
             throw new DaoException("Error. Impossible get data from data base.", ex);
@@ -70,8 +70,8 @@ public class UserDaoImpl implements UserDao {
         int rowsUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_CONTROL_USER_ROLE)) {
-            statement.setString(1, String.valueOf(UserRoleType.ordinal(roleType)));
-            statement.setString(2, String.valueOf(userId));
+            statement.setInt(1, UserRoleType.ordinal(roleType));
+            statement.setLong(2, userId);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
             throw new DaoException("Error. Impossible get data from data base.", ex);
@@ -188,20 +188,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> getUserByLogin(String login) throws DaoException {
-        User user = null;
-        if (login != null) {
-            try (Connection connection = ConnectionPool.getInstance().getConnection();
-                 PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)){
-                statement.setString(1, login);
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    user = UserCreator.createUser(resultSet);
-                }
-            } catch (SQLException ex) {
-                throw new DaoException("Error. Impossible get user from data base.", ex);
-            }
-        }
-        return Optional.ofNullable(user);
+        return getUser(login, SQL_FIND_USER_BY_LOGIN);
     }
 
     @Override
@@ -224,11 +211,20 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findUserByEmail(String email) throws DaoException {
+        return getUser(email, SQL_FIND_USER_BY_EMAIL);
+    }
+
+    @Override
+    public Optional<User> findUserByNickname(String nickname) throws DaoException {
+        return getUser(nickname, SQL_FIND_USER_BY_NICKNAME);
+    }
+
+    private Optional<User> getUser(String parameter, String sqlQuery) throws DaoException {
         User user = null;
-        if (email != null) {
+        if (parameter != null) {
             try (Connection connection = ConnectionPool.getInstance().getConnection();
-                 PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_EMAIL)){
-                statement.setString(1, email);
+                 PreparedStatement statement = connection.prepareStatement(sqlQuery)){
+                statement.setString(1, parameter);
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     user = UserCreator.createUser(resultSet);

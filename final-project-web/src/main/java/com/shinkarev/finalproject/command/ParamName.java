@@ -4,6 +4,7 @@ public class ParamName {
 
     private ParamName() {}
 
+
     /*Errors*/
     public static final String LOGIN_ERROR = "loginError";
     public static final String PASSWORD_ERROR = "passwordError";
@@ -31,6 +32,9 @@ public class ParamName {
     public static final String REGISTRATION_VALUES = "registrationValues";
     public static final String ERRORS_LIST = "errors";
     public static final String COMMON_PROPERTIES = "common.properties";
+    public static final String USER_ID_PARAM = "userId";
+    public static final String NEW_ROLE_PARAM = "new_role";
+    public static final String NEW_STATUS_PARAM = "new_state";
 
 
     /*Properties keys*/

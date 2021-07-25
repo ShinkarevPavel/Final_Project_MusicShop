@@ -1,7 +1,6 @@
 package com.shinkarev.finalproject.command.common.admin;
 
 import com.shinkarev.finalproject.command.Command;
-import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.ParamName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.musicshop.entity.UserRoleType;
@@ -13,18 +12,20 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static com.shinkarev.finalproject.command.ParamName.*;
+
 public class UserStatusControlCommand implements Command {
     private final Logger logger = LogManager.getLogger();
     private Router router = new Router();
 
     @Override
     public Router execute(HttpServletRequest request) {
-        String userId = request.getParameter("userId");
-        String newRole = request.getParameter("new_role");
-        UserRoleType roleType = UserRoleType.valueOf(newRole);
+        String userId = request.getParameter(USER_ID_PARAM);
+        String newStatus = request.getParameter(NEW_STATUS_PARAM);
+        UserStatusType statusType = UserStatusType.valueOf(newStatus);
         UserServiceImpl userService = new UserServiceImpl();
         try {
-            userService.userRoleController(Long.parseLong(userId), roleType);
+            userService.userStatusController(Long.parseLong(userId), statusType);
         } catch (ServiceException e) {
             logger.log(Level.DEBUG, "Error. Impossible change role by this " + userId + " user");
 //                    todo error to admin page
