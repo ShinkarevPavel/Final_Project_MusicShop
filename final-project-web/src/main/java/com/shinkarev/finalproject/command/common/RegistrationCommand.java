@@ -2,12 +2,16 @@ package com.shinkarev.finalproject.command.common;
 
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
+import com.shinkarev.finalproject.util.RegistrationConfirmator;
 import com.shinkarev.finalproject.validator.Impl.RegistrationValidatorImp;
 import com.shinkarev.musicshop.dao.impl.UserDaoImpl;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.entity.UserRoleType;
 import com.shinkarev.musicshop.entity.UserStatusType;
 import com.shinkarev.musicshop.exception.DaoException;
+import com.shinkarev.musicshop.exception.ServiceException;
+import com.shinkarev.musicshop.service.impl.EmailServiceImpl;
+import com.shinkarev.musicshop.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
@@ -43,26 +47,27 @@ public class RegistrationCommand implements Command {
             registrationValues.put(NICKNAME.getFieldName(), nickname);
             registrationValues.put(NAME.getFieldName(), name);
             registrationValues.put(SURENAME.getFieldName(), surename);
+
             RegistrationValidatorImp registrationValidator = new RegistrationValidatorImp();
             Map<String, String> errors = registrationValidator.checkValues(registrationValues, locale);
-
-
             if (!errors.isEmpty()) {
                 request.setAttribute(REGISTRATION_VALUES, registrationValues);
                 request.setAttribute(ERRORS_LIST, errors);
                 router.setPagePath(REGISTRATION_PAGE);
             } else {
                 User user = new User(login, email, nickname, name, surename, UserStatusType.ACTIVE, UserRoleType.GUEST);
-                UserDaoImpl userDao = new UserDaoImpl(); //todo to service !!!!
+                UserServiceImpl userService = new UserServiceImpl();
                 try {
-                    if (userDao.addUser(user, password)) {
-                        request.getSession().setAttribute(USER, user);
+                    String registrationKey = RegistrationConfirmator.setRegistrationToken(email, login);
+                    if (userService.addUser(user, password, registrationKey)) {
                         router.setPagePath(REGISTRATION_IS_DONE);
                     } else {
-                        //todo smt write here
+                        request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops! Something went wrong...");
+                        router.setPagePath(ERROR_PAGE);
                     }
-                } catch (DaoException e) {
-                    //TODO
+                } catch (ServiceException e) {
+                    request.setAttribute(ERRORS_ON_ERROR_PAGE, "looks like our service is bullshit");
+                    router.setPagePath(ERROR_PAGE);
                 }
             }
         }

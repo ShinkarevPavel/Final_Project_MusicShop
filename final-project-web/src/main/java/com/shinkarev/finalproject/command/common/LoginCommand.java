@@ -22,24 +22,22 @@ public class LoginCommand implements Command {
     private final Logger logger = LogManager.getLogger();
     private Router router = new Router();
 
+
     @Override
     public Router execute(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute(USER);
         if (user != null) {
             request.setAttribute(USER, user);
-            switch (user.getRole()) {
-                case ADMIN -> router.setPagePath(ADMIN_PAGE);
-                case CLIENT -> router.setPagePath(CLIENT_PAGE);
-                default -> router.setPagePath(LOGIN_PAGE);
-            }
+            userPageControl(request, user);
         } else {
             logger.log(Level.DEBUG, "Session is empty");
-            getUser(request, router);
+            getUser(request);
         }
         return router;
     }
 
-    private void getUser(HttpServletRequest request, Router router) {
+    private void getUser(HttpServletRequest request) {
+
         if (request.getMethod().equals(METHOD_POST)) {
             String locale = (String) request.getSession().getAttribute(LOCALE);
             User user;
@@ -47,27 +45,38 @@ public class LoginCommand implements Command {
             String password = request.getParameter(UserValidator.PASSWORD.getFieldName());
             UserServiceImpl userService = new UserServiceImpl();
             Optional<User> optionalUser = userService.login(login, password);
+
             if (optionalUser.isPresent()) {
                 user = optionalUser.get();
                 logger.log(Level.DEBUG, "Logged user is present on DB" + user);
-                request.getSession().setAttribute(USER, user);
-                request.setAttribute(USER, user);
-                if (user.getStatus() != UserStatusType.BLOCKED) {
-                    if (user.getStatus().equals(UserStatusType.ACTIVE)) {
-                        switch (user.getRole()) {
-                            case ADMIN -> router.setPagePath(ADMIN_PAGE);
-                            case CLIENT -> router.setPagePath(PageName.CLIENT_PAGE);
-                            default -> router.setPagePath(LOGIN_PAGE);
-                        }
-                    }
-                } else {
-                    request.setAttribute(USER, user);
-                    router.setPagePath(PageName.LIMIT_ACCESS_PAGE);
+                if (user.getStatus().equals(UserStatusType.ACTIVE)) {
+                    userPageControl(request, user);
                 }
             } else {
                 request.setAttribute(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(PAGE_ERRORS_LOGIN_PASSWORD, locale));
                 router.setPagePath(PageName.LOGIN_PAGE);
             }
+        }
+    }
+
+    private void userPageControl(HttpServletRequest request, User user) {
+        String locale = (String) request.getSession().getAttribute(LOCALE);
+        switch (user.getRole()) {
+            case ADMIN -> {
+                request.getSession().setAttribute(USER, user);
+                request.setAttribute(USER, user);
+                router.setPagePath(ADMIN_PAGE);
+            }
+            case CLIENT -> {
+                request.getSession().setAttribute(USER, user);
+                request.setAttribute(USER, user);
+                router.setPagePath(CLIENT_PAGE);
+            }
+            case GUEST -> {
+                request.setAttribute(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(PAGE_ERRORS_REGISTRATION_CONFIRMING, locale));
+                router.setPagePath(PageName.LOGIN_PAGE);
+            }
+            default -> router.setPagePath(LOGIN_PAGE);
         }
     }
 }

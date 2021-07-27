@@ -19,7 +19,7 @@ public interface UserDao extends BaseDao<Long, User> {
 
     List<User> findUsersByStatus(UserStatusType status) throws DaoException;
 
-    boolean addUser(User user, String password) throws DaoException;
+    boolean addUser(User user, String password, String registrationKey) throws DaoException;
 
     Optional<User> getUserByLogin(String login) throws DaoException;
 
@@ -28,5 +28,7 @@ public interface UserDao extends BaseDao<Long, User> {
     Optional<User> findUserByEmail(String email) throws DaoException;
 
     Optional<User> findUserByNickname(String nickname) throws DaoException;
+
+    Optional<User> findUserByRegistrationKey(String registrationKey) throws DaoException;
 }
 

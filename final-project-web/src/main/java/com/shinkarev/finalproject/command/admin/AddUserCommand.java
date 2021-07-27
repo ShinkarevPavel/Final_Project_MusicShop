@@ -2,12 +2,15 @@ package com.shinkarev.finalproject.command.admin;
 
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
+import com.shinkarev.finalproject.util.RegistrationConfirmator;
 import com.shinkarev.finalproject.validator.Impl.AdminRegistrationValidatorImpl;
 import com.shinkarev.musicshop.dao.impl.UserDaoImpl;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.entity.UserRoleType;
 import com.shinkarev.musicshop.entity.UserStatusType;
 import com.shinkarev.musicshop.exception.DaoException;
+import com.shinkarev.musicshop.exception.ServiceException;
+import com.shinkarev.musicshop.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
@@ -42,14 +45,15 @@ public class AddUserCommand implements Command {
 //            router.setPagePath(TODO);
         } else {
             User user = new User(login, email, nickname, UserStatusType.ACTIVE, UserRoleType.GUEST);
-            UserDaoImpl userDao = new UserDaoImpl(); //todo to service !!!!
+            UserServiceImpl userService = new UserServiceImpl(); //todo to service !!!!
             try {
-                if (userDao.addUser(user, password)) {
+                String registrationKey = RegistrationConfirmator.setRegistrationToken(email, login);
+                if (userService.addUser(user, password, registrationKey)) {
                     router.setPagePath(ADMIN_PAGE);
                 } else {
                     //todo smt write here
                 }
-            } catch (DaoException e) {
+            } catch (ServiceException e) {
                 //TODO
             }
         }

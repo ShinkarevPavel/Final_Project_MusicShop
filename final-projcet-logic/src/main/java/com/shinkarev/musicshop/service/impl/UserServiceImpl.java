@@ -128,4 +128,32 @@ public class UserServiceImpl implements UserService {
         }
         return Optional.ofNullable(user);
     }
+
+    @Override
+    public boolean addUser(User user, String password, String registrationKey) throws ServiceException {
+        boolean isAdded = false;
+        UserDaoImpl userDao = new UserDaoImpl();
+        try {
+            if (userDao.addUser(user, password, registrationKey)) {
+                isAdded = true;
+            }
+        } catch (DaoException ex) {
+            throw new ServiceException("Impossible add user into DB", ex);
+        }
+        return isAdded;
+    }
+
+    @Override
+    public Optional<User> getUserByRegistrationKey(String registrationKey) throws ServiceException {
+        UserDaoImpl userDao = new UserDaoImpl();
+        Optional<User> optionalUser;
+        User user;
+        try {
+            optionalUser = userDao.findUserByRegistrationKey(registrationKey);
+            user = optionalUser.orElse(null);
+        } catch (DaoException ex) {
+            throw new ServiceException("Impossible get user", ex);
+        }
+        return Optional.ofNullable(user);
+    }
 }

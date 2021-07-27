@@ -1,9 +1,6 @@
 package com.shinkarev.finalproject.command;
 
-import com.shinkarev.finalproject.command.common.ChangeLocalCommand;
-import com.shinkarev.finalproject.command.common.LoginCommand;
-import com.shinkarev.finalproject.command.common.LogoutCommand;
-import com.shinkarev.finalproject.command.common.RegistrationCommand;
+import com.shinkarev.finalproject.command.common.*;
 import com.shinkarev.finalproject.command.admin.*;
 
 public enum CommandName {
@@ -19,6 +16,7 @@ public enum CommandName {
     SHOW_TYPE_INSTRUMENT(new ShowTypeInstrument()),
     INSTRUMENT_STATUS_CONTROL_COMMAND(new InstrumentStatusControlCommand()),
     INSTRUMENT_TYPE_CONTROL_COMMAND(new InstrumentTypeControlCommand()),
+    REGISTRATION_CONFIRMATION_COMMAND(new RegistrationConfirmationCommand()),
     SHOW_ALL_INSTRUMENTS_COMMAND(new ShowAllInstrumentsCommand()),
     FIND_USER_COMMAND(new FindUserCommand());
 

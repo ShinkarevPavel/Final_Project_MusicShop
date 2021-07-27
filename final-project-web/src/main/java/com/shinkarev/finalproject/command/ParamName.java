@@ -30,6 +30,7 @@ public class ParamName {
     /**/
     public static final String COMMAND_PARAM = "command";
     public static final String LOCALIZATION = "localization";
+    public static final String CONFIRM_KEY = "confirm";
     public static final String LOCALE = "locale";
     public static final String REFERER = "referer";
     public static final String METHOD_POST = "POST";
@@ -57,6 +58,7 @@ public class ParamName {
 
     /*Properties keys*/
     public static final String PAGE_ERRORS_LOGIN_PASSWORD = "page.errors.login_password_error";
+    public static final String PAGE_ERRORS_REGISTRATION_CONFIRMING = "page.errors.registration_confirming_error";
 
 
 }

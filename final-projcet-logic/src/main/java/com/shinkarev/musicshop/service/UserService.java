@@ -21,4 +21,8 @@ public interface UserService extends Service{
     Optional<User> getUserById(long userId) throws ServiceException;
 
     Optional<User> getUserByNickName(String nickname) throws ServiceException;
+
+    boolean addUser(User user, String password, String registrationKey) throws ServiceException;
+
+    Optional<User> getUserByRegistrationKey(String registrationKey) throws ServiceException;
 }

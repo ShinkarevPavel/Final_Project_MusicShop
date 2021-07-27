@@ -159,8 +159,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean addUser(User user, String password) throws DaoException {
-        boolean flag = false;
+    public boolean addUser(User user, String password, String registrationKey) throws DaoException {
+        boolean isAdded = false;
         if (user != null && password != null) {
             try (Connection connection = ConnectionPool.getInstance().getConnection();
                  PreparedStatement statement = connection.prepareStatement(SQL_ADD_USER, Statement.RETURN_GENERATED_KEYS)) {
@@ -172,17 +172,18 @@ public class UserDaoImpl implements UserDao {
                 statement.setString(6, user.getSurename());
                 statement.setInt(7, UserStatusType.ordinal(user.getStatus()));
                 statement.setInt(8, UserRoleType.ordinal(user.getRole()));
+                statement.setString(9, registrationKey);
                 statement.executeUpdate();
                 ResultSet resultSet = statement.getGeneratedKeys();
                 if (resultSet.next()) {
                     user.setId(resultSet.getInt(1));
-                    flag = true;
+                    isAdded = true;
                 }
             } catch (SQLException ex) {
                 throw new DaoException("Error. Impossible add user to data base.", ex);
             }
         }
-        return flag;
+        return isAdded;
     }
 
     @Override
@@ -231,6 +232,22 @@ public class UserDaoImpl implements UserDao {
             } catch (SQLException ex) {
                 throw new DaoException("Error. Impossible get user from data base.", ex);
             }
+        }
+        return Optional.ofNullable(user);
+    }
+
+    @Override
+    public Optional<User> findUserByRegistrationKey(String registrationKey) throws DaoException {
+        User user = null;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_REGISTRATION_KEY)) {
+            statement.setString(1, registrationKey);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                user = UserCreator.createUser(resultSet);
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return Optional.ofNullable(user);
     }

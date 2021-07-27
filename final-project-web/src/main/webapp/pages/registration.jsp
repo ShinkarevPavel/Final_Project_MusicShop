@@ -29,7 +29,7 @@ background-size: cover">
                 <h6 class="mb-0" style="color: #ffffff"><fmt:message key="page.registration.login"/></h6>
             </div>
             <div class="col-md-9 pe-5">
-                <input type="text" class="form-control form-control"
+                <input type="text" class="form-control form-control-lg"
                        name="login" pattern="^[\w@#$%^&+=]{7,25}$"
                        value="${registrationValues.login}"
                        placeholder="<fmt:message key="page.registration.login"/>" required/>
@@ -122,7 +122,7 @@ background-size: cover">
                        class="form-control form-control-lg"
                        name="name"
                        value="${registrationValues.name}"
-                       placeholder="<fmt:message key="page.registration.name"/>" required>
+                       placeholder="<fmt:message key="page.registration.name"/>">
                 <h6 class="mb-0" style="color: #ffffff">
                     <fmt:message key="page.registration.name.requirements"/>
                 </h6>
@@ -140,7 +140,7 @@ background-size: cover">
                        class="form-control form-control-lg"
                        name="surename"
                        value="${registrationValues.surename}"
-                       placeholder="<fmt:message key="page.registration.surename"/>" required>
+                       placeholder="<fmt:message key="page.registration.surename"/>">
                 <h6 class="mb-0" style="color: #ffffff">
                     <fmt:message key="page.registration.surename.requirements"/>
                 </h6>

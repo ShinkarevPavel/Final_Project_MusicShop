@@ -15,10 +15,14 @@ class SqlQuery {
             " status_value, role_value FROM users" +
             " LEFT JOIN statuses ON users.status_id=statuses.id LEFT JOIN roles ON users.role_id=roles.id" +
             " WHERE user_id=?";
+    static final String SQL_FIND_USER_BY_REGISTRATION_KEY = "SELECT user_id, login, email, nickname, name, surename," +
+            " status_value, role_value FROM users" +
+            " LEFT JOIN statuses ON users.status_id=statuses.id LEFT JOIN roles ON users.role_id=roles.id" +
+            " WHERE registration_key =?";
     static final String SQL_CONTROL_USER_STATUS = "UPDATE users SET status_id=? WHERE user_id=?";
     static final String SQL_CONTROL_USER_ROLE = "UPDATE users SET role_id=? WHERE user_id=?";
     static final String SQL_ADD_USER = "INSERT INTO users(login, password, email, nickname, name, surename," +
-            "  status_id, role_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+            "  status_id, role_id, registration_key) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
     static final String SQL_UPDATE_USER = "UPDATE users SET login=?, email=?, nickname=?, name=?, surename=?, status_id=?, role_id=?  WHERE user_id=?";
     static final String SQL_FIND_BY_LOGIN_AND_PASSWORD = "SELECT user_id, login, email, nickname, name, surename," +
             " status_value, role_value FROM users" +
