@@ -1,6 +1,7 @@
-package com.shinkarev.finalproject.validator;
+package com.shinkarev.finalproject.validator.Impl;
 
 import com.shinkarev.finalproject.util.LocaleSetter;
+import com.shinkarev.finalproject.validator.InputDataValidator;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.impl.UserServiceImpl;
 
@@ -12,8 +13,9 @@ import static com.shinkarev.finalproject.command.ParamName.PASSWORD_ERROR;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 import static com.shinkarev.finalproject.validator.UserValidator.PASSWORD;
 
-public class RegistrationValidator {
-    public static Map<String, String> checkValues(Map<String, String> values, String locale) {
+public class RegistrationValidatorImp implements InputDataValidator {
+    @Override
+    public Map<String, String> checkValues(Map<String, String> values, String locale) {
         Map<String, String> result = new HashMap<>();
         UserServiceImpl userService = new UserServiceImpl();
         String login = values.get(LOGIN.getFieldName());
@@ -50,8 +52,12 @@ public class RegistrationValidator {
          */
         String email = values.get(EMAIL.getFieldName());
         if (email != null && email.matches(EMAIL.getRegExp())) {
-            if (!userService.isEmailUnique(email)) {
-                result.put(EMAIL_ERROR, LocaleSetter.getInstance().getMassage(MESSAGE_ERROR_EMAIL, locale));
+            try {
+                if (!userService.isEmailUnique(email)) {
+                    result.put(EMAIL_ERROR, LocaleSetter.getInstance().getMassage(MESSAGE_ERROR_EMAIL, locale));
+                }
+            } catch (ServiceException e) {
+               // todo
             }
         } else {
             result.put(EMAIL_ERROR, LocaleSetter.getInstance().getMassage(EMAIL.getMessage(), locale));

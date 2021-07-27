@@ -13,16 +13,18 @@
 <fmt:setBundle basename="localization"/>
 <html>
 <head>
-    <%@include file="/include/header.jsp" %>
-    <br>
-    <br>
-    <br>
     <link rel="stylesheet" href="https://www.markuptag.com/bootstrap/5/css/bootstrap.min.css">
 </head>
-<body>
-<section section="vh-100" style="background-color: #cedeea">
+<body style="background-image: url(https://cdn.hipwallpaper.com/i/95/86/BSezOZ.jpg);
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover">
+
+<%@include file="/include/header.jsp" %>
+
+<section class="vh-100" >
     <div class="row">
-        <div class="col-md-4 offset-md-4">
+        <div class="col-md-3 offset-md-4">
             <div class="login-form bg-light mt-4 p-4">
                 <form action="${abs_path}/controller?command=login" method="post" class="row g-3">
                     <h4 style="color: #084298"><fmt:message key="page.head.login"/></h4>

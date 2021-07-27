@@ -4,7 +4,7 @@ import com.shinkarev.finalproject.command.common.ChangeLocalCommand;
 import com.shinkarev.finalproject.command.common.LoginCommand;
 import com.shinkarev.finalproject.command.common.LogoutCommand;
 import com.shinkarev.finalproject.command.common.RegistrationCommand;
-import com.shinkarev.finalproject.command.common.admin.*;
+import com.shinkarev.finalproject.command.admin.*;
 
 public enum CommandName {
     LOGIN(new LoginCommand()),
@@ -15,8 +15,12 @@ public enum CommandName {
     LOGOUT(new LogoutCommand()),
     USER_STATUS_CONTROL_COMMAND(new UserStatusControlCommand()),
     USER_ROLE_CONTROL_COMMAND(new UserRoleControlCommand()),
-    FIND_USER_COMMAND(new FindUserCommand()),
-    UPDATE_USERS(new UpdateUsersCommand());
+    ADD_INSTRUMENT_COMMAND(new AddInstrumentCommand()),
+    SHOW_TYPE_INSTRUMENT(new ShowTypeInstrument()),
+    INSTRUMENT_STATUS_CONTROL_COMMAND(new InstrumentStatusControlCommand()),
+    INSTRUMENT_TYPE_CONTROL_COMMAND(new InstrumentTypeControlCommand()),
+    SHOW_ALL_INSTRUMENTS_COMMAND(new ShowAllInstrumentsCommand()),
+    FIND_USER_COMMAND(new FindUserCommand());
 
     private Command command;
 

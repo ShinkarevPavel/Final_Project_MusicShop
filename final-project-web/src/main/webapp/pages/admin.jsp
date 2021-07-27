@@ -13,7 +13,11 @@
 
 
 </head>
-<body>
+
+<body style="background-image: url(https://wallpapercave.com/wp/wp8202724.jpg);
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover">
 <%@include file="/include/admin_header.jsp"%>
 
             ${user.nickname}

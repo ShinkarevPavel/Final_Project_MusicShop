@@ -1,4 +1,4 @@
-package com.shinkarev.finalproject.command.common.admin;
+package com.shinkarev.finalproject.command.admin;
 
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.ParamName;
@@ -18,13 +18,13 @@ import static com.shinkarev.finalproject.command.PageName.*;
 
 public class ShowAllUsersCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
-    private final UserService service = new UserServiceImpl();
+    private final UserServiceImpl service = new UserServiceImpl();
     private Router router = new Router();
     @Override
     public Router execute(HttpServletRequest request) {
         List<User> users;
         try {
-            users = service.getAllUsers();
+            users = service.getAllEntity();
             request.setAttribute(ParamName.USER_LIST_PARAM, users);
             router.setPagePath(SHOW_ALL_USERS);
         } catch (ServiceException e) {

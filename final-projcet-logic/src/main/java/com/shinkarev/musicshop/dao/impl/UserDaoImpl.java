@@ -112,7 +112,6 @@ public class UserDaoImpl implements UserDao {
             try (Connection connection = ConnectionPool.getInstance().getConnection();
                  PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_LOGIN_AND_PASSWORD)) {
                 statement.setString(1, login);
-
                 statement.setString(2, PasswordHashGenerator.encodePassword(password)); //TODO check DB !!!!!
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {

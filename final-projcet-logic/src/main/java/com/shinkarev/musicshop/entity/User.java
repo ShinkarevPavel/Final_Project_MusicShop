@@ -31,6 +31,8 @@ public class User extends Entity {
         this.role = role;
     }
 
+
+
     public long getId() {
         return id;
     }

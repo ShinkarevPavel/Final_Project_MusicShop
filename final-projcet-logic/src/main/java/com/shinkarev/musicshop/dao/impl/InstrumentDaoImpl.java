@@ -16,6 +16,7 @@ import static com.shinkarev.musicshop.dao.impl.SqlQuery.*;
 
 
 public class InstrumentDaoImpl implements InstrumentDao {
+
     @Override
     public List<Instrument> findAll() throws DaoException {
         List<Instrument> instruments = new ArrayList<>();
@@ -30,6 +31,11 @@ public class InstrumentDaoImpl implements InstrumentDao {
             throw new DaoException("Error of creating list instrument", ex);
         }
         return instruments;
+    }
+
+    @Override
+    public Optional<Instrument> findInstrumentById(long instrumentId) throws DaoException {
+        return Optional.empty();
     }
 
     @Override
@@ -58,7 +64,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
             statement.setString(3, instrument.getCountry());
             statement.setDouble(4, instrument.getPrice());
             statement.setDouble(5, instrument.getRating());
-            statement.setString(6, instrument.getDescription()); // TODO THIS FIELD UNIQUE IN BD FOR UNSAVING DUPLICATES and what can I do if EXCEPTION happened for this reason
+            statement.setString(6, instrument.getDescription());
             statement.setInt(7, InstrumentStatusType.ordinal(instrument.getInstrumentStatus()));
             statement.setInt(8, InstrumentType.ordinal(instrument.getType()));
             statement.executeUpdate();
@@ -111,7 +117,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
-    public List<Instrument> findInstrumentBuStatus(InstrumentStatusType status) throws DaoException {
+    public List<Instrument> findInstrumentByStatus(InstrumentStatusType status) throws DaoException {
         List<Instrument> instruments = new ArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_INSTRUMENT_BY_STATUS)) {
@@ -184,5 +190,33 @@ public class InstrumentDaoImpl implements InstrumentDao {
             rating /= marks.size(); // TODO will write code for getting 2 numbers after point
         }
         return rating;
+    }
+
+    @Override
+    public boolean changeInstrumentStatusById(long instrumentId, InstrumentStatusType statusType) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_CONTROL_INSTRUMENT_STATUS)) {
+            statement.setInt(1, InstrumentStatusType.ordinal(statusType));
+            statement.setLong(2, instrumentId);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible get data from data base.", ex);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public boolean changeInstrumentTypeById(long instrumentId, InstrumentType type) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_CONTROL_INSTRUMENT_TYPE)) {
+            statement.setInt(1, InstrumentType.ordinal(type));
+            statement.setLong(2, instrumentId);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible get data from data base.", ex);
+        }
+        return rowsUpdate == 1;
     }
 }

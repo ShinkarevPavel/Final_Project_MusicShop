@@ -86,6 +86,8 @@
                                             </ul>
                                         </div>
                                     </li>
+
+
                                     <li class="nav-item">
                                         <div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button"
@@ -95,17 +97,26 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-sm-start"
                                                 aria-labelledby="d">
-
-                                                <li><a class="dropdown-item" href="#">Add instrument</a></li>
-                                                <li><a class="dropdown-item" href="#">Remove instrumet</a></li>
-                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-
+                                                <li><a class="dropdown-item"
+                                                       href="${abs_path}/pages/add_instrument.jsp">Add instrument</a></li>
+                                                <li><a class="dropdown-item"
+                                                       href="${abs_path}/controller?command=show_type_instrument&instrumentType=GUITARS">
+                                                    Show Guitars</a></li>
+                                                <li><a class="dropdown-item"
+                                                       href="${abs_path}/controller?command=show_type_instrument&instrumentType=DRUMS">
+                                                    Show Drums</a></li>
+                                                <li><a class="dropdown-item"
+                                                       href="${abs_path}/controller?command=show_type_instrument&instrumentType=KEYBOARDS">
+                                                    Show Keyboards</a></li>
+                                                <li><a class="dropdown-item"
+                                                       href="${abs_path}/controller?command=show_type_instrument&instrumentType=OTHER">
+                                                    Show Other</a></li>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
 
                                                 <li><a class="dropdown-item btn-outline-secondary"
-                                                       href="#">Show all instrument</a>
+                                                       href="${abs_path}/controller?command=show_all_instruments_command">Show all instrument</a>
                                                 </li>
 
                                             </ul>

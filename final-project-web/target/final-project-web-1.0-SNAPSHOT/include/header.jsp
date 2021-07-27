@@ -21,6 +21,11 @@
 <header>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <form action="${abs_path}/controller" method="post">
+            <input type="hidden" name="command" value="change_locale">
+            <input type="hidden" name="refererCommand" value="${refererCommand}">
+            <input type="submit" class="btn btn-primary" value="${curr_lang}">
+        </form>
         <div class="container-fluid">
             <button
                     class="navbar-toggler"
@@ -33,11 +38,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarExample01">
-                <form action="${abs_path}/controller" method="post">
-                    <input type="hidden" name="command" value="change_locale">
-                    <input type="hidden" name="refererCommand" value="${refererCommand}">
-                    <input type="submit" class="btn btn-primary" value="${curr_lang}">
-                </form>
+
                 <div id="logout">
                     <c:if test="${not empty sessionScope.user}">
                         <div class="collapse navbar-collapse">

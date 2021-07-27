@@ -14,14 +14,14 @@
 <%@include file="/include/admin_header.jsp"%>
 
 
-<section section="card" style="background-color: #eae6ce">
-    <div class="ui-icon-background">
-        <div class="col-md-4 offset-md-4">
+<section class="vh-100" style="background-color: #e4e7e8">
+    <div class="row">
+        <div class="col-md-4 offset-md-1">
             <div class="login-form bg-light mt-4 p-4">
                 <form method="post" action="${abs_path}/controller?command=find_user_command" >
                     <div class="input-group">
                         <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                               aria-describedby="search-addon" name="nickname"/>
+                               aria-describedby="search-addon" name="admin_search_by_id" required/>
                         <button type="submit" class="btn btn-outline-warning">search</button>
                     </div>
                 </form>

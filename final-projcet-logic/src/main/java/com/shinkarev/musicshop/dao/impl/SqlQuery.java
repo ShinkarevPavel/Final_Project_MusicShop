@@ -40,7 +40,7 @@ class SqlQuery {
     static final String SQL_GET_ALL_INSTRUMENTS = "SELECT instrument_id, name, brand, country, price, description, rating, status, type FROM instruments" +
             " LEFT JOIN instruments_statuses ON instruments.status_id=id LEFT JOIN instruments_types ON instruments.instrument_type=type_id";
     static final String SQL_FIND_INSTRUMENT_BY_ID = "SELECT instrument_id, name, brand, country, price, description, rating, status, type FROM instruments" +
-            " LEFT JOIN instruments_statuses ON instruments.status_id=id LEFT JOIN instruments_types ON instruments.instrument_type=type_id" +
+            " LEFT JOIN instruments_statuses ON instruments.status_id=instruments_statuses.id LEFT JOIN instruments_types ON instruments.instrument_type=instruments_types.type_id" +
             " WHERE instrument_id=?";
     static final String SQL_ADD_INSTRUMENT = "INSERT INTO instruments(name, brand, country, price, rating," +
             " description, status_id, instrument_type) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -54,12 +54,15 @@ class SqlQuery {
             "instruments.status_id=id LEFT JOIN instruments_types ON instruments.instrument_type=type_id WHERE status=?";
     static final String SQL_FIND_INSTRUMENT_BY_TYPE = "SELECT instrument_id, name, brand, country, price, rating," +
             " description, status, type FROM instruments LEFT JOIN instruments_statuses ON " +
-            "instruments.status_id=id LEFT JOIN instruments_types ON instruments.instrument_type=type_id WHERE type=?";
+            "instruments.status_id=instruments_statuses.id LEFT JOIN instruments_types " +
+            "ON instruments.instrument_type=instruments_types.type_id " +
+            "WHERE instrument_type=?";
     static final String SQL_FIND_INSTRUMENT_BY_RATING = "SELECT instrument_id, name, brand, country, price, rating," +
             " description, status, type FROM instruments LEFT JOIN instruments_statuses ON " +
             "instruments.status_id=id LEFT JOIN instruments_types ON instruments.instrument_type=type_id WHERE rating=? and type=?";
     static final String SQL_GET_INSTRUMENT_RATING = "SELECT rating FROM ratings WHERE ratings.id=?";
-
+    static final String SQL_CONTROL_INSTRUMENT_STATUS = "UPDATE instruments SET status_id=? WHERE instrument_id=?";
+    static final String SQL_CONTROL_INSTRUMENT_TYPE = "UPDATE instruments SET instrument_type=? WHERE instrument_id=?";
     /**
      * Requests to 'instruments' table into musician instruments database
      */

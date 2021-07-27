@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isEmailUnique(String email) {
+    public boolean isEmailUnique(String email) throws ServiceException{
         UserDaoImpl userDao = new UserDaoImpl();
         boolean isUnique = false;
         try {
@@ -51,14 +51,14 @@ public class UserServiceImpl implements UserService {
             if (!currentUser.isPresent()) {
                 isUnique = true;
             }
-        } catch (DaoException e) {
-            // TODO service EX
+        } catch (DaoException ex) {
+            throw new ServiceException("Error getting data from Dao", ex);
         }
         return isUnique;
     }
 
     @Override
-    public List<User> getAllUsers() throws ServiceException {
+    public List<User> getAllEntity() throws ServiceException {
         UserDaoImpl userDao = new UserDaoImpl();
         List<User> users;
         try {

@@ -1,4 +1,4 @@
-package com.shinkarev.finalproject.command.common.admin;
+package com.shinkarev.finalproject.command.admin;
 
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
@@ -27,11 +27,11 @@ public class UserInfoCommand implements Command {
                 request.setAttribute(USER, user);
                 router.setPagePath(USER_INFO_PAGE);
             } else {
-                request.setAttribute("error.message", "User not found");
+                request.setAttribute("error", "User not found");
                 router.setPagePath(ERROR_PAGE);
             }
         } catch (ServiceException | NumberFormatException ex) {
-            request.setAttribute("error.message", "Impossible get user info");
+            request.setAttribute("error", "Impossible get user info");
             router.setPagePath(ERROR_PAGE);
         }
         return router;

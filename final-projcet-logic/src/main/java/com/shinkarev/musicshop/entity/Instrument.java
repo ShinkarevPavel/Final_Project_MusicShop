@@ -14,21 +14,6 @@ public class Instrument extends Entity {
     public Instrument() {
     }
 
-    ;
-
-    public Instrument(long instrument_id, String name, String brand, String country, int price, int rating, String description,
-                      InstrumentStatusType instrumentStatus, InstrumentType type) {
-        this.instrument_id = instrument_id;
-        this.name = name;
-        this.brand = brand;
-        this.country = country;
-        this.price = price;
-        this.rating = rating;
-        this.description = description;
-        this.instrumentStatus = instrumentStatus;
-        this.type = type;
-    }
-
     public Instrument(String name, String brand, String country, double price, int rating, String description,
                       InstrumentStatusType instrumentStatus, InstrumentType type) {
         this.name = name;
