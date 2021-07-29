@@ -2,6 +2,8 @@ package com.shinkarev.finalproject.command;
 
 public class ParamName {
 
+
+
     private ParamName() {}
 
 
@@ -21,6 +23,8 @@ public class ParamName {
     public static final String INSTRUMENT_RATING_ERROR = "instrumentRatingError";
     public static final String INSTRUMENT_STATUS_ERROR = "instrumentStatusError";
     public static final String INSTRUMENT_TYPE_ERROR = "instrumentTypeError";
+
+
 
 
     /*Error Messages*/
@@ -54,6 +58,8 @@ public class ParamName {
     public static final String INSTRUMENTS_MESSAGE = "instrument_message";
     public static final String INSTRUMENT_TYPE = "instrumentType";
     public static final String INSTRUMENT_STATUS = "instrumentStatus";
+
+    public static final String ADDRESS_DELIVERY = "address";
 
 
     /*Properties keys*/

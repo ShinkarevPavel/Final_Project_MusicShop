@@ -1,41 +1,53 @@
 package com.shinkarev.musicshop.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Order extends Entity {
     private long id;
+    private LocalDateTime orderDate;
+    private List<Instrument> items;
     private long userId;
-    private Date orderDate;
     private double price;
     private OderType status;
     private String address;
-    private List<Long> items;
 
-    public Order(long id, long userId, Date orderDate, List<Long> items, double price, String address, OderType status) {
+    public Order(long userId, LocalDateTime orderDate, List<Instrument> items, double price, String address, OderType status) {
+        this.userId = userId;
+        this.orderDate = orderDate;
+        this.items = items;
+        this.price = price;
+        this.address = address;
+        this.status = status;
+    }
+
+    public Order(long id, LocalDateTime orderDate, List<Instrument> items, long userId, double price, OderType status, String address) {
         this.id = id;
-        this.userId = userId;
         this.orderDate = orderDate;
         this.items = items;
-        this.price = price;
-        this.address = address;
-        this.status = status;
-    }
-
-    public Order(long userId, Date orderDate, List<Long> items, double price, String address, OderType status) {
         this.userId = userId;
-        this.orderDate = orderDate;
-        this.items = items;
         this.price = price;
-        this.address = address;
         this.status = status;
+        this.address = address;
     }
 
-    public List<Long> getItems() {
+    public Order(long id, LocalDateTime orderDate, long userId, double price, OderType status, String address) {
+        this.id = id;
+        this.orderDate = orderDate;
+        this.userId = userId;
+        this.price = price;
+        this.status = status;
+        this.address = address;
+    }
+
+    public Order() {
+    }
+
+    public List<Instrument> getItems() {
         return items;
     }
 
-    public void setItems(List<Long> items) {
+    public void setItems(List<Instrument> items) {
         this.items = items;
     }
 
@@ -55,11 +67,11 @@ public class Order extends Entity {
         this.userId = userId;
     }
 
-    public Date getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -126,8 +138,8 @@ public class Order extends Entity {
         result = 31 * result + Double.hashCode(this.price);
         result = 31 * result + (this.address != null ? this.address.hashCode() : 0);
         result = 31 * result + (this.status != null ? this.status.hashCode() : 0);
-        for (Long item : this.items) {
-            result = 31 * result + ((int) (item ^ (item >>> 32)));
+        for (Instrument item : this.items) {
+            result = 31 * result + item.hashCode();
         }
         return result;
     }

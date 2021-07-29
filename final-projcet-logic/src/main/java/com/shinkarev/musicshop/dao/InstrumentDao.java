@@ -27,4 +27,11 @@ public interface InstrumentDao extends BaseDao<Long, Instrument> {
 
     boolean changeInstrumentTypeById(long instrumentId, InstrumentType type) throws DaoException;
 
+    boolean addItemToBucket(long userId, long instrumentId) throws DaoException;
+
+    boolean removeItemFromBucket(long userId, long instrumentId) throws DaoException;
+
+    List<Instrument> findAddedToBucketItems(long userId) throws DaoException;
+
+    boolean clearUserBucket(long userId) throws DaoException;
 }

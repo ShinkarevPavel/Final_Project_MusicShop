@@ -219,4 +219,62 @@ public class InstrumentDaoImpl implements InstrumentDao {
         }
         return rowsUpdate == 1;
     }
+
+    @Override
+    public boolean addItemToBucket(long userId, long instrumentId) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_ADD_INSTRUMENT_TO_BUCKET)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, instrumentId);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible get data from data base.", ex);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public boolean removeItemFromBucket(long userId, long instrumentId) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_REMOVE_INSTRUMENT_FROM_BUCKET)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, instrumentId);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible get data from data base.", ex);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public List<Instrument> findAddedToBucketItems(long userId) throws DaoException {
+        List<Instrument> instruments = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_ORDER_ITEMS)) {
+            statement.setLong(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Instrument instrument = InstrumentCreator.createInstrument(resultSet);
+                instruments.add(instrument);
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("Error of finding instruments", ex);
+        }
+        return instruments;
+    }
+
+    @Override
+    public boolean clearUserBucket(long userId) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_CLEAR_USER_BUCKET)) {
+            statement.setLong(1, userId);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible get data from data base.", ex);
+        }
+        return rowsUpdate == 1;
+    }
 }

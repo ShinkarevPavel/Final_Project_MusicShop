@@ -11,7 +11,7 @@ import java.util.List;
 import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
-public class ShowTypeInstrument implements Command{
+public class ShowInstrumentType implements Command{
     private Router router = new Router();
     @Override
     public Router execute(HttpServletRequest request) {

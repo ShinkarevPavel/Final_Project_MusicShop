@@ -12,10 +12,7 @@
 </head>
 
 
-<body style="background-image: url(https://images.pexels.com/photos/1082615/pexels-photo-1082615.jpeg?cs=srgb&dl=pexels-alaa-elawaad-1082615.jpg&fm=jpg);
-background-repeat: no-repeat;
-background-position: center center;
-background-size: cover">
+
 <%@include file="/include/admin_header.jsp" %>
 <form method="post" id="fuck" action="${abs_path}/controller?command=add_instrument_command">
 <section class="vh-100" >

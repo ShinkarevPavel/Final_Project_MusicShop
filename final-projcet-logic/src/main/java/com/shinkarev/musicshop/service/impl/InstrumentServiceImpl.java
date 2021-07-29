@@ -12,6 +12,7 @@ import com.shinkarev.musicshop.service.InstrumentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ public class InstrumentServiceImpl implements InstrumentService {
 //Todo
         return Optional.empty();
     }
+
 
     @Override
     public List<Instrument> getAllEntity() throws ServiceException {
@@ -92,5 +94,62 @@ public class InstrumentServiceImpl implements InstrumentService {
             throw new ServiceException("Impossible change status for user", ex);
         }
         return isChanged;
+    }
+
+    @Override
+    public boolean addItemToBucket(long userId, long instrumentId) throws ServiceException {
+        boolean isAdded = false;
+        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
+        try {
+            if (instrumentDao.addItemToBucket(userId, instrumentId)) {
+                isAdded = true;
+            }
+        } catch (DaoException ex) {
+            throw new ServiceException("Error. Item wasn't added to DB", ex);
+        }
+
+        return isAdded;
+    }
+
+    @Override
+    public boolean removeItemFromBucket(long userId, long instrumentId) throws ServiceException {
+        boolean isAdded = false;
+        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
+        try {
+            if (instrumentDao.removeItemFromBucket(userId, instrumentId)) {
+                isAdded = true;
+            }
+        } catch (DaoException ex) {
+            throw new ServiceException("Error. Item wasn't added to DB", ex);
+        }
+
+        return isAdded;
+    }
+
+    @Override
+    public List<Instrument> getUserBucket(long userId) throws ServiceException {
+        List<Instrument> instruments;
+        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
+        try {
+            instruments = instrumentDao.findAddedToBucketItems(userId);
+        } catch (DaoException ex) {
+            throw new ServiceException("Fatal. Error of getting items", ex);
+        }
+        return instruments;
+    }
+
+    @Override
+    public boolean clearUserBucket(long userId) throws ServiceException {
+        boolean isAdded = false;
+        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
+        try {
+            if (instrumentDao.clearUserBucket(userId)) {
+                isAdded = true;
+            }
+        } catch (DaoException ex) {
+            throw new ServiceException("Error. Item wasn't clear user bucket in DB", ex);
+        }
+
+        return isAdded;
     }
 }

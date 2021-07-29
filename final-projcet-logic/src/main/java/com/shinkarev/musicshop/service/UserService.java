@@ -5,9 +5,10 @@ import com.shinkarev.musicshop.entity.UserRoleType;
 import com.shinkarev.musicshop.entity.UserStatusType;
 import com.shinkarev.musicshop.exception.ServiceException;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface UserService extends Service{
+public interface UserService {
     Optional<User> login(String login, String password);
 
     boolean isLoginUnique(String login) throws ServiceException;
@@ -25,4 +26,6 @@ public interface UserService extends Service{
     boolean addUser(User user, String password, String registrationKey) throws ServiceException;
 
     Optional<User> getUserByRegistrationKey(String registrationKey) throws ServiceException;
+
+    List<User> getAllEntity() throws ServiceException;
 }

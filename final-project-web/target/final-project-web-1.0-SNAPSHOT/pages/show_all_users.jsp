@@ -26,7 +26,7 @@
             <td>${user.email}</td>
             <td>
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-primary dropdown-toggle" name="${user.id}" value="${user.id}" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                             ${user.role}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">

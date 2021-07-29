@@ -112,3 +112,25 @@
 2021-07-17 14:37 INFO  PoolChecker -Service mode was switched off
 2021-07-26 23:17 INFO  PoolChecker -Service mode was switched on
 2021-07-26 23:17 INFO  PoolChecker -Service mode was switched off
+2021-07-28 22:57 INFO  PoolChecker -Service mode was switched on
+2021-07-28 22:57 INFO  PoolChecker -Service mode was switched off
+2021-07-29 17:52 INFO  PoolChecker -Service mode was switched on
+2021-07-29 17:52 INFO  PoolChecker -Service mode was switched off
+2021-07-29 21:32 INFO  PoolChecker -Service mode was switched on
+2021-07-29 21:32 INFO  PoolChecker -Service mode was switched off
+2021-07-29 22:34 INFO  BaseDao -Were found 3 users
+2021-07-29 22:50 INFO  BaseDao -Were found 3 instruments
+2021-07-29 22:50 INFO  BaseDao -Were found 3 instruments
+2021-07-29 22:52 INFO  BaseDao -Were found 3 instruments
+2021-07-29 22:55 INFO  BaseDao -Were found 3 instruments
+2021-07-29 22:57 INFO  BaseDao -Were found 3 instruments
+2021-07-29 22:57 INFO  BaseDao -Were found 3 instruments
+2021-07-29 22:58 INFO  BaseDao -Were found 3 instruments
+2021-07-29 22:58 INFO  BaseDao -Were found 3 instruments
+2021-07-29 23:58 INFO  PoolChecker -Service mode was switched on
+2021-07-29 23:58 INFO  PoolChecker -Service mode was switched off
+2021-07-30 00:24 INFO  BaseDao -Were found 3 instruments
+2021-07-30 00:24 INFO  BaseDao -Were found 3 instruments
+2021-07-30 00:25 INFO  BaseDao -Were found 3 instruments
+2021-07-30 00:25 INFO  BaseDao -Were found 3 instruments
+2021-07-30 00:25 INFO  BaseDao -Were found 3 instruments

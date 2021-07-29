@@ -13,7 +13,7 @@ public enum CommandName {
     USER_STATUS_CONTROL_COMMAND(new UserStatusControlCommand()),
     USER_ROLE_CONTROL_COMMAND(new UserRoleControlCommand()),
     ADD_INSTRUMENT_COMMAND(new AddInstrumentCommand()),
-    SHOW_TYPE_INSTRUMENT(new ShowTypeInstrument()),
+    SHOW_TYPE_INSTRUMENT(new ShowInstrumentType()),
     INSTRUMENT_STATUS_CONTROL_COMMAND(new InstrumentStatusControlCommand()),
     INSTRUMENT_TYPE_CONTROL_COMMAND(new InstrumentTypeControlCommand()),
     REGISTRATION_CONFIRMATION_COMMAND(new RegistrationConfirmationCommand()),
