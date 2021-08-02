@@ -11,8 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Optional;
 
-import static com.shinkarev.finalproject.command.PageName.LOGIN_PAGE;
-import static com.shinkarev.finalproject.command.PageName.REGISTRATION_PAGE;
+import static com.shinkarev.finalproject.command.PageName.*;
 
 public class RegistrationConfirmationCommand implements Command {
     private Router router = new Router();

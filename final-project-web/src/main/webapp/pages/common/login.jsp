@@ -71,7 +71,6 @@ background-size: cover">
     <br>
     <br>
     <br>
-</section>
-<script src="https://www.markuptag.com/bootstrap/5/js/bootstrap.bundle.min.js"></script>
+</section>7
 </body>
 </html>

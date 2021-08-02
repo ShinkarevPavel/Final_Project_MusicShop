@@ -15,7 +15,7 @@ public class ShowInstrumentType implements Command{
     private Router router = new Router();
     @Override
     public Router execute(HttpServletRequest request) {
-        String type = request.getParameter(INSTRUMENT_TYPE);
+        String type = request.getParameter(INSTRUMENT_TYPE_PARAM);
         InstrumentServiceImpl instrumentService = new InstrumentServiceImpl();
         InstrumentType instrumentType = InstrumentType.valueOf(type);
         List<Instrument> instruments;

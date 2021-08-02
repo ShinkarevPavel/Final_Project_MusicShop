@@ -7,11 +7,15 @@ import com.shinkarev.musicshop.entity.InstrumentType;
 import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.pool.ConnectionPool;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+
+import static com.shinkarev.musicshop.dao.impl.InstrumentField.INSTRUMENT_IMAGE_PARAM;
+import static com.shinkarev.musicshop.dao.impl.InstrumentField.INSTRUMENT_KEY_PARAM;
 import static com.shinkarev.musicshop.dao.impl.SqlQuery.*;
 
 
@@ -34,11 +38,6 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
-    public Optional<Instrument> findInstrumentById(long instrumentId) throws DaoException {
-        return Optional.empty();
-    }
-
-    @Override
     public Optional<Instrument> findEntityById(Long id) throws DaoException {
         Instrument instrument = null;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -54,23 +53,42 @@ public class InstrumentDaoImpl implements InstrumentDao {
         return Optional.ofNullable(instrument);
     }
 
+     List<String> convertBlobToString(List<Blob> images) throws SQLException, IOException {
+        List<String> stringImages = new ArrayList<>();
+        for (Blob blob : images) {
+            byte[] byteImage = blob.getBinaryStream().readAllBytes();
+            byte[] encodeBase64 = Base64.getEncoder().encode(byteImage);
+            String base64DataString = new String(encodeBase64, StandardCharsets.UTF_8);
+            String image = INSTRUMENT_IMAGE_PARAM + base64DataString;
+            stringImages.add(image);
+        }
+        return stringImages;
+    }
+
+
+    List<Blob> getInstrumentImages(long instrumentId) throws SQLException {
+        List<Blob> images = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_GET_INSTRUMENT_IMAGES)) {
+            statement.setLong(1, instrumentId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                images.add(resultSet.getBlob(INSTRUMENT_KEY_PARAM));
+            }
+        }
+        return images;
+    }
+
     @Override
     public boolean create(Instrument instrument) throws DaoException {
         boolean flag = false;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_ADD_INSTRUMENT, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, instrument.getName());
-            statement.setString(2, instrument.getBrand());
-            statement.setString(3, instrument.getCountry());
-            statement.setDouble(4, instrument.getPrice());
-            statement.setDouble(5, instrument.getRating());
-            statement.setString(6, instrument.getDescription());
-            statement.setInt(7, InstrumentStatusType.ordinal(instrument.getInstrumentStatus()));
-            statement.setInt(8, InstrumentType.ordinal(instrument.getType()));
+            setParameters(instrument, statement);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             while (resultSet.next()) {
-                instrument.setInstrument_id(resultSet.getLong(1)); //TODO for what ?
+                instrument.setInstrument_id(resultSet.getLong(1));
                 flag = true;
             }
         } catch (SQLException ex) {
@@ -80,18 +98,55 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
+    public boolean addInstrument(Instrument instrument, List<InputStream> images) throws DaoException {
+        boolean flag = false;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_ADD_INSTRUMENT, Statement.RETURN_GENERATED_KEYS)) {
+            setParameters(instrument, statement);
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            while (resultSet.next()) {
+                instrument.setInstrument_id(resultSet.getLong(1));
+                flag = pinImagesToInstrument(instrument.getInstrument_id(), images);
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("Error of creating instrument", ex);
+        }
+        return flag;
+    }
+
+    private void setParameters(Instrument instrument, PreparedStatement statement) throws SQLException {
+        statement.setString(1, instrument.getName());
+        statement.setString(2, instrument.getBrand());
+        statement.setString(3, instrument.getCountry());
+        statement.setDouble(4, instrument.getPrice());
+        statement.setDouble(5, instrument.getRating());
+        statement.setString(6, instrument.getDescription());
+        statement.setInt(7, InstrumentStatusType.ordinal(instrument.getInstrumentStatus()));
+        statement.setInt(8, InstrumentType.ordinal(instrument.getType()));
+    }
+
+    private boolean pinImagesToInstrument(long instrumentId, List<InputStream> images) throws SQLException {
+        int rowsUpdate = 0;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SET_INSTRUMENT_IMAGE)) {
+            for (InputStream image : images) {
+                statement.setLong(1, instrumentId);
+                statement.setBlob(2, image);
+                if (statement.executeUpdate() == 1) {
+                    rowsUpdate++;
+                }
+            }
+        }
+        return rowsUpdate == images.size();
+    }
+
+    @Override
     public boolean update(Instrument instrument) throws DaoException { // TODO For what boolean ?
         boolean flag;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_INSTRUMENT)) {
-            statement.setString(1, instrument.getName());
-            statement.setString(2, instrument.getBrand());
-            statement.setString(3, instrument.getCountry());
-            statement.setDouble(4, instrument.getPrice());
-            statement.setDouble(5, instrument.getRating());
-            statement.setString(6, instrument.getDescription());
-            statement.setInt(7, InstrumentStatusType.ordinal(instrument.getInstrumentStatus()));
-            statement.setInt(8, InstrumentType.ordinal(instrument.getType()));
+            setParameters(instrument, statement);
             flag = statement.executeUpdate() != 0;
         } catch (SQLException ex) {
             throw new DaoException("Error of updating instrument", ex);
@@ -169,12 +224,12 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
-    public double getInstrumentRating(Instrument instrument) throws DaoException {
+    public double getInstrumentRating(long instrumentId) throws DaoException {
         List<Integer> marks = new ArrayList<>();
         double rating = 0;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_GET_INSTRUMENT_RATING)) {
-            statement.setLong(1, instrument.getInstrument_id());
+            statement.setLong(1, instrumentId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int mark = Integer.parseInt(resultSet.getString(InstrumentField.RATING));
@@ -183,13 +238,44 @@ public class InstrumentDaoImpl implements InstrumentDao {
         } catch (SQLException ex) {
             throw new DaoException("Error of getting rating", ex);
         }
-        if (marks.size() > 0) {
-            for (Integer mark : marks) {
-                rating += mark;
-            }
-            rating /= marks.size(); // TODO will write code for getting 2 numbers after point
+        OptionalDouble average = marks.stream().mapToInt(e -> e).average();
+        if (average.isPresent()) {
+            rating = average.getAsDouble();
         }
-        return rating;
+        return (double) Math.round(rating * 10d) / 10d;
+    }
+
+
+    @Override
+    public boolean isRated(long userId, long instrumentId) throws DaoException {
+        boolean result = false;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_IS_RATED_BY_USER_ID)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, instrumentId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = true;
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("Error of getting rating", ex);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean setInstrumentRating(long userId, long instrumentId, int rating) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SET_INSTRUMENT_RATING)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, instrumentId);
+            statement.setInt(3, rating);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DaoException("Error of getting rating", ex);
+        }
+        return rowsUpdate == 1;
     }
 
     @Override
@@ -274,6 +360,20 @@ public class InstrumentDaoImpl implements InstrumentDao {
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
             throw new DaoException("Error. Impossible get data from data base.", ex);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public boolean addImageToInstrumentById(long instrumentId, InputStream inputStream) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SET_INSTRUMENT_IMAGE)) {
+            statement.setLong(1, instrumentId);
+            statement.setBlob(2, inputStream);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible put image to data base.", ex);
         }
         return rowsUpdate == 1;
     }

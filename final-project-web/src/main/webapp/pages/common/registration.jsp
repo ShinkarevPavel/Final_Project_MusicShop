@@ -15,8 +15,8 @@
     <br>
     <br>
     <link rel="stylesheet" href="https://www.markuptag.com/bootstrap/5/css/bootstrap.min.css">
-</head>
 
+</head>
 <body style="background-image: url(https://cdn.shopify.com/s/files/1/0975/2962/products/image_67736ab5-4f2a-4ba7-b912-b0b3ae367fb9_2048x.jpg?v=1541103676);
 background-repeat: no-repeat;
 background-position: center center;
@@ -145,6 +145,15 @@ background-size: cover">
                     <fmt:message key="page.registration.surename.requirements"/>
                 </h6>
             </div>
+        </div>
+
+        <div class="col-12">
+            <p class="text-center mb-0" style="color: white">
+                <fmt:message key="page.head.registration_text"/>
+                <a href="${abs_path}/pages/common/login.jsp">
+                    <fmt:message key="page.login.sign_in.button"/>
+                </a>
+            </p>
         </div>
 
         <hr class="mx-n3">

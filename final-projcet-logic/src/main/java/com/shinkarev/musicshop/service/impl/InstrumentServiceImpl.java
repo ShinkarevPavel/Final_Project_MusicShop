@@ -1,35 +1,42 @@
 package com.shinkarev.musicshop.service.impl;
 
+import com.shinkarev.musicshop.dao.InstrumentDao;
 import com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl;
-import com.shinkarev.musicshop.dao.impl.UserDaoImpl;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;
-import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
 public class InstrumentServiceImpl implements InstrumentService {
     private Logger logger = LogManager.getLogger();
-    private InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
+    private InstrumentDao instrumentDao = new InstrumentDaoImpl();
+
 
     @Override
     public Optional<Instrument> findInstrumentById(long instrumentId) throws ServiceException {
-//Todo
-        return Optional.empty();
-    }
+        Instrument instrument = null;
+        try {
+            Optional<Instrument> optionalInstrument = instrumentDao.findEntityById(instrumentId);
+            if (optionalInstrument.isPresent()) {
+                instrument = optionalInstrument.get();
+            }
+        } catch (DaoException ex) {
+            throw new ServiceException("Error. Impossible get data from Dao", ex);
+        }
 
+        return Optional.ofNullable(instrument);
+    }
 
     @Override
     public List<Instrument> getAllEntity() throws ServiceException {
-        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
         List<Instrument> instruments;
         try {
             instruments = instrumentDao.findAll();
@@ -40,12 +47,10 @@ public class InstrumentServiceImpl implements InstrumentService {
     }
 
     @Override
-    public boolean addInstrument(Instrument instrument) throws ServiceException{
-        boolean result = false;
+    public boolean addInstrument(Instrument instrument, List<InputStream> images) throws ServiceException{
+        boolean result;
         try {
-            if (instrumentDao.create(instrument)) {
-                result = true;
-            }
+            result= instrumentDao.addInstrument(instrument, images);
         } catch (DaoException ex) {
            throw new ServiceException("Error. Impossible create instrument", ex);
         }
@@ -55,7 +60,6 @@ public class InstrumentServiceImpl implements InstrumentService {
     @Override
     public List<Instrument> findInstrumentByType(InstrumentType instrumentType) throws ServiceException {
         List<Instrument> instruments;
-        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
         try {
             instruments = instrumentDao.findInstrumentByType(instrumentType);
         } catch (DaoException ex) {
@@ -67,7 +71,6 @@ public class InstrumentServiceImpl implements InstrumentService {
     @Override
     public boolean instrumentStatusControl(long instrumentId, InstrumentStatusType statusType) throws ServiceException {
         boolean isChanged = false;
-        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
         try {
             Optional<Instrument> optionalInstrument = instrumentDao.findEntityById(instrumentId);
             if (optionalInstrument.isPresent()) {
@@ -83,7 +86,6 @@ public class InstrumentServiceImpl implements InstrumentService {
     @Override
     public boolean instrumentTypeControl(long instrumentId, InstrumentType type) throws ServiceException {
         boolean isChanged = false;
-        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
         try {
             Optional<Instrument> optionalInstrument = instrumentDao.findEntityById(instrumentId);
             if (optionalInstrument.isPresent()) {
@@ -98,12 +100,9 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     @Override
     public boolean addItemToBucket(long userId, long instrumentId) throws ServiceException {
-        boolean isAdded = false;
-        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
+        boolean isAdded;
         try {
-            if (instrumentDao.addItemToBucket(userId, instrumentId)) {
-                isAdded = true;
-            }
+            isAdded = instrumentDao.addItemToBucket(userId, instrumentId);
         } catch (DaoException ex) {
             throw new ServiceException("Error. Item wasn't added to DB", ex);
         }
@@ -113,12 +112,9 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     @Override
     public boolean removeItemFromBucket(long userId, long instrumentId) throws ServiceException {
-        boolean isAdded = false;
-        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
+        boolean isAdded;
         try {
-            if (instrumentDao.removeItemFromBucket(userId, instrumentId)) {
-                isAdded = true;
-            }
+           isAdded = instrumentDao.removeItemFromBucket(userId, instrumentId);
         } catch (DaoException ex) {
             throw new ServiceException("Error. Item wasn't added to DB", ex);
         }
@@ -129,7 +125,6 @@ public class InstrumentServiceImpl implements InstrumentService {
     @Override
     public List<Instrument> getUserBucket(long userId) throws ServiceException {
         List<Instrument> instruments;
-        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
         try {
             instruments = instrumentDao.findAddedToBucketItems(userId);
         } catch (DaoException ex) {
@@ -140,16 +135,23 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     @Override
     public boolean clearUserBucket(long userId) throws ServiceException {
-        boolean isAdded = false;
-        InstrumentDaoImpl instrumentDao = new InstrumentDaoImpl();
+        boolean isAdded;
         try {
-            if (instrumentDao.clearUserBucket(userId)) {
-                isAdded = true;
-            }
+            isAdded = instrumentDao.clearUserBucket(userId);
         } catch (DaoException ex) {
             throw new ServiceException("Error. Item wasn't clear user bucket in DB", ex);
         }
+        return isAdded;
+    }
 
+    @Override
+    public boolean saveInstrumentImage(long instrumentId, InputStream inputStream) throws ServiceException {
+        boolean isAdded;
+        try {
+            isAdded = instrumentDao.addImageToInstrumentById(instrumentId, inputStream);
+        } catch (DaoException ex) {
+            throw new ServiceException("Fatal. Error of adding image to DB", ex);
+        }
         return isAdded;
     }
 }

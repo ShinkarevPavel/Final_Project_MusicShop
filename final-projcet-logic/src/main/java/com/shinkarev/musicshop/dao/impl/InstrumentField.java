@@ -10,6 +10,9 @@ class InstrumentField {
     static final String DESCRIPTION = "description";
     static final String STATUS_ID = "status";
     static final String INSTRUMENT_TYPE = "type";
+    static final String INSTRUMENT_IMAGE_PARAM = "data:image/jpeg;base64,";
+    static final String INSTRUMENT_KEY_PARAM = "instrument_image";
+
 
     private InstrumentField() {
     }

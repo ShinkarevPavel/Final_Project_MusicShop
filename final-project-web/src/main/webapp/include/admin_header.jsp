@@ -56,7 +56,7 @@
 
                                     <li class="nav-item active">
                                         <div class="dropdown">
-                                            <a class="btn btn-secondary" href="${abs_path}/pages/login.jsp">Home</a>
+                                            <a class="btn btn-secondary" href="${abs_path}/pages/common/login.jsp">Home</a>
                                         </div>
                                     </li>
 
@@ -71,7 +71,7 @@
                                             <ul class="dropdown-menu dropdown-menu-sm-start"
                                                 aria-labelledby="d">
 
-                                                <li><a class="dropdown-item" href="${abs_path}/pages/find_user.jsp">Find user</a></li>
+                                                <li><a class="dropdown-item" href="${abs_path}/pages/admin/find_user.jsp">Find user</a></li>
                                                 <li><a class="dropdown-item" href="#">Add user</a></li>
                                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
 
@@ -98,7 +98,7 @@
                                             <ul class="dropdown-menu dropdown-menu-sm-start"
                                                 aria-labelledby="d">
                                                 <li><a class="dropdown-item"
-                                                       href="${abs_path}/pages/add_instrument.jsp">Add instrument</a></li>
+                                                       href="${abs_path}/pages/admin/add_instrument.jsp">Add instrument</a></li>
                                                 <li><a class="dropdown-item"
                                                        href="${abs_path}/controller?command=show_type_instrument&instrumentType=GUITARS">
                                                     Show Guitars</a></li>

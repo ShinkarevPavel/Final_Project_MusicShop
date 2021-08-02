@@ -19,10 +19,11 @@ public class EmailServiceImpl implements EmailService {
     public static final String EMAIL_PROPERTIES = "mail.properties";
     public static final String EMAIL_CONFIRMATION = "Email Confirmation";
     public static final String CONTENT_TYPE = "text/html";
-
+    public static final String LINK_HEAD = "Click to confirm email: <a href=http://localhost:8080/final_project_web_war_exploded/controller?command=registration_confirmation_command&confirm=";
+    public static final String LINK_FOOT = ">link</a>";
     @Override
     public boolean sendEmail(String emailTo, String key) throws ServiceException {
-        final String content = "Click to confirm email: <a href=http://localhost:8080/final_project_web_war_exploded/controller?command=registration_confirmation_command&confirm=" + key + ">link</a>";
+        final String content = LINK_HEAD + key + LINK_FOOT;
         ResourceManager resourceManager = new ResourceManager();
         Properties properties = resourceManager.getValue(EMAIL_PROPERTIES);
         final String user = properties != null ? properties.getProperty(USER_KEY) : null;

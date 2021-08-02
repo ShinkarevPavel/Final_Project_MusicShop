@@ -1,5 +1,6 @@
 package com.shinkarev.musicshop.service.impl;
 
+import com.shinkarev.musicshop.dao.UserDao;
 import com.shinkarev.musicshop.dao.impl.UserDaoImpl;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.entity.UserRoleType;
@@ -12,9 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
+    private UserDao userDao = new UserDaoImpl();
     @Override
     public Optional<User> login(String login, String password) {
-        UserDaoImpl userDao = new UserDaoImpl();
         User user = null;
         try {
             Optional<User> currentUser = userDao.findUserByLoginAndPassword(login, password);
@@ -29,7 +30,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isLoginUnique(String login) throws ServiceException {
-        UserDaoImpl userDao = new UserDaoImpl();
         boolean isPresent = false;
         try {
             Optional<User> currentUser = userDao.getUserByLogin(login);
@@ -44,7 +44,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isEmailUnique(String email) throws ServiceException{
-        UserDaoImpl userDao = new UserDaoImpl();
         boolean isUnique = false;
         try {
             Optional<User> currentUser = userDao.findUserByEmail(email);
@@ -59,7 +58,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllEntity() throws ServiceException {
-        UserDaoImpl userDao = new UserDaoImpl();
         List<User> users;
         try {
             users = userDao.findAll();
@@ -72,7 +70,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean userStatusController(long userId, UserStatusType statusType) throws ServiceException {
         boolean isChanged = false;
-        UserDaoImpl userDao = new UserDaoImpl();
         try {
             Optional<User> optionalUser = userDao.findEntityById(userId);
             if (optionalUser.isPresent()) {
@@ -88,7 +85,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean userRoleController(long userId, UserRoleType roleType) throws ServiceException {
         boolean isChanged = false;
-        UserDaoImpl userDao = new UserDaoImpl();
         try {
             Optional<User> optionalUser = userDao.findEntityById(userId);
             if (optionalUser.isPresent()) {
@@ -103,7 +99,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserById(long userId) throws ServiceException {
-        UserDaoImpl userDao = new UserDaoImpl();
         Optional<User> optionalUser;
         User user;
         try {
@@ -117,7 +112,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserByNickName(String nickname) throws ServiceException {
-        UserDaoImpl userDao = new UserDaoImpl();
         Optional<User> optionalUser;
         User user;
         try {
@@ -132,7 +126,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean addUser(User user, String password, String registrationKey) throws ServiceException {
         boolean isAdded = false;
-        UserDaoImpl userDao = new UserDaoImpl();
         try {
             if (userDao.addUser(user, password, registrationKey)) {
                 isAdded = true;
@@ -145,7 +138,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserByRegistrationKey(String registrationKey) throws ServiceException {
-        UserDaoImpl userDao = new UserDaoImpl();
         Optional<User> optionalUser;
         User user;
         try {

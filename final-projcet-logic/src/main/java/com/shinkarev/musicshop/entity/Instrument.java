@@ -1,5 +1,8 @@
 package com.shinkarev.musicshop.entity;
 
+import java.io.InputStream;
+import java.util.List;
+
 public class Instrument extends Entity {
     private long instrument_id;
     private String name;
@@ -10,12 +13,25 @@ public class Instrument extends Entity {
     private String description;
     private InstrumentStatusType instrumentStatus;
     private InstrumentType type;
+    private List<String> image;
 
     public Instrument() {
     }
 
     public Instrument(String name, String brand, String country, double price, int rating, String description,
-                      InstrumentStatusType instrumentStatus, InstrumentType type) {
+                      InstrumentStatusType instrumentStatus, InstrumentType type, List<String> image) {
+        this.name = name;
+        this.brand = brand;
+        this.country = country;
+        this.price = price;
+        this.rating = rating;
+        this.description = description;
+        this.instrumentStatus = instrumentStatus;
+        this.type = type;
+        this.image = image;
+    }
+
+    public Instrument(String name, String brand, String country, double price, double rating, String description, InstrumentStatusType instrumentStatus, InstrumentType type) {
         this.name = name;
         this.brand = brand;
         this.country = country;
@@ -98,6 +114,14 @@ public class Instrument extends Entity {
         this.type = type;
     }
 
+    public List<String> getImage() {
+        return image;
+    }
+
+    public void setImage(List<String> image) {
+        this.image = image;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -152,7 +176,7 @@ public class Instrument extends Entity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Instrument{");
-        sb.append("id=").append(instrument_id);
+        sb.append("instrument_id=").append(instrument_id);
         sb.append(", name='").append(name).append('\'');
         sb.append(", brand='").append(brand).append('\'');
         sb.append(", country='").append(country).append('\'');
@@ -161,6 +185,7 @@ public class Instrument extends Entity {
         sb.append(", description='").append(description).append('\'');
         sb.append(", instrumentStatus=").append(instrumentStatus);
         sb.append(", type=").append(type);
+        sb.append(", image=").append(image);
         sb.append('}');
         return sb.toString();
     }

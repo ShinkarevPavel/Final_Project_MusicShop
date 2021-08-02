@@ -8,4 +8,5 @@ public enum InstrumentStatusType {
     public static int ordinal(InstrumentStatusType status) {
         return status.ordinal() + 1;
     }
+
 }

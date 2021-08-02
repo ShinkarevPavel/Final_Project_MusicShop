@@ -1,5 +1,6 @@
 package com.shinkarev.finalproject.validator.Impl;
 
+import com.shinkarev.finalproject.command.ParamName;
 import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.InputDataValidator;
 
@@ -39,11 +40,11 @@ public class InstrumentCreationValidator implements InputDataValidator {
         if (!instrumentRating.matches(INSTRUMENT_RATING.getRegExp())) {
             result.put(INSTRUMENT_RATING_ERROR, LocaleSetter.getInstance().getMassage(INSTRUMENT_RATING.getMessage(), locale));
         }
-        String instrumentStatus = values.get(INSTRUMENT_STATUS.getFieldName());
+        String instrumentStatus = values.get(INSTRUMENT_STATUS_PARAM);
         if (instrumentStatus == null) {
             result.put(INSTRUMENT_STATUS_ERROR, LocaleSetter.getInstance().getMassage(INSTRUMENT_STATUS.getMessage(), locale));
         }
-        String instrumentType = values.get(INSTRUMENT_TYPE.getFieldName());
+        String instrumentType = values.get(INSTRUMENT_STATUS_PARAM);
         if (instrumentType == null) {
             result.put(INSTRUMENT_TYPE_ERROR, LocaleSetter.getInstance().getMassage(INSTRUMENT_TYPE.getMessage(), locale));
         }

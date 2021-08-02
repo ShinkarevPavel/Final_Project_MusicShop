@@ -6,8 +6,6 @@ public class ParamName {
 
     private ParamName() {}
 
-
-
     /*Error keys*/
     public static final String LOGIN_ERROR = "loginError";
     public static final String PASSWORD_ERROR = "passwordError";
@@ -23,9 +21,6 @@ public class ParamName {
     public static final String INSTRUMENT_RATING_ERROR = "instrumentRatingError";
     public static final String INSTRUMENT_STATUS_ERROR = "instrumentStatusError";
     public static final String INSTRUMENT_TYPE_ERROR = "instrumentTypeError";
-
-
-
 
     /*Error Messages*/
     public static final String MESSAGE_ERROR_LOGIN = "page.registration.login.message.error";
@@ -50,14 +45,18 @@ public class ParamName {
     public static final String COMMON_PROPERTIES = "common.properties";
     public static final String NEW_ROLE_PARAM = "new_role";
     public static final String NEW_STATUS_PARAM = "new_state";
+    public static final String INSTRUMENT_TYPE = "instrument_type";
+    public static final String INSTRUMENT_PARAM = "instrument";
+    public static final String INSTRUMENT_DETAILS_ERROR = "instrument_error";
 
     public static final String INSTRUMENTS = "instruments";
     public static final String INSTRUMENT_ID_PARAM = "instrumentId";
     public static final String INSTRUMENT_NEW_STATUS_PARAM = "new_status";
     public static final String INSTRUMENT_NEW_TYPE_PARAM = "new_type";
     public static final String INSTRUMENTS_MESSAGE = "instrument_message";
-    public static final String INSTRUMENT_TYPE = "instrumentType";
-    public static final String INSTRUMENT_STATUS = "instrumentStatus";
+    public static final String INSTRUMENT_TYPE_PARAM = "instrumentType";
+    public static final String INSTRUMENT_STATUS_PARAM = "instrumentStatus";
+    public static final String IMAGE_PARAM = "image";
 
     public static final String ADDRESS_DELIVERY = "address";
 
@@ -65,6 +64,6 @@ public class ParamName {
     /*Properties keys*/
     public static final String PAGE_ERRORS_LOGIN_PASSWORD = "page.errors.login_password_error";
     public static final String PAGE_ERRORS_REGISTRATION_CONFIRMING = "page.errors.registration_confirming_error";
-
+    public static final String EMPTY_INSTRUMENTS_LIST = "page.instruments.message";
 
 }

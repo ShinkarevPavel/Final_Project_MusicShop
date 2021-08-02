@@ -1,6 +1,8 @@
 package com.shinkarev.musicshop.service.impl;
 
-import com.shinkarev.musicshop.dao.impl.OderDaoImpl;
+import com.shinkarev.musicshop.dao.OrderDao;
+import com.shinkarev.musicshop.dao.impl.OrderDaoImpl;
+import com.shinkarev.musicshop.entity.OderType;
 import com.shinkarev.musicshop.entity.Order;
 import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.exception.ServiceException;
@@ -10,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
-    private OderDaoImpl orderDao = new OderDaoImpl();
+    private OrderDao orderDao = new OrderDaoImpl();
 
     @Override
     public boolean addOrder(Order order) throws ServiceException {
@@ -45,5 +47,27 @@ public class OrderServiceImpl implements OrderService {
             throw new ServiceException("Fatal. Error of getting order", ex);
         }
         return Optional.ofNullable(order);
+    }
+
+    @Override
+    public List<Order> findOrderByStatus(long userId, OderType status) throws ServiceException {
+        List<Order> orders;
+        try {
+            orders = orderDao.findOrderByStatus(userId, status);
+        } catch (DaoException ex) {
+            throw new ServiceException("Fatal. Error of getting order", ex);
+        }
+        return orders;
+    }
+
+    @Override
+    public boolean changeOrderStatusByOrderId(long orderId, OderType status) throws ServiceException {
+        boolean isChanged;
+        try {
+            isChanged = orderDao.changeOrderStatusById(orderId, status);
+        } catch (DaoException ex) {
+            throw new ServiceException("Fatal. Error of changing order status", ex);
+        }
+        return isChanged;
     }
 }

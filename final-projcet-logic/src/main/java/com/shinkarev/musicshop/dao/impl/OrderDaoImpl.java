@@ -4,7 +4,6 @@ import com.shinkarev.musicshop.dao.OrderDao;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.OderType;
 import com.shinkarev.musicshop.entity.Order;
-import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.pool.ConnectionPool;
 
@@ -16,7 +15,7 @@ import java.util.Optional;
 
 import static com.shinkarev.musicshop.dao.impl.SqlQuery.*;
 
-public class OderDaoImpl implements OrderDao {
+public class OrderDaoImpl implements OrderDao {
     public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     @Override
@@ -146,7 +145,7 @@ public class OderDaoImpl implements OrderDao {
 
     @Override
     public boolean changeOrderStatusById(long orderId, OderType status) throws DaoException {
-        int rowsUpdate ;
+        int rowsUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_CHANGE_ORDER_STATUS)) {
             statement.setInt(1, OderType.ordinal(status));

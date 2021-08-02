@@ -2,6 +2,7 @@ package com.shinkarev.finalproject.controller;
 
 import com.shinkarev.finalproject.command.*;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Optional;
 
+@MultipartConfig(fileSizeThreshold = 1200 * 1024)
 @WebServlet(name = "controller", urlPatterns = "/controller")
 public class Controller extends HttpServlet {
 

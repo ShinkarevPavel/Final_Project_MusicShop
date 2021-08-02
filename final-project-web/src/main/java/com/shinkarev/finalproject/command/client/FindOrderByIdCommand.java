@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Optional;
 
-public class FindOrderBuIdCommand implements Command {
+public class FindOrderByIdCommand implements Command {
     private Router router = new Router();
 
     @Override
