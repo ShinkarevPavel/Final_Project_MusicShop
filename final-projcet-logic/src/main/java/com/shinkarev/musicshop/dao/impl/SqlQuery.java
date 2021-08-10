@@ -68,14 +68,16 @@ class SqlQuery {
             " description, status, type FROM instruments LEFT JOIN instruments_statuses ON " +
             "instruments.status_id=id LEFT JOIN instruments_types ON instruments.instrument_type=type_id WHERE rating=? and type=?";
     static final String SQL_IS_RATED_BY_USER_ID = "SELECT rating FROM ratings WHERE user_id=? and instrument_id=?";
+    static final String SQL_IS_IN_BUCKET = "SELECT user_id, instrument_id FROM buckets WHERE user_id=? and instrument_id=?";
     static final String SQL_SET_INSTRUMENT_RATING = "INSERT INTO ratings(user_id, instrument_id, rating) VALUES(?, ?, ?)";
+    static final String SQL_SET_INSTRUMENT_QUANTITY = "UPDATE buckets SET quantity=? WHERE user_id=? and instrument_id=?";
     static final String SQL_GET_INSTRUMENT_RATING = "SELECT rating FROM ratings WHERE instrument_id=?";
     static final String SQL_CONTROL_INSTRUMENT_STATUS = "UPDATE instruments SET status_id=? WHERE instrument_id=?";
     static final String SQL_CONTROL_INSTRUMENT_TYPE = "UPDATE instruments SET instrument_type=? WHERE instrument_id=?";
-    static final String SQL_ADD_INSTRUMENT_TO_BUCKET = "INSERT INTO buckets(user_id, instrument_id) VALUES(?, ?)";
+    static final String SQL_ADD_INSTRUMENT_TO_BUCKET = "INSERT INTO buckets(user_id, instrument_id, quantity) VALUES(?, ?, ?)";
     static final String SQL_REMOVE_INSTRUMENT_FROM_BUCKET = "DELETE FROM buckets WHERE(user_id=? and instrument_id=?)";
     static final String SQL_CLEAR_USER_BUCKET = "DELETE FROM buckets WHERE user_id=?";
-    static final String SQL_FIND_ALL_ORDER_ITEMS = "SELECT instruments.instrument_id, name, brand, country, price, description, rating, status, type FROM instruments " +
+    static final String SQL_FIND_ALL_ORDER_ITEMS = "SELECT instruments.instrument_id, name, brand, country, price, description, rating, status, type, quantity FROM instruments " +
             "LEFT JOIN instruments_statuses ON instruments.status_id=id " +
             "LEFT JOIN instruments_types ON instruments.instrument_type=type_id " +
             "LEFT JOIN buckets ON instruments.instrument_id=buckets.instrument_id WHERE user_id=?";
@@ -88,8 +90,8 @@ class SqlQuery {
             "LEFT JOIN order_statuses ON orders.status_id=order_statuses.status_id WHERE order_id=?";
     static final String SQL_FIND_ORDER_BY_USER_ID = "SELECT order_id, user_id, order_date, address, status, price FROM orders " +
             "LEFT JOIN order_statuses ON orders.status_id=order_statuses.status_id WHERE user_id=?";
-    static final String SQL_ADD_ITEMS_TO_ORDER = "INSERT INTO order_items(order_id, item_id) VALUES(?, ?)";
-    static final String SQL_GET_ORDER_ITEMS = "SELECT instruments.instrument_id, name, brand, country, price, description, rating, status, type FROM instruments " +
+    static final String SQL_ADD_ITEMS_TO_ORDER = "INSERT INTO order_items(order_id, item_id, quantity) VALUES(?, ?, ?)";
+    static final String SQL_GET_ORDER_ITEMS = "SELECT instruments.instrument_id, name, brand, country, price, description, rating, status, type, quantity FROM instruments " +
             "LEFT JOIN instruments_statuses ON instruments.status_id=id " +
             "LEFT JOIN instruments_types ON instruments.instrument_type=type_id " +
             "LEFT JOIN order_items ON instruments.instrument_id=order_items.item_id WHERE order_id=?";

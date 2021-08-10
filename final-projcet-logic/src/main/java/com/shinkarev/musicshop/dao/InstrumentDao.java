@@ -7,6 +7,7 @@ import com.shinkarev.musicshop.exception.DaoException;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -31,16 +32,20 @@ public interface InstrumentDao extends BaseDao<Long, Instrument> {
 
     boolean changeInstrumentTypeById(long instrumentId, InstrumentType type) throws DaoException;
 
-    boolean addItemToBucket(long userId, long instrumentId) throws DaoException;
+    boolean addItemToCart(long userId, long instrumentId) throws DaoException;
 
     boolean removeItemFromBucket(long userId, long instrumentId) throws DaoException;
 
-    List<Instrument> findAddedToBucketItems(long userId) throws DaoException;
+    Map<Instrument, Integer> findAddedToCartItems(long userId) throws DaoException;
 
     boolean clearUserBucket(long userId) throws DaoException;
 
     boolean addImageToInstrumentById(long instrumentId, InputStream inputStream) throws DaoException;
 
     boolean addInstrument(Instrument instrument, List<InputStream> images) throws DaoException;
+
+    boolean isInBucket(long userId, long instrumentId) throws DaoException;
+
+    boolean setInstrumentQuantity(long userId, long instrumentId, int quantity) throws DaoException;
 
 }

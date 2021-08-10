@@ -9,16 +9,17 @@ import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.OrderService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao = new OrderDaoImpl();
 
     @Override
-    public boolean addOrder(Order order) throws ServiceException {
+    public boolean addOrder(Order order, Map<Long, Integer> items) throws ServiceException {
         boolean isAdded = false;
         try {
-            if (orderDao.create(order)) {
+            if (orderDao.createOrder(order, items)) {
                 isAdded = true;
             }
         } catch (DaoException ex) {
@@ -69,5 +70,11 @@ public class OrderServiceImpl implements OrderService {
             throw new ServiceException("Fatal. Error of changing order status", ex);
         }
         return isChanged;
+    }
+
+    @Override
+    public Optional<Order> findOrderById(long orderId) throws ServiceException {
+
+        return Optional.empty();
     }
 }

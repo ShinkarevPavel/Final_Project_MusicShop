@@ -12,6 +12,7 @@ class InstrumentField {
     static final String INSTRUMENT_TYPE = "type";
     static final String INSTRUMENT_IMAGE_PARAM = "data:image/jpeg;base64,";
     static final String INSTRUMENT_KEY_PARAM = "instrument_image";
+    static final String INSTRUMENT_QUANTITY = "quantity";
 
 
     private InstrumentField() {

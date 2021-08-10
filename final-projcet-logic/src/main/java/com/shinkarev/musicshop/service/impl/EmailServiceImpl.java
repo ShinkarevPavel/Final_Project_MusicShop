@@ -19,16 +19,13 @@ public class EmailServiceImpl implements EmailService {
     public static final String EMAIL_PROPERTIES = "mail.properties";
     public static final String EMAIL_CONFIRMATION = "Email Confirmation";
     public static final String CONTENT_TYPE = "text/html";
-    public static final String LINK_HEAD = "Click to confirm email: <a href=http://localhost:8080/final_project_web_war_exploded/controller?command=registration_confirmation_command&confirm=";
-    public static final String LINK_FOOT = ">link</a>";
+
     @Override
-    public boolean sendEmail(String emailTo, String key) throws ServiceException {
-        final String content = LINK_HEAD + key + LINK_FOOT;
+    public boolean sendEmail(String emailTo, String clientMessage) throws ServiceException {
         ResourceManager resourceManager = new ResourceManager();
         Properties properties = resourceManager.getValue(EMAIL_PROPERTIES);
         final String user = properties != null ? properties.getProperty(USER_KEY) : null;
         final String password = properties != null ? properties.getProperty(PASSWORD_KEY) : null;
-        System.out.println(user + password);
         final Session session = Session.getDefaultInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -42,9 +39,8 @@ public class EmailServiceImpl implements EmailService {
                 message.setFrom(new InternetAddress(user));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
                 message.setSubject(EMAIL_CONFIRMATION);
-                message.setContent(content, CONTENT_TYPE);
+                message.setContent(clientMessage, CONTENT_TYPE);
                 Transport.send(message);
-                System.out.println("here");
                 isSent = true;
             }
             return isSent;

@@ -11,7 +11,8 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
-    <link href=" ${pageContext.request.contextPath}/pages/instrumentsStyle.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/pages/instrumentsStyle.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/pages/ratingStyle.css" rel="stylesheet"/>
     <script type="text/javascript" src=""></script>
     <script type="text/javascript"
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
@@ -26,61 +27,100 @@
             <div class="col-md-6 border-end">
                 <div class="d-flex flex-column justify-content-center">
                     <div class="main_image">
-                        <img src="https://i.imgur.com/TAzli1U.jpg" id="main_product_image" width="350">
+                        <img src="${instrument.image[0]}" id="main_product_image" width="350">
                     </div>
                     <div class="thumbnail_images">
                         <ul id="thumbnail">
-                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/TAzli1U.jpg" width="70">
-                            </li>
-                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/w6kEctd.jpg" width="70">
-                            </li>
-                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/L7hFD8X.jpg" width="70"></li>
-                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/6ZufmNS.jpg" width="70">
-                            </li>
+                            <c:forEach items="${instrument.image}" var="image">
+                                <li><img onclick="changeImage(this)" src="${image}" width="70">
+                                </li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>
             </div>
+
+
+
+
             <div class="col-md-6">
                 <div class="p-3 right-side">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h3>IIlana</h3>
-                        <span class="heart">
-                        <i class="bx bx-heart"></i>
-                    </span>
+                        <h3>${instrument.name}</h3>
+                        <span class="heart">${instrument.instrument_id}</span>
                     </div>
                     <div class="mt-2 pr-3 content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua</p>
+                        <p>${instrument.description}</p>
                     </div>
-                    <h3>$430.99</h3>
+                    <h3>$${instrument.price}</h3>
+
+
+
+
+
+
                     <div class="ratings d-flex flex-row align-items-center">
-                        <div class="d-flex flex-row"><i class="bx bxs-star"></i> <i class="bx bxs-star"></i> <i
-                                class="bx bxs-star"></i> <i class="bx bxs-star"></i> <i class="bx bx-star"></i></div>
-                        <span>441 reviews</span></div>
-                    <div class="mt-5"><span class="fw-bold">Color</span>
-                        <div class="colors">
-                            <ul id="marker">
-                                <li id="marker-1"></li>
-                                <li id="marker-2"></li>
-                                <li id="marker-3"></li>
-                                <li id="marker-4"></li>
-                                <li id="marker-5"></li>
-                            </ul>
-                        </div>
+                        <c:if test="${empty message}">
+                            <c:if test="${not empty instrument}">
+                                <form action="${abs_path}/controller?command=set_instrument_rating_command"
+                                      class="rating"
+                                      method="post">
+                                    <input type="submit" id="star5" name="rating" value="5"/>
+                                    <label for="star5">5 stars</label>
+                                    <input type="submit" id="star4" name="rating" value="4"/>
+                                    <label for="star4">4 stars</label>
+                                    <input type="submit" id="star3" name="rating" value="3"/>
+                                    <label for="star3">3 stars</label>
+                                    <input type="submit" id="star2" name="rating" value="2"/>
+                                    <label for="star2">2 stars</label>
+                                    <input type="submit" id="star1" name="rating" value="1"/>
+                                    <label for="star1">1 star</label>
+                                </form>
+                            </c:if>
+                        </c:if>
+                        <span>${message}</span>
                     </div>
+
+
+                    <div class="mt-5">
+                        <span class="fw-bold">Country: ${instrument.country}</span>
+                    </div>
+
+
+
+
+
                     <div class="buttons d-flex flex-row mt-5 gap-3">
-                        <button class="btn btn-outline-dark">Buy Now</button>
-                        <button class="btn btn-dark">Add to Basket</button>
+                        <c:if test="${not empty user}">
+                            <form method="post" action="${abs_path}/controller?command=create_order_command">
+                                <button class="btn btn-outline-dark">Buy Now</button>
+                            </form>
+                            <c:if test="${not requestScope.containsValue(instrument.instrument_id)}">
+                                <form method="post" action="${abs_path}/controller?command=add_to_bucket_command">
+                                    <button class="btn btn-dark">Add to Bucket</button>
+                                </form>
+                            </c:if>
+                            <c:if test="${requestScope.containsValue(instrument.instrument_id)}">
+                                <form method="post" action="${abs_path}/controller?command=add_to_bucket_command">
+                                    <button class="btn btn-success">Added to bucket</button>
+                                </form>
+                            </c:if>
+                        </c:if>
+                        <c:if test="${empty sessionScope.user}">
+                            <form method="post" action="${abs_path}/pages/common/login.jsp">
+                                <button class="btn btn-outline-dark">Buy Now</button>
+                            </form>
+                            <form method="post" action="${abs_path}/pages/common/login.jsp">
+                                <button class="btn btn-dark">Add to Basket</button>
+                            </form>
+                        </c:if>
                     </div>
-                    <div class="search-option"><i class="bx bx-search-alt-2 first-search"></i>
-                        <div class="inputs"><input type="text" name=""></div>
-                        <i class="bx bx-share-alt share"></i></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <script type="text/javascript">function changeImage(element) {
     var main_prodcut_image = document.getElementById('main_product_image');
     main_prodcut_image.src = element.src;

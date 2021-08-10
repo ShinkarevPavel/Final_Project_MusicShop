@@ -9,10 +9,9 @@ import com.shinkarev.musicshop.pool.ConnectionPool;
 
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+import static com.shinkarev.musicshop.dao.impl.InstrumentField.INSTRUMENT_QUANTITY;
 import static com.shinkarev.musicshop.dao.impl.SqlQuery.*;
 
 public class OrderDaoImpl implements OrderDao {
@@ -42,6 +41,11 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public boolean create(Order order) throws DaoException {
+        throw new UnsupportedOperationException("Impossible create order");
+    }
+
+    @Override
+    public boolean createOrder(Order order, Map<Long, Integer> items) throws DaoException{
         boolean flag = false;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_ADD_ORDER, Statement.RETURN_GENERATED_KEYS)) {
@@ -55,10 +59,9 @@ public class OrderDaoImpl implements OrderDao {
             ResultSet resultSet = statement.getGeneratedKeys();
             while (resultSet.next()) {
                 order.setId(resultSet.getLong(1));
-                long orderId = order.getId();
-                if (saveItemsInOrder(order.getItems(), orderId)) {
-                    flag = true;
-                }
+            }
+            if (saveItemsInOrder(items, order.getId())) {
+                flag = true;
             }
         } catch (SQLException ex) {
             throw new DaoException("Error of creating order", ex);
@@ -90,13 +93,14 @@ public class OrderDaoImpl implements OrderDao {
         return orders;
     }
 
-    private boolean saveItemsInOrder(List<Instrument> instruments, long orderId) throws SQLException {
+    private boolean saveItemsInOrder(Map<Long, Integer> instruments, long orderId) throws SQLException {
         int rowsUpdate = 0;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_ADD_ITEMS_TO_ORDER)) {
-            for (Instrument item : instruments) {
+            for (Map.Entry<Long, Integer> item : instruments.entrySet()) {
                 statement.setLong(1, orderId);
-                statement.setLong(2, item.getInstrument_id());
+                statement.setLong(2, item.getKey());
+                statement.setInt(3, item.getValue());
                 if (statement.executeUpdate() == 1) {
                     rowsUpdate++;
                 }
@@ -105,8 +109,8 @@ public class OrderDaoImpl implements OrderDao {
         return rowsUpdate == instruments.size();
     }
 
-    private List<Instrument> getOrderItems(long orderId) throws DaoException {
-        List<Instrument> instruments = new ArrayList<>();
+    private Map<Instrument, Integer> getOrderItems(long orderId) throws DaoException {
+        Map<Instrument, Integer> instruments = new HashMap<>();
         ResultSet resultSet;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_GET_ORDER_ITEMS)) {
@@ -114,7 +118,8 @@ public class OrderDaoImpl implements OrderDao {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Instrument instrument = InstrumentCreator.createInstrument(resultSet);
-                instruments.add(instrument);
+                int quantity = resultSet.getInt(INSTRUMENT_QUANTITY);
+                instruments.put(instrument, quantity);
             }
         } catch (SQLException ex) {
             throw new DaoException("Error. Impossible get data from data base.", ex);

@@ -14,8 +14,7 @@ import java.sql.*;
 import java.util.*;
 
 
-import static com.shinkarev.musicshop.dao.impl.InstrumentField.INSTRUMENT_IMAGE_PARAM;
-import static com.shinkarev.musicshop.dao.impl.InstrumentField.INSTRUMENT_KEY_PARAM;
+import static com.shinkarev.musicshop.dao.impl.InstrumentField.*;
 import static com.shinkarev.musicshop.dao.impl.SqlQuery.*;
 
 
@@ -264,6 +263,23 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
+    public boolean isInBucket(long userId, long instrumentId) throws DaoException {
+        boolean result = false;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_IS_IN_BUCKET)) {
+            statement.setLong(1, userId);
+            statement.setLong(2, instrumentId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = true;
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("Error of getting rating", ex);
+        }
+        return result;
+    }
+
+    @Override
     public boolean setInstrumentRating(long userId, long instrumentId, int rating) throws DaoException {
         int rowsUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -307,12 +323,13 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
-    public boolean addItemToBucket(long userId, long instrumentId) throws DaoException {
+    public boolean addItemToCart(long userId, long instrumentId) throws DaoException {
         int rowsUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_ADD_INSTRUMENT_TO_BUCKET)) {
             statement.setLong(1, userId);
             statement.setLong(2, instrumentId);
+            statement.setInt(3, 1);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
             throw new DaoException("Error. Impossible get data from data base.", ex);
@@ -335,20 +352,21 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
-    public List<Instrument> findAddedToBucketItems(long userId) throws DaoException {
-        List<Instrument> instruments = new ArrayList<>();
+    public Map<Instrument, Integer> findAddedToCartItems(long userId) throws DaoException {
+        Map<Instrument, Integer> cartItems = new HashMap<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_ORDER_ITEMS)) {
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Instrument instrument = InstrumentCreator.createInstrument(resultSet);
-                instruments.add(instrument);
+                int quantity = resultSet.getInt(INSTRUMENT_QUANTITY);
+                cartItems.put(instrument, quantity);
             }
         } catch (SQLException ex) {
             throw new DaoException("Error of finding instruments", ex);
         }
-        return instruments;
+        return cartItems;
     }
 
     @Override
@@ -371,6 +389,21 @@ public class InstrumentDaoImpl implements InstrumentDao {
              PreparedStatement statement = connection.prepareStatement(SQL_SET_INSTRUMENT_IMAGE)) {
             statement.setLong(1, instrumentId);
             statement.setBlob(2, inputStream);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible put image to data base.", ex);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public boolean setInstrumentQuantity(long userId, long instrumentId, int quantity) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SET_INSTRUMENT_QUANTITY)) {
+            statement.setInt(1, quantity);
+            statement.setLong(2, userId);
+            statement.setLong(3, instrumentId);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
             throw new DaoException("Error. Impossible put image to data base.", ex);

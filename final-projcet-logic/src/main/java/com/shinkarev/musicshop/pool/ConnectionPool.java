@@ -28,7 +28,7 @@ public class ConnectionPool {
     private String URL;
     private Properties properties;
     private BlockingQueue<ProxyConnection> freeConnections;
-    private Queue<ProxyConnection> givenAwayConnections;
+    private BlockingQueue<ProxyConnection> givenAwayConnections;
     private ReentrantLock connectionLocker;
     private Condition condition;
     private Timer timer;
@@ -74,7 +74,7 @@ public class ConnectionPool {
         ProxyConnection connection = null;
         try {
             connection = freeConnections.take();
-            givenAwayConnections.offer(connection);
+            givenAwayConnections.put(connection);
         } catch (InterruptedException e) {
             logger.error("Error getting connection ", e);
             Thread.currentThread().interrupt();
@@ -84,10 +84,14 @@ public class ConnectionPool {
 
     public void releaseConnection(Connection connection) {
         this.onService();
-        if (connection instanceof ProxyConnection) {
-            givenAwayConnections.remove();
-            freeConnections.offer((ProxyConnection) connection);
-        } else {
+        try {
+            if (connection instanceof ProxyConnection) {
+                givenAwayConnections.remove();
+                freeConnections.put((ProxyConnection) connection);
+            } else {
+                logger.error("Attention. Attempt to transfer to the Connection Pool rogue connection.");
+            }
+        } catch (InterruptedException ex) {
             logger.error("Attention. Attempt to transfer to the Connection Pool rogue connection.");
         }
     }

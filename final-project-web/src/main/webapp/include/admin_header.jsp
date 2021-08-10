@@ -56,7 +56,7 @@
 
                                     <li class="nav-item active">
                                         <div class="dropdown">
-                                            <a class="btn btn-secondary" href="${abs_path}/pages/common/login.jsp">Home</a>
+                                            <a class="btn btn-secondary" href="${abs_path}/pages/common/main_page.jsp">Home</a>
                                         </div>
                                     </li>
 

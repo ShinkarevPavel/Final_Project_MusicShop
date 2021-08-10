@@ -45,12 +45,6 @@ background-size: cover">
                         </span>
                     </div>
                     <div class="col-12">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe"><fmt:message key="page.head.remember_me"/></label>
-                        </div>
-                    </div>
-                    <div class="col-12">
                         <input type="hidden" name="command" value="login">
                         <button type="submit"><fmt:message key="page.login.sign_in.button"/></button>
                     </div>
@@ -59,7 +53,7 @@ background-size: cover">
                 <div class="col-12">
                     <p class="text-center mb-0">
                         <fmt:message key="page.head.registration_text"/>
-                        <a href="${abs_path}/pages/registration.jsp">
+                        <a href="${abs_path}/pages/common/registration.jsp">
                             <fmt:message key="page.login.register"/>
                         </a>
                     </p>

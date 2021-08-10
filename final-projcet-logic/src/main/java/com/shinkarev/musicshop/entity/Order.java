@@ -1,27 +1,28 @@
 package com.shinkarev.musicshop.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Map;
 
 public class Order extends Entity {
     private long id;
     private LocalDateTime orderDate;
-    private List<Instrument> items;
+    private Map<Instrument, Integer> items;
     private long userId;
     private double price;
     private OderType status;
     private String address;
+    private String payment;
 
-    public Order(long userId, LocalDateTime orderDate, List<Instrument> items, double price, String address, OderType status) {
+    public Order(long userId, LocalDateTime orderDate, double price, String address, OderType status, String payment) {
         this.userId = userId;
         this.orderDate = orderDate;
-        this.items = items;
         this.price = price;
         this.address = address;
         this.status = status;
+        this.payment = payment;
     }
 
-    public Order(long id, LocalDateTime orderDate, List<Instrument> items, long userId, double price, OderType status, String address) {
+    public Order(long id, LocalDateTime orderDate, Map<Instrument, Integer> items, long userId, double price, OderType status, String address, String payment) {
         this.id = id;
         this.orderDate = orderDate;
         this.items = items;
@@ -29,25 +30,18 @@ public class Order extends Entity {
         this.price = price;
         this.status = status;
         this.address = address;
+        this.payment = payment;
     }
 
-    public Order(long id, LocalDateTime orderDate, long userId, double price, OderType status, String address) {
-        this.id = id;
-        this.orderDate = orderDate;
-        this.userId = userId;
-        this.price = price;
-        this.status = status;
-        this.address = address;
-    }
 
     public Order() {
     }
 
-    public List<Instrument> getItems() {
+    public Map<Instrument, Integer> getItems() {
         return items;
     }
 
-    public void setItems(List<Instrument> items) {
+    public void setItems(Map<Instrument, Integer> items) {
         this.items = items;
     }
 
@@ -99,6 +93,14 @@ public class Order extends Entity {
         this.status = status;
     }
 
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -114,7 +116,7 @@ public class Order extends Entity {
         if (this.userId != order.getUserId()) {
             return false;
         }
-        if (!(this.items.containsAll(((Order) o).getItems()) && ((Order) o).getItems().containsAll(this.items))) {
+        if (this.items.equals(((Order) o).items)) {
             return false;
         }
 
@@ -125,6 +127,9 @@ public class Order extends Entity {
             return false;
         }
         if (!this.address.equals(order.getAddress())) {
+            return false;
+        }
+        if (!this.payment.equals(order.payment)) {
             return false;
         }
         return this.status != order.getStatus();
@@ -138,8 +143,9 @@ public class Order extends Entity {
         result = 31 * result + Double.hashCode(this.price);
         result = 31 * result + (this.address != null ? this.address.hashCode() : 0);
         result = 31 * result + (this.status != null ? this.status.hashCode() : 0);
-        for (Instrument item : this.items) {
-            result = 31 * result + item.hashCode();
+        result = 31 * result + (this.payment != null ? this.payment.hashCode() : 0);
+        for (Map.Entry<Instrument, Integer> item : this.items.entrySet()) {
+            result += (31 * item.getKey().hashCode() + item.getValue());
         }
         return result;
     }
@@ -148,12 +154,13 @@ public class Order extends Entity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Order{");
         sb.append("id=").append(id);
-        sb.append(", userId=").append(userId);
         sb.append(", orderDate=").append(orderDate);
+        sb.append(", items=").append(items);
+        sb.append(", userId=").append(userId);
         sb.append(", price=").append(price);
         sb.append(", status=").append(status);
         sb.append(", address='").append(address).append('\'');
-        sb.append(", items=").append(items);
+        sb.append(", payment='").append(payment).append('\'');
         sb.append('}');
         return sb.toString();
     }

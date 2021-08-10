@@ -4,6 +4,7 @@ public class ParamName {
 
 
 
+
     private ParamName() {}
 
     /*Error keys*/
@@ -59,7 +60,12 @@ public class ParamName {
     public static final String IMAGE_PARAM = "image";
 
     public static final String ADDRESS_DELIVERY = "address";
-
+    public static final String RATING = "rating";
+    public static final String RATING_MESSAGE = "message";
+    public static final String CART_ITEMS = "items";
+    public static final String TOTAL_CART = "total";
+    public static final String ITEM_QUANTITY = "quantity";
+    public static final String PAYMENT = "payment";
 
     /*Properties keys*/
     public static final String PAGE_ERRORS_LOGIN_PASSWORD = "page.errors.login_password_error";

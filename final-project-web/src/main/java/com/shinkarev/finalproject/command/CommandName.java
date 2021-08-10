@@ -1,7 +1,6 @@
 package com.shinkarev.finalproject.command;
 
-import com.shinkarev.finalproject.command.client.ShowInstrumentByTypeCommand;
-import com.shinkarev.finalproject.command.client.ShowInstrumentDetailsCommand;
+import com.shinkarev.finalproject.command.client.*;
 import com.shinkarev.finalproject.command.common.*;
 import com.shinkarev.finalproject.command.admin.*;
 
@@ -22,7 +21,14 @@ public enum CommandName {
     SHOW_ALL_INSTRUMENTS_COMMAND(new ShowAllInstrumentsCommand()),
     FIND_USER_COMMAND(new FindUserCommand()),
     SHOW_INSTRUMENT_BY_TYPE_COMMAND(new ShowInstrumentByTypeCommand()),
-    SHOW_INSTRUMENT_DETAILS_COMMAND(new ShowInstrumentDetailsCommand());
+    SHOW_INSTRUMENT_DETAILS_COMMAND(new ShowInstrumentDetailsCommand()),
+    SET_INSTRUMENT_RATING_COMMAND(new SetInstrumentRatingCommand()),
+    CHECK_CART_COMMAND(new CheckCartCommand()),
+    REMOVE_FROM_CART_COMMAND(new RemoveFromCartCommand()),
+    ORDER_PROCESSING_COMMAND(new OrderProcessingCommand()),
+    QUANTITY_CONTROL_COMMAND(new QuantityControlCommand()),
+    CREATE_ORDER_COMMAND(new CreateOrderCommand()),
+    ADD_TO_BUCKET_COMMAND(new AddToBucketCommand());
 
     private Command command;
 

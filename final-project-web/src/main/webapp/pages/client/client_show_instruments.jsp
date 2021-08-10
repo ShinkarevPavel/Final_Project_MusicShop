@@ -23,9 +23,6 @@ background-position: center center;
 background-size: cover">
 <%@include file="/include/header.jsp" %>
 
-
-
-
 <div class="container">
 
     <c:if test="${empty instruments}">
@@ -34,13 +31,12 @@ background-size: cover">
                 <div class="col-md-3 offset-md-4">
                     <div class="login-form bg-light mt-4 p-4">
                         <h4 class="offset-xxl-2"><fmt:message key="page.instruments.message"/></h4>
+                        <h4 class="offset-xxl-2">${instrument_message}</h4>
                     </div>
                 </div>
             </div>
         </section>
     </c:if>
-
-
     <div class="row row-cols-2 row-cols-lg-3">
         <c:forEach items="${instruments}" var="instrument">
             <div class="col">
@@ -74,8 +70,6 @@ background-size: cover">
                             </h4>
                         </div>
                     </div>
-
-
                     <form method="post" action="${abs_path}/controller?command=show_instrument_details_command">
                         <div class="product-1 align-items-center p-2 text-center">
                             <input type="hidden" name="instrumentId" value="${instrument.instrument_id}">
@@ -87,7 +81,5 @@ background-size: cover">
         </c:forEach>
     </div>
 </div>
-
-
 </body>
 </html>

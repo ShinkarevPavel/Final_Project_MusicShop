@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class InstrumentServiceImpl implements InstrumentService {
@@ -102,7 +103,7 @@ public class InstrumentServiceImpl implements InstrumentService {
     public boolean addItemToBucket(long userId, long instrumentId) throws ServiceException {
         boolean isAdded;
         try {
-            isAdded = instrumentDao.addItemToBucket(userId, instrumentId);
+            isAdded = instrumentDao.addItemToCart(userId, instrumentId);
         } catch (DaoException ex) {
             throw new ServiceException("Error. Item wasn't added to DB", ex);
         }
@@ -112,21 +113,20 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     @Override
     public boolean removeItemFromBucket(long userId, long instrumentId) throws ServiceException {
-        boolean isAdded;
+        boolean isRemoved;
         try {
-           isAdded = instrumentDao.removeItemFromBucket(userId, instrumentId);
+            isRemoved = instrumentDao.removeItemFromBucket(userId, instrumentId);
         } catch (DaoException ex) {
             throw new ServiceException("Error. Item wasn't added to DB", ex);
         }
-
-        return isAdded;
+        return isRemoved;
     }
 
     @Override
-    public List<Instrument> getUserBucket(long userId) throws ServiceException {
-        List<Instrument> instruments;
+    public Map<Instrument, Integer> getUserBucket(long userId) throws ServiceException {
+        Map<Instrument, Integer> instruments;
         try {
-            instruments = instrumentDao.findAddedToBucketItems(userId);
+            instruments = instrumentDao.findAddedToCartItems(userId);
         } catch (DaoException ex) {
             throw new ServiceException("Fatal. Error of getting items", ex);
         }
@@ -153,5 +153,49 @@ public class InstrumentServiceImpl implements InstrumentService {
             throw new ServiceException("Fatal. Error of adding image to DB", ex);
         }
         return isAdded;
+    }
+
+    @Override
+    public boolean isRated(long userId, long instrumentId) throws ServiceException {
+        boolean result;
+        try {
+            result = instrumentDao.isRated(userId, instrumentId);
+        } catch (DaoException ex) {
+            throw new ServiceException("Error of getting request", ex);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean isInBucket(long userId, long instrumentId) throws ServiceException {
+        boolean result;
+        try {
+            result = instrumentDao.isInBucket(userId, instrumentId);
+        } catch (DaoException ex) {
+            throw new ServiceException("Error of getting request", ex);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean addInstrumentRating(long userId, long instrumentId, int rating) throws ServiceException {
+        boolean result;
+        try {
+            result = instrumentDao.setInstrumentRating(userId, instrumentId, rating);
+        } catch (DaoException ex) {
+            throw new ServiceException("Error of getting request", ex);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean setInstrumentQuantity(long userId, long instrumentId, int quantity) throws ServiceException {
+        boolean result;
+        try {
+            result = instrumentDao.setInstrumentQuantity(userId, instrumentId, quantity);
+        } catch (DaoException ex) {
+            throw new ServiceException("Error of getting request", ex);
+        }
+        return result;
     }
 }
