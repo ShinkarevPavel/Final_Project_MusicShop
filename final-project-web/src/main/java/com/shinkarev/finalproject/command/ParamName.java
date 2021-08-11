@@ -2,9 +2,6 @@ package com.shinkarev.finalproject.command;
 
 public class ParamName {
 
-
-
-
     private ParamName() {}
 
     /*Error keys*/
@@ -49,11 +46,12 @@ public class ParamName {
     public static final String INSTRUMENT_TYPE = "instrument_type";
     public static final String INSTRUMENT_PARAM = "instrument";
     public static final String INSTRUMENT_DETAILS_ERROR = "instrument_error";
+    public static final String PAGEABLE = "pageable";
 
     public static final String INSTRUMENTS = "instruments";
     public static final String INSTRUMENT_ID_PARAM = "instrumentId";
     public static final String INSTRUMENT_NEW_STATUS_PARAM = "new_status";
-    public static final String INSTRUMENT_NEW_TYPE_PARAM = "new_type";
+    public static final String ENTITY_NEW_TYPE_PARAM = "new_type";
     public static final String INSTRUMENTS_MESSAGE = "instrument_message";
     public static final String INSTRUMENT_TYPE_PARAM = "instrumentType";
     public static final String INSTRUMENT_STATUS_PARAM = "instrumentStatus";
@@ -66,6 +64,8 @@ public class ParamName {
     public static final String TOTAL_CART = "total";
     public static final String ITEM_QUANTITY = "quantity";
     public static final String PAYMENT = "payment";
+    public static final String ORDERS_PARAM = "orders";
+    public static final String ORDER_MESSAGE = "message";
 
     /*Properties keys*/
     public static final String PAGE_ERRORS_LOGIN_PASSWORD = "page.errors.login_password_error";

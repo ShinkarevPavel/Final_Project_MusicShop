@@ -25,6 +25,7 @@ public class OrderCreator {
             order.setPrice(resultSet.getDouble(OrderFields.PRICE));
             order.setAddress(resultSet.getString(OrderFields.ADDRESS));
             order.setStatus(OderType.valueOf(resultSet.getString(OrderFields.ODER_STATUS)));
+            order.setPayment(resultSet.getString(OrderFields.PAYMENT));
         } catch (SQLException ex) {
             throw new DaoException("Error. Impossible create instrument", ex);
         }

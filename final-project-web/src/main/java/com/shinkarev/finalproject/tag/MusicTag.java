@@ -1,19 +1,20 @@
 package com.shinkarev.finalproject.tag;
 
+import com.shinkarev.finalproject.command.ParamName;
+import com.shinkarev.musicshop.entity.User;
+import com.shinkarev.musicshop.entity.UserRoleType;
+import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.tagext.TagSupport;
 
-import java.io.IOException;
 
 public class MusicTag extends TagSupport {
-    private static final String MUSIC_TAG = "Pavel Shinkarev: final project";
-    private static final long serialVersionID = 1L;
 
-    public int doStartTag() {
-        try {
-            pageContext.getOut().print(MUSIC_TAG);
-        } catch (IOException e) {
-            System.out.println("fuck"); // todo
+    public int doStartTag() throws JspException {
+        User user = (User) pageContext.getSession().getAttribute(ParamName.USER);
+        if (user != null && user.getRole() == UserRoleType.ADMIN) {
+            return EVAL_BODY_INCLUDE;
+        } else {
+            return SKIP_BODY;
         }
-        return SKIP_BODY;
     }
 }

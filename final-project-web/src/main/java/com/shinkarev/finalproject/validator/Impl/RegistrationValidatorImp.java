@@ -9,9 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.shinkarev.finalproject.command.ParamName.*;
-import static com.shinkarev.finalproject.command.ParamName.PASSWORD_ERROR;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
-import static com.shinkarev.finalproject.validator.UserValidator.PASSWORD;
 
 public class RegistrationValidatorImp implements InputDataValidator {
     @Override

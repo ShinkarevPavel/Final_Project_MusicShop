@@ -20,7 +20,7 @@
             <div class="login-form bg-light mt-4 p-4">
                 <form method="post" action="${abs_path}/controller?command=find_user_command" >
                     <div class="input-group">
-                        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                        <input type="search" class="form-control rounded" placeholder="Search by Id" aria-label="Search"
                                aria-describedby="search-addon" name="admin_search_by_id" required/>
                         <button type="submit" class="btn btn-outline-warning">search</button>
                     </div>

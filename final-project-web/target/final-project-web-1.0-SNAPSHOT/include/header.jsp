@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <c:set var="abs_path">${pageContext.request.contextPath}</c:set>
 <fmt:setLocale value="${sessionScope.locale}"/>
 <fmt:setBundle basename="localization"/>
@@ -109,9 +110,12 @@
                              class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-                        <li><a class="dropdown-item" href="#">Mu orders</a></li>
+                        <ctg:is-admin>
+                            <li><a class="dropdown-item" href="${abs_path}/pages/admin/admin.jsp">Admin cabinet</a></li>
+                        </ctg:is-admin>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=check_cart_command">Mu orders</a></li>
                         <li><a class="dropdown-item" href="${abs_path}/controller?command=check_cart_command">My cart</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/pages/client/cabinet_page.jsp">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

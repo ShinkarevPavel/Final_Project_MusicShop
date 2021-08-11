@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
+
+    int getUserCount() throws ServiceException;
+
+    List<User> readByPage(int page) throws ServiceException;
+
     Optional<User> login(String login, String password);
 
     boolean isLoginUnique(String login) throws ServiceException;

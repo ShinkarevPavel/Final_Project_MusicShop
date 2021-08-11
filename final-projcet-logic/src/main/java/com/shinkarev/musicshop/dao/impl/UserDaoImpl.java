@@ -7,6 +7,9 @@ import com.shinkarev.musicshop.entity.UserStatusType;
 import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.pool.ConnectionPool;
 import com.shinkarev.musicshop.util.PasswordHashGenerator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,6 +19,47 @@ import java.util.Optional;
 import static com.shinkarev.musicshop.dao.impl.SqlQuery.*;
 
 public class UserDaoImpl implements UserDao {
+    private static Logger logger = LogManager.getLogger();
+
+    @Override
+    public int getUserCount() throws DaoException {
+        return rowCountByQuery(SQL_GET_ALL_USERS);
+    }
+
+
+    private int rowCountByQuery(String sourceQuery) throws DaoException {
+        int result = 0;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl" )
+        ) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR, "Can't count row count. ", e);
+            throw new DaoException("Can't count row count.", e);
+        }
+        return result;
+    }
+
+
+    @Override
+    public List<User> findByPage(int page) throws DaoException {
+        List<User> users = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(buildPageableQuery(SQL_GET_ALL_USERS + USER_ORDER_BY, page))) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                User user = UserCreator.createUser(resultSet);
+                users.add(user);
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error with find all Users.", ex);
+            throw new DaoException("Error with find all Users .", ex);
+        }
+        return users;
+    }
 
     @Override
     public List<User> findAll() throws DaoException {

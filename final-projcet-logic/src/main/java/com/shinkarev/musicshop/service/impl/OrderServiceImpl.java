@@ -15,6 +15,7 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao = new OrderDaoImpl();
 
+
     @Override
     public boolean addOrder(Order order, Map<Long, Integer> items) throws ServiceException {
         boolean isAdded = false;
@@ -74,7 +75,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> findOrderById(long orderId) throws ServiceException {
-
-        return Optional.empty();
+        Order order = null;
+        try {
+            Optional<Order> optionalOrder = orderDao.findEntityById(orderId);
+            if (optionalOrder.isPresent()) {
+                order = optionalOrder.get();
+            }
+        } catch (DaoException ex) {
+            throw new ServiceException("Fatal. Error of changing order status", ex);
+        }
+        return Optional.ofNullable(order);
     }
 }

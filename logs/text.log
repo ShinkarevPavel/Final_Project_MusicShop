@@ -159,3 +159,12 @@
 2021-08-08 15:31 INFO  PoolChecker -Service mode was switched off
 2021-08-08 16:31 INFO  PoolChecker -Service mode was switched on
 2021-08-08 16:31 INFO  PoolChecker -Service mode was switched off
+2021-08-10 17:26 INFO  BaseDao -Were found 1 instruments
+2021-08-10 18:26 INFO  PoolChecker -Service mode was switched on
+2021-08-10 18:26 INFO  PoolChecker -Service mode was switched off
+2021-08-10 19:26 INFO  PoolChecker -Service mode was switched on
+2021-08-10 19:26 INFO  PoolChecker -Service mode was switched off
+2021-08-11 16:34 INFO  BaseDao -Were found 1 instruments
+2021-08-11 16:38 INFO  BaseDao -Were found 1 instruments
+2021-08-11 17:38 INFO  PoolChecker -Service mode was switched on
+2021-08-11 17:38 INFO  PoolChecker -Service mode was switched off

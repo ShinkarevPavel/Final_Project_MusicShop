@@ -5,9 +5,11 @@ import com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;
+import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +22,29 @@ public class InstrumentServiceImpl implements InstrumentService {
     private Logger logger = LogManager.getLogger();
     private InstrumentDao instrumentDao = new InstrumentDaoImpl();
 
+    @Override
+    public int getInstrumentCount() throws ServiceException {
+        try {
+            return instrumentDao.getInstrumentCount();
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with instrument count .", e);
+            throw new ServiceException("Error with instrument count .", e);
+        }
+    }
+
+
+
+    @Override
+    public List<Instrument> readByPage(int page) throws ServiceException {
+        List<Instrument> instruments;
+        try {
+            instruments = instrumentDao.findByPage(page);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with find all Users .", e);
+            throw new ServiceException("Error with find all Users .", e);
+        }
+        return instruments;
+    }
 
     @Override
     public Optional<Instrument> findInstrumentById(long instrumentId) throws ServiceException {

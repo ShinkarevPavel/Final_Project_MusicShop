@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends BaseDao<Long, User> {
+
+    int getUserCount() throws DaoException;
+
+    List<User> findByPage(int page) throws DaoException;
+
     boolean changeUserStatusById(long userId, UserStatusType statusType) throws DaoException;
 
     boolean changeUserRoleById(long userId, UserRoleType roleType) throws DaoException;

@@ -71,7 +71,7 @@
                                             <ul class="dropdown-menu dropdown-menu-sm-start"
                                                 aria-labelledby="d">
 
-                                                <li><a class="dropdown-item" href="${abs_path}/pages/admin/find_user.jsp">Find user</a></li>
+                                                <li><a class="dropdown-item"  href="${abs_path}/pages/admin/find_user.jsp">Find user</a></li>
                                                 <li><a class="dropdown-item" href="#">Add user</a></li>
                                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
 

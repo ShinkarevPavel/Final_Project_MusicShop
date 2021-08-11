@@ -119,7 +119,7 @@
                         </div>
                         <h6 class="mt-4 text-secondary">Delivery address</h6>
                         <div class="email mt-2">
-                            <input type="text" form="order" name="address" class="form-control email-text"
+                            <input type="text" form="order"  name="address" class="form-control email-text"
                                                        placeholder="Delivery Address" required>
                         </div>
                         <div class="mt-3">

@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import static com.shinkarev.finalproject.command.ParamName.*;
 
-public class ClearBucketCommand implements Command {
+public class ClearCartCommand implements Command {
     private Router router = new Router();
 
     @Override

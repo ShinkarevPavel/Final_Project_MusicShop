@@ -14,6 +14,7 @@ import java.util.Optional;
 
 public interface BaseDao<K, T extends Entity> {
     Logger logger = LogManager.getLogger();
+    int PAGE_SIZE = 3;
 
     Optional<T> findEntityById(K id) throws DaoException;
 
@@ -37,5 +38,17 @@ public interface BaseDao<K, T extends Entity> {
         if (connection != null) {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
+    }
+
+    default String buildPageableQuery(String mainQuery, int pageNumber) {
+        int limit = PAGE_SIZE;
+        int offset = (limit * pageNumber) - limit;
+        StringBuilder queryBuilder = new StringBuilder(mainQuery);
+        queryBuilder.append(" LIMIT ");
+        if (offset > 0) {
+            queryBuilder.append(offset).append(", ");
+        }
+        queryBuilder.append(limit);
+        return queryBuilder.toString();
     }
 }

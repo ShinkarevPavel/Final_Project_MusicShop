@@ -1,8 +1,6 @@
 package com.shinkarev.finalproject.command.client;
 
-import com.oracle.wls.shaded.org.apache.xpath.operations.Or;
 import com.shinkarev.finalproject.command.Command;
-import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.musicshop.entity.OderType;
 import com.shinkarev.musicshop.entity.Order;
@@ -52,7 +50,7 @@ public class CreateOrderCommand implements Command {
                 EmailService emailService = new EmailServiceImpl();
                 emailService.sendEmail(user.getEmail(), "Your order was created. You can control and track it in your acc. Thanks that chose our shop");
                 request.setAttribute("message", "Your order created");
-                router.setPagePath(CLIENT_PAGE);
+                router.setPagePath(CABINET_PAGE);
             }
         } catch (ServiceException e) {
             request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops, something went wrong. We fix it, later ;)");

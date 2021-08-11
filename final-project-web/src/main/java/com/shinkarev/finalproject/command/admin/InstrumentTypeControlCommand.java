@@ -21,7 +21,7 @@ public class InstrumentTypeControlCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         String instrumentId = request.getParameter(INSTRUMENT_ID_PARAM);
-        String newType = request.getParameter(INSTRUMENT_NEW_TYPE_PARAM);
+        String newType = request.getParameter(ENTITY_NEW_TYPE_PARAM);
 
         InstrumentServiceImpl instrumentService = new InstrumentServiceImpl();
         InstrumentType type = InstrumentType.valueOf(newType);

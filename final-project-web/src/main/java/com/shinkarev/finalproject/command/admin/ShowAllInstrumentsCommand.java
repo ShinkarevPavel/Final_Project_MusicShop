@@ -1,6 +1,7 @@
 package com.shinkarev.finalproject.command.admin;
 
 import com.shinkarev.finalproject.command.Command;
+import com.shinkarev.finalproject.command.Page;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.exception.ServiceException;
@@ -14,19 +15,25 @@ import java.util.List;
 import static com.shinkarev.finalproject.command.PageName.ERROR_PAGE;
 import static com.shinkarev.finalproject.command.PageName.SHOW_INSTRUMENTS;
 import static com.shinkarev.finalproject.command.ParamName.*;
+import static com.shinkarev.musicshop.dao.BaseDao.PAGE_SIZE;
 
 public class ShowAllInstrumentsCommand implements Command {
     private Logger logger = LogManager.getLogger();
     private Router router = new Router();
+    private InstrumentServiceImpl instrumentService = new InstrumentServiceImpl();
+
     @Override
     public Router execute(HttpServletRequest request) {
         List<Instrument> instruments;
-        InstrumentServiceImpl instrumentService = new InstrumentServiceImpl();
+
 
         try {
-            instruments = instrumentService.getAllEntity();
+            int pageToDisplay = getPage(request);
+            instruments = instrumentService.readByPage(pageToDisplay);
+            int instrumentCount = instrumentService.getInstrumentCount();
             if (instruments.size() != 0) {
                 request.setAttribute(INSTRUMENTS, instruments);
+                request.setAttribute(PAGEABLE, new Page(instrumentCount, pageToDisplay, PAGE_SIZE));
             } else {
                 request.setAttribute(INSTRUMENTS_MESSAGE, "Found nothing");
             }

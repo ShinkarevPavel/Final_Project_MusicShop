@@ -28,6 +28,8 @@ public enum CommandName {
     ORDER_PROCESSING_COMMAND(new OrderProcessingCommand()),
     QUANTITY_CONTROL_COMMAND(new QuantityControlCommand()),
     CREATE_ORDER_COMMAND(new CreateOrderCommand()),
+    FIND_ORDER_COMMAND(new FindOrderCommand()),
+    SHOW_ORDER_DETAILS_COMMAND(new ShowOrderDetailsCommand()),
     ADD_TO_BUCKET_COMMAND(new AddToBucketCommand());
 
     private Command command;

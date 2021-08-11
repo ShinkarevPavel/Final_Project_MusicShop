@@ -4,13 +4,11 @@ import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.RegistrationConfirmator;
 import com.shinkarev.finalproject.validator.Impl.RegistrationValidatorImp;
-import com.shinkarev.musicshop.dao.impl.UserDaoImpl;
+import com.shinkarev.finalproject.validator.InputDataValidator;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.entity.UserRoleType;
 import com.shinkarev.musicshop.entity.UserStatusType;
-import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.exception.ServiceException;
-import com.shinkarev.musicshop.service.impl.EmailServiceImpl;
 import com.shinkarev.musicshop.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -48,7 +46,7 @@ public class RegistrationCommand implements Command {
             registrationValues.put(NAME.getFieldName(), name);
             registrationValues.put(SURENAME.getFieldName(), surename);
 
-            RegistrationValidatorImp registrationValidator = new RegistrationValidatorImp();
+            InputDataValidator registrationValidator = new RegistrationValidatorImp();
             Map<String, String> errors = registrationValidator.checkValues(registrationValues, locale);
             if (!errors.isEmpty()) {
                 request.setAttribute(REGISTRATION_VALUES, registrationValues);

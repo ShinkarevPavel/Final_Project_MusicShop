@@ -6,6 +6,7 @@ import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;
 import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.pool.ConnectionPool;
+import org.apache.logging.log4j.Level;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +20,44 @@ import static com.shinkarev.musicshop.dao.impl.SqlQuery.*;
 
 
 public class InstrumentDaoImpl implements InstrumentDao {
+
+    @Override
+    public int getInstrumentCount() throws DaoException {
+        return rowCountByQuery(SQL_GET_ALL_INSTRUMENTS);
+    }
+
+    private int rowCountByQuery(String sourceQuery) throws DaoException {
+        int result = 0;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl" )
+        ) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getInt(1);
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Can't count row count. ", ex);
+            throw new DaoException("Can't count row count.", ex);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Instrument> findByPage(int page) throws DaoException {
+        List<Instrument> instruments = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(buildPageableQuery(SQL_GET_ALL_INSTRUMENTS + INSTRUMENT_ORDER_BY, page))) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Instrument instrument = InstrumentCreator.createInstrument(resultSet);
+                instruments.add(instrument);
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error with find all Users.", ex);
+            throw new DaoException("Error with find all Users .", ex);
+        }
+        return instruments;
+    }
 
     @Override
     public List<Instrument> findAll() throws DaoException {

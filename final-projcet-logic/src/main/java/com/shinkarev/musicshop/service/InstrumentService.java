@@ -4,6 +4,7 @@ package com.shinkarev.musicshop.service;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;
+import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
 
 import java.io.InputStream;
@@ -12,6 +13,11 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface InstrumentService {
+
+    int getInstrumentCount() throws ServiceException;
+
+    List<Instrument> readByPage(int page) throws ServiceException;
+
     Optional<Instrument> findInstrumentById(long instrumentId) throws ServiceException;
 
     List<Instrument> findInstrumentByType(InstrumentType instrumentType) throws ServiceException;

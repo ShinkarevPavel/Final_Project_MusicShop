@@ -46,7 +46,7 @@ background-size: cover">
                     </div>
                     <div class="col-12">
                         <input type="hidden" name="command" value="login">
-                        <button type="submit"><fmt:message key="page.login.sign_in.button"/></button>
+                        <button type="submit" class="btn btn-primary"><fmt:message key="page.login.sign_in.button"/></button>
                     </div>
                 </form>
                 <hr class="mt-4">

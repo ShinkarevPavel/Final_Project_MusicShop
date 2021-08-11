@@ -61,6 +61,23 @@ background-size: cover">
             <a href="${abs_path}/controller?command=user_info&userId=${user.id}">Control</a>
         </td>
         </c:forEach>
-</table>i
+</table>
+
+<nav aria-label="Page navigation area">
+    <ul class="pagination justify-content-center">
+        <li class="page-item ${pageable.isFirstPage() ? 'disabled': ''}">
+            <a class="page-link"
+               href="${abs_path}/controller?command=show_all_instruments_command&page=${pageable.currentPage - 1}" tabindex="-1">Previous</a>
+        </li>
+        <c:forEach var="i" begin="1" end="${pageable.pageCount()}">
+            <li class="page-item ${pageable.currentPage eq i ? 'active': ''}">
+                <a class="page-link" href="${abs_path}/controller?command=show_all_instruments_command&page=${i}">${i}</a></li>
+        </c:forEach>
+        <li class="page-item ${pageable.isLastPage() ? 'disabled': ''}">
+            <a class="page-link"
+               href="${abs_path}/controller?command=show_all_instruments_command&page=${pageable.currentPage + 1}">Next</a>
+        </li>
+    </ul>
+</nav>
 </body>
 </html>

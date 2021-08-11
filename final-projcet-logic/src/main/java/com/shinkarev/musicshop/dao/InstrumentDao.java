@@ -3,6 +3,7 @@ package com.shinkarev.musicshop.dao;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;
+import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.DaoException;
 
 import java.io.InputStream;
@@ -13,6 +14,9 @@ import java.util.Optional;
 
 public interface InstrumentDao extends BaseDao<Long, Instrument> {
 
+    int getInstrumentCount() throws DaoException;
+
+    List<Instrument> findByPage(int page) throws DaoException;
 
     List<Instrument> findInstrumentByBrand(String brand) throws DaoException;
 

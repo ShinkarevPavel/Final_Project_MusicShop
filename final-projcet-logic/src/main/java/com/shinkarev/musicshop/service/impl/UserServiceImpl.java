@@ -8,12 +8,42 @@ import com.shinkarev.musicshop.entity.UserStatusType;
 import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.UserService;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
+    private static final Logger logger = LogManager.getLogger();
     private UserDao userDao = new UserDaoImpl();
+
+
+
+
+    @Override
+    public int getUserCount() throws ServiceException {
+        try {
+            return userDao.getUserCount();
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with users count .", e);
+            throw new ServiceException("Error with users count .", e);
+        }
+    }
+
+    @Override
+    public List<User> readByPage(int page) throws ServiceException {
+        List<User> users;
+        try {
+            users = userDao.findByPage(page);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with find all Users .", e);
+            throw new ServiceException("Error with find all Users .", e);
+        }
+        return users;
+    }
+
     @Override
     public Optional<User> login(String login, String password) {
         User user = null;

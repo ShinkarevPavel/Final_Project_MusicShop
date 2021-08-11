@@ -1,5 +1,7 @@
-package com.shinkarev.finalproject.command;
+package com.shinkarev.finalproject.command.client;
 
+import com.shinkarev.finalproject.command.Command;
+import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentType;
 import com.shinkarev.musicshop.exception.ServiceException;
@@ -11,7 +13,7 @@ import java.util.List;
 import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
-public class ShowInstrumentType implements Command{
+public class ShowInstrumentType implements Command {
     private Router router = new Router();
     @Override
     public Router execute(HttpServletRequest request) {

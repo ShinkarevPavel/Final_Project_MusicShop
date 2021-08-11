@@ -9,6 +9,7 @@ public class OrderFields {
     public static final String ODER_STATUS = "status";
     public static final String ADDRESS = "address";
     public static final String ITEMS = "items";
+    public static final String PAYMENT = "payment";
 
     private OrderFields() {}
 
