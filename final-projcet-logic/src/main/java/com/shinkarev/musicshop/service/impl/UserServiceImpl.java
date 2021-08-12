@@ -20,7 +20,16 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao = new UserDaoImpl();
 
 
-
+    @Override
+    public boolean updateUser(User user) throws ServiceException {
+        boolean result;
+        try {
+            result = userDao.update(user);
+        } catch (DaoException ex) {
+            throw new ServiceException("Error. Impossible update user", ex);
+        }
+        return result;
+    }
 
     @Override
     public int getUserCount() throws ServiceException {
@@ -177,5 +186,17 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Impossible get user", ex);
         }
         return Optional.ofNullable(user);
+    }
+
+    @Override
+    public boolean changePassword(long userId, String password) throws ServiceException {
+        boolean result;
+
+        try {
+            result = userDao.changePassword(userId, password);
+        } catch (DaoException ex) {
+            throw new ServiceException("Impossible change password", ex);
+        }
+        return result;
     }
 }

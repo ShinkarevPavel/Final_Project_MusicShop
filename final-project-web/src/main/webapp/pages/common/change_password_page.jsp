@@ -34,18 +34,27 @@
                 </div>
 
                 <div class="col-md-12"><label class="labels">Enter password:</label>
-                    <input type="password" name="password" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{12,45}$"
-                           class="form-control"></div>
+                    <input type="password"
+                           form="change"
+                           class="form-control"
+                           name="password"
+                           pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{12,45}$"
+                           required>
+                </div>
                 <br>
                 <div class="col-md-12"><label class="labels">Confirm password:</label>
-                    <input type="password" name="checkPassword"
-                           pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{12,45}$" class="form-control"></div>
+                    <input type="password"
+                           form="change"
+                           name="checkPassword"
+                           class="form-control"
+                           required>
+                </div>
                 <strong>
                     <p class="text-danger">${errors.passwordError}</p>
                 </strong>
-                <form method="post" action="${abs_path}/controller?command=change_password_command">
+                <form method="post" id="change" action="${abs_path}/controller?command=change_password_command">
                     <div class="mt-5 text-center">
-                        <button class="btn btn-success profile-button" type="button">Save</button>
+                        <button class="btn btn-success profile-button" type="submit">Save</button>
                     </div>
                 </form>
             </div>

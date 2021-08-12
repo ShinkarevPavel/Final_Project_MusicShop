@@ -35,5 +35,7 @@ public interface UserDao extends BaseDao<Long, User> {
     Optional<User> findUserByNickname(String nickname) throws DaoException;
 
     Optional<User> findUserByRegistrationKey(String registrationKey) throws DaoException;
+
+    boolean changePassword(long userId, String password) throws DaoException;
 }
 

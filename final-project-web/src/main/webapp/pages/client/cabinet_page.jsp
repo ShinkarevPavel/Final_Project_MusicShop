@@ -31,6 +31,9 @@
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right">Profile Settings</h4>
+                    <a href="${abs_path}/pages/common/edit_profile_page.jsp">
+                        <button class="btn btn-success" type="submit">Edit profile</button>
+                    </a>
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-6">
@@ -201,7 +204,8 @@
                             <tr>
                                 <th scope="row">
                                     <a class="link-primary"
-                                       href="${abs_path}/controller?command=show_instrument_details_command&instrumentId=${item.key.instrument_id}">${item.key.instrument_id}</a></th>
+                                       href="${abs_path}/controller?command=show_instrument_details_command&instrumentId=${item.key.instrument_id}">${item.key.instrument_id}</a>
+                                </th>
                                 <td>${item.key.name}</td>
                                 <td>${item.key.brand}</td>
                                 <td>${item.key.price}</td>
@@ -211,10 +215,10 @@
                         </tbody>
                     </table>
                 </div>
-
                 </c:if>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

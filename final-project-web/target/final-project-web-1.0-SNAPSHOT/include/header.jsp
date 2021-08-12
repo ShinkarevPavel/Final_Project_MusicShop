@@ -56,10 +56,10 @@
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li>
-                    <form action="${abs_path}/controller?command=change_locale" method="post">
-                        <input type="hidden" name="command" value="change_locale">
-                        <input type="hidden" name="refererCommand" value="${refererCommand}">
-                        <input type="submit" class="btn btn-outline-light me-2" value="${curr_lang}">
+                    <form action="${abs_path}/controller?command=change_locale" method="post" id="locale">
+                        <input type="hidden" form="locale" name="command" value="change_locale">
+                        <input type="hidden" form="locale" name="refererCommand" value="${refererCommand}">
+                        <input type="submit" form="locale"  class="btn btn-outline-light me-2" value="${curr_lang}">
                     </form>
                 </li>
                 <li><a href="${abs_path}/pages/common/main_page.jsp" class="nav-link px-2 link-secondary">Home</a></li>

@@ -39,6 +39,7 @@ class SqlQuery {
     static final String SQL_FIND_USER_BY_NICKNAME = "SELECT user_id, login, email, nickname, name, surename," +
             "status_value, role_value FROM users LEFT JOIN roles ON users.role_id=roles.id LEFT JOIN statuses ON status_id=statuses.id  WHERE nickname=?";
     static final String USER_ORDER_BY = " ORDER BY login ";
+    static final String SQL_USER_CHANGE_PASSWORD = "UPDATE users SET password=? WHERE user_id=?";
 
     /**
      * Requests to 'instruments' table into musician instruments database

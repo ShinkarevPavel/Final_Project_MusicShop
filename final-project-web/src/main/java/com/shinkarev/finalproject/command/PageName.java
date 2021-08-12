@@ -21,4 +21,5 @@ public class PageName {
     public static final String ORDER_PAGE = "/pages/client/order_page.jsp";
     public static final String CABINET_PAGE = "/pages/client/cabinet_page.jsp";
     public static final String CHANGE_PASSWORD_PAGE = "/pages/common/change_password_page.jsp";
+    public static final String EDIT_PROFILE_PAGE = "/pages/common/edit_profile_page.jsp";
 }

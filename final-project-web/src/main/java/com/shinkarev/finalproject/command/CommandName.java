@@ -30,6 +30,8 @@ public enum CommandName {
     CREATE_ORDER_COMMAND(new CreateOrderCommand()),
     FIND_ORDER_COMMAND(new FindOrderCommand()),
     SHOW_ORDER_DETAILS_COMMAND(new ShowOrderDetailsCommand()),
+    CHANGE_PASSWORD_COMMAND(new ChangePasswordCommand()),
+    EDIT_PROFILE_COMMAND(new EditProfileCommand()),
     ADD_TO_BUCKET_COMMAND(new AddToBucketCommand());
 
     private Command command;

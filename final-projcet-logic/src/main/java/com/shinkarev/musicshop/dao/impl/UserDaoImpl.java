@@ -156,7 +156,7 @@ public class UserDaoImpl implements UserDao {
             try (Connection connection = ConnectionPool.getInstance().getConnection();
                  PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_LOGIN_AND_PASSWORD)) {
                 statement.setString(1, login);
-                statement.setString(2, PasswordHashGenerator.encodePassword(password)); //TODO check DB !!!!!
+                statement.setString(2, PasswordHashGenerator.encodePassword(password));
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     user = UserCreator.createUser(resultSet);
@@ -294,5 +294,19 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return Optional.ofNullable(user);
+    }
+
+    @Override
+    public boolean changePassword(long userId, String password) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_USER_CHANGE_PASSWORD)) {
+            statement.setString(1, PasswordHashGenerator.encodePassword(password));
+            statement.setLong(2, userId);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible change password.", ex);
+        }
+        return rowsUpdate == 1;
     }
 }

@@ -20,13 +20,11 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
 public class RegistrationCommand implements Command {
-    private Router router = new Router();
+
 
     @Override
     public Router execute(HttpServletRequest request) {
-
-
-        if (request.getMethod().equals(METHOD_POST)) {
+            Router router = new Router();
             String login = request.getParameter(LOGIN.getFieldName());
             String password = request.getParameter(PASSWORD.getFieldName());
             String checkPassword = request.getParameter(CHECKPASSWORD.getFieldName());
@@ -46,29 +44,35 @@ public class RegistrationCommand implements Command {
             registrationValues.put(NAME.getFieldName(), name);
             registrationValues.put(SURENAME.getFieldName(), surename);
 
-            InputDataValidator registrationValidator = new RegistrationValidatorImp();
-            Map<String, String> errors = registrationValidator.checkValues(registrationValues, locale);
-            if (!errors.isEmpty()) {
-                request.setAttribute(REGISTRATION_VALUES, registrationValues);
-                request.setAttribute(ERRORS_LIST, errors);
-                router.setPagePath(REGISTRATION_PAGE);
-            } else {
-                User user = new User(login, email, nickname, name, surename, UserStatusType.ACTIVE, UserRoleType.GUEST);
-                UserServiceImpl userService = new UserServiceImpl();
-                try {
-                    String registrationKey = RegistrationConfirmator.setRegistrationToken(email, login);
-                    if (userService.addUser(user, password, registrationKey)) {
-                        router.setPagePath(REGISTRATION_IS_DONE);
-                    } else {
-                        request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops! Something went wrong...");
-                        router.setPagePath(ERROR_PAGE);
-                    }
-                } catch (ServiceException e) {
-                    request.setAttribute(ERRORS_ON_ERROR_PAGE, "looks like our service is bullshit");
-                    router.setPagePath(ERROR_PAGE);
-                }
-            }
-        }
+
+             String method = request.getMethod();
+             if (method.equals(METHOD_POST)) {
+                 InputDataValidator registrationValidator = new RegistrationValidatorImp();
+                 Map<String, String> errors = registrationValidator.checkValues(registrationValues, locale);
+                 if (!errors.isEmpty()) {
+                     request.setAttribute(REGISTRATION_VALUES, registrationValues);
+                     request.setAttribute(ERRORS_LIST, errors);
+                     router.setPagePath(REGISTRATION_PAGE);
+                 } else {
+                     User user = new User(login, email, nickname, name, surename, UserStatusType.ACTIVE, UserRoleType.GUEST);
+                     UserServiceImpl userService = new UserServiceImpl();
+                     try {
+                         String registrationKey = RegistrationConfirmator.setRegistrationToken(email, login);
+                         if (userService.addUser(user, password, registrationKey)) {
+                             router.setPagePath(REGISTRATION_IS_DONE);
+                         } else {
+                             request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops! Something went wrong...");
+                             router.setPagePath(ERROR_PAGE);
+                         }
+                     } catch (ServiceException e) {
+                         request.setAttribute(ERRORS_ON_ERROR_PAGE, "looks like our service is bullshit");
+                         router.setPagePath(ERROR_PAGE);
+                     }
+                 }
+             } else {
+                 router.setPagePath(REGISTRATION_PAGE);
+             }
+
         return router;
     }
 }

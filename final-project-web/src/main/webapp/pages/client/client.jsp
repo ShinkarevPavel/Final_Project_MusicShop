@@ -9,7 +9,7 @@
 <html>
 <head>
     <%@include file="/include/header.jsp" %>
-    Hey, ${sessionScope.get("user").getName()}
+    Hey, ${sessionScope.user.nickname}
 </head>
 <body>
 

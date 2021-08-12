@@ -33,4 +33,8 @@ public interface UserService {
     Optional<User> getUserByRegistrationKey(String registrationKey) throws ServiceException;
 
     List<User> getAllEntity() throws ServiceException;
+
+    boolean changePassword(long userId, String password) throws ServiceException;
+
+    boolean updateUser(User user) throws ServiceException;
 }

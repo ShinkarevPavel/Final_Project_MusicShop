@@ -26,6 +26,6 @@ public class ChangePasswordValidatorImpl implements InputDataValidator {
         } else {
             result.put(PASSWORD_ERROR, LocaleSetter.getInstance().getMassage(PASSWORD.getMessage(), locale));
         }
-        return null;
+        return result;
     }
 }

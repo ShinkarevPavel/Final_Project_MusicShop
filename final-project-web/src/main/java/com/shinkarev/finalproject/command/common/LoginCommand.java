@@ -20,25 +20,24 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 
 public class LoginCommand implements Command {
     private final Logger logger = LogManager.getLogger();
-    private Router router = new Router();
-
 
     @Override
     public Router execute(HttpServletRequest request) {
+        Router router = new Router();
         User user = (User) request.getSession().getAttribute(USER);
         if (user != null) {
             request.setAttribute(USER, user);
-            userPageControl(request, user);
+            userPageControl(request, user, router);
         } else {
             logger.log(Level.DEBUG, "Session is empty");
-            getUser(request);
+            getUser(request, router);
         }
         return router;
     }
 
-    private void getUser(HttpServletRequest request) {
-
-        if (request.getMethod().equals(METHOD_POST)) {
+    private void getUser(HttpServletRequest request, Router router) {
+        String method = request.getMethod();
+        if (method.equals(METHOD_POST)) {
             String locale = (String) request.getSession().getAttribute(LOCALE);
             User user;
             String login = request.getParameter(UserValidator.LOGIN.getFieldName());
@@ -50,16 +49,20 @@ public class LoginCommand implements Command {
                 user = optionalUser.get();
                 logger.log(Level.DEBUG, "Logged user is present on DB" + user);
                 if (user.getStatus().equals(UserStatusType.ACTIVE)) {
-                    userPageControl(request, user);
+                    userPageControl(request, user, router);
                 }
             } else {
                 request.setAttribute(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(PAGE_ERRORS_LOGIN_PASSWORD, locale));
                 router.setPagePath(PageName.LOGIN_PAGE);
             }
+        } else {
+            router.setPagePath(LOGIN_PAGE);
         }
+
+
     }
 
-    private void userPageControl(HttpServletRequest request, User user) {
+    private void userPageControl(HttpServletRequest request, User user, Router router) {
         String locale = (String) request.getSession().getAttribute(LOCALE);
         switch (user.getRole()) {
             case ADMIN -> {
