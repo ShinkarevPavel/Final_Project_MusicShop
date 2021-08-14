@@ -55,7 +55,7 @@ class SqlQuery {
     static final String SQL_ADD_INSTRUMENT = "INSERT INTO instruments(name, brand, country, price, rating," +
             " description, status_id, instrument_type) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
     static final String SQL_UPDATE_INSTRUMENT = "UPDATE instruments SET name=?, brand=?, country=?, price=?," +
-            " description=?, rating=?, status_id=?, instrument_type=? WHERE instrument_id=?";
+            " description=? WHERE instrument_id=?";
     static final String SQL_FIND_INSTRUMENT_BY_BRAND = "SELECT instrument_id, name, brand, country, price, rating," +
             " description, status, type FROM instruments LEFT JOIN instruments_statuses ON " +
             "instruments.status_id=id LEFT JOIN instruments_types ON instruments.instrument_type=type_id WHERE brand=?";
@@ -85,12 +85,14 @@ class SqlQuery {
             "LEFT JOIN instruments_types ON instruments.instrument_type=type_id " +
             "LEFT JOIN buckets ON instruments.instrument_id=buckets.instrument_id WHERE user_id=?";
     static final String SQL_SET_INSTRUMENT_IMAGE = "INSERT INTO instrument_images(instrument_id, instrument_image) VALUES(?, ?)";
-    static final String INSTRUMENT_ORDER_BY = " ORDER BY name ";
+    static final String INSTRUMENT_ORDER_BY = " ORDER BY brand ";
 
     /**
      * Requests to 'orders' table into musician instruments database
      */
-    static final String SQL_ADD_ORDER = "INSERT INTO orders(user_id, order_date, address, status_id, price) VALUES(?, ?, ?, ?, ?)";
+    static final String SQL_FIND_ALL_ORDERS = "SELECT order_id, user_id, order_date, address, status, price, payment FROM orders " +
+            "LEFT JOIN order_statuses ON orders.status_id=order_statuses.status_id";
+    static final String SQL_ADD_ORDER = "INSERT INTO orders(user_id, order_date, address, status_id, price, payment) VALUES(?, ?, ?, ?, ?, ?)";
     static final String SQL_FIND_ORDER_BY_ORDER_ID = "SELECT order_id, user_id, order_date, address, status, price, payment FROM orders " +
             "LEFT JOIN order_statuses ON orders.status_id=order_statuses.status_id WHERE order_id=?";
     static final String SQL_FIND_ORDER_BY_USER_ID = "SELECT order_id, user_id, order_date, address, status, price, payment FROM orders " +
@@ -101,7 +103,9 @@ class SqlQuery {
             "LEFT JOIN instruments_types ON instruments.instrument_type=type_id " +
             "LEFT JOIN order_items ON instruments.instrument_id=order_items.item_id WHERE order_id=?";
     public static final String SQL_CHANGE_ORDER_STATUS = "UPDATE orders SET status_id=? WHERE order_id=?";
-    static final String SQL_FIND_ORDER_BY_STATUS = "SELECT order_id, user_id, order_date, address, status, price, payment FROM orders " +
+    static final String SQL_FIND_USER_ORDER_BY_STATUS = "SELECT order_id, user_id, order_date, address, status, price, payment FROM orders " +
             "LEFT JOIN order_statuses ON orders.status_id=order_statuses.status_id WHERE user_id=? and orders.status_id=?";
+    static final String SQL_FIND_ORDER_BY_STATUS = "SELECT order_id, user_id, order_date, address, status, price, payment FROM orders " +
+            "LEFT JOIN order_statuses ON orders.status_id=order_statuses.status_id WHERE orders.status_id=?";
 
 }

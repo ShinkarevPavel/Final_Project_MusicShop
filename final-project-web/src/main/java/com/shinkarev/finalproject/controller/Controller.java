@@ -33,11 +33,13 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Optional<CommandName> commandName = getCommandName(request);
+        Optional<CommandName> commandName = CommandProvider.getInstance().getCommandName(request);
         if (commandName.isPresent()) {
             Router router = commandName.get().getCommand().execute(request);
             request.setAttribute(ParamName.REFERER_PARAM, commandName.get().name());
-            if (router.getRouterType() == Router.RouterType.REDIRECT) {
+            if (router.hasError()) {
+                response.sendError(router.getErrorCode());
+            } else if (router.getRouterType() == Router.RouterType.REDIRECT) {
                 response.sendRedirect(router.getPagePath());
             } else {
                 request.getRequestDispatcher(router.getPagePath()).forward(request, response);
@@ -45,16 +47,8 @@ public class Controller extends HttpServlet {
         } else {
             response.sendRedirect(PageName.ERROR_PAGE);
         }
-        Locale locale = new Locale("en", "US");
-        response.setLocale(locale);
     }
 
-    private Optional<CommandName> getCommandName(HttpServletRequest request) {
-        String name = request.getParameter(ParamName.COMMAND_PARAM);
-        CommandName commandName;
-        commandName = CommandName.valueOf(name.toUpperCase());
-        return Optional.of(commandName);
-    }
     @Override
     public void destroy() {
         super.destroy();

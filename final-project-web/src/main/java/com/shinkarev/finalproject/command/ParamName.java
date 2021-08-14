@@ -4,7 +4,6 @@ public class ParamName {
 
     private ParamName() {}
 
-    /*Error keys*/
     public static final String LOGIN_ERROR = "loginError";
     public static final String PASSWORD_ERROR = "passwordError";
     public static final String EMAIL_ERROR = "emailError";
@@ -19,12 +18,8 @@ public class ParamName {
     public static final String INSTRUMENT_RATING_ERROR = "instrumentRatingError";
     public static final String INSTRUMENT_STATUS_ERROR = "instrumentStatusError";
     public static final String INSTRUMENT_TYPE_ERROR = "instrumentTypeError";
-
-    /*Error Messages*/
     public static final String MESSAGE_ERROR_LOGIN = "page.registration.login.message.error";
     public static final String MESSAGE_ERROR_EMAIL = "page.registration.email.message.error";
-
-    /**/
     public static final String COMMAND_PARAM = "command";
     public static final String LOCALIZATION = "localization";
     public static final String CONFIRM_KEY = "confirm";
@@ -47,7 +42,6 @@ public class ParamName {
     public static final String INSTRUMENT_PARAM = "instrument";
     public static final String INSTRUMENT_DETAILS_ERROR = "instrument_error";
     public static final String PAGEABLE = "pageable";
-
     public static final String INSTRUMENTS = "instruments";
     public static final String INSTRUMENT_ID_PARAM = "instrumentId";
     public static final String INSTRUMENT_NEW_STATUS_PARAM = "new_status";
@@ -56,20 +50,26 @@ public class ParamName {
     public static final String INSTRUMENT_TYPE_PARAM = "instrumentType";
     public static final String INSTRUMENT_STATUS_PARAM = "instrumentStatus";
     public static final String IMAGE_PARAM = "image";
-
     public static final String ADDRESS_DELIVERY = "address";
     public static final String RATING = "rating";
     public static final String RATING_MESSAGE = "message";
+    public static final String ADMIN_PAGE_MESSAGE = "adminMessage";
     public static final String CART_ITEMS = "items";
     public static final String TOTAL_CART = "total";
     public static final String ITEM_QUANTITY = "quantity";
     public static final String PAYMENT = "payment";
     public static final String ORDERS_PARAM = "orders";
-    public static final String ORDER_MESSAGE = "message";
-
-    /*Properties keys*/
+    public static final String ADMIN_MESSAGE = "message";
     public static final String PAGE_ERRORS_LOGIN_PASSWORD = "page.errors.login_password_error";
     public static final String PAGE_ERRORS_REGISTRATION_CONFIRMING = "page.errors.registration_confirming_error";
     public static final String EMPTY_INSTRUMENTS_LIST = "page.instruments.message";
-
+    public static final String ORDER_DETAILS = "details";
+    public static final String ORDER = "order";
+    public static final String COLLECTIONS_PARAM = "items";
+    public static final String ORDER_PARAM = "orderId";
+    public static final String UPDATE_INSTRUMENT_PARAM = "updateValues";
+    public static final String MARK = "mark";
+    public static final String ERROR_CODE = "error_code";
+    public static final String ERROR_NAME = "error_name";
+    public static final Object SERVER_ERROR = "Server Error";
 }

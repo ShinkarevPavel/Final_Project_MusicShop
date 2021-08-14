@@ -14,7 +14,7 @@ import static com.shinkarev.finalproject.validator.UserValidator.*;
 
 public class AdminRegistrationValidatorImpl implements InputDataValidator {
     @Override
-    public Map<String, String> checkValues(Map<String, String> values, String locale) {
+    public Map<String, String> checkValues(Map<String, String> values, String locale) throws ServiceException {
         Map<String, String> result = new HashMap<>();
         UserServiceImpl userService = new UserServiceImpl();
 
@@ -23,28 +23,19 @@ public class AdminRegistrationValidatorImpl implements InputDataValidator {
          */
         String login = values.get(LOGIN.getFieldName());
         if (login != null) {
-            try {
-                if (!userService.isLoginUnique(login)) {
-                    result.put(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(MESSAGE_ERROR_LOGIN, locale));
-                }
-            } catch (ServiceException e) {
-                // TODO ?????
+            if (!userService.isLoginUnique(login)) {
+                result.put(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(MESSAGE_ERROR_LOGIN, locale));
             }
         } else {
             result.put(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(LOGIN.getMessage(), locale));
         }
-
         /*
          *This block checking email on RegEx conformity and unique
          */
         String email = values.get(EMAIL.getFieldName());
         if (email != null) {
-            try {
-                if (!userService.isEmailUnique(email)) {
-                    result.put(EMAIL_ERROR, LocaleSetter.getInstance().getMassage(MESSAGE_ERROR_EMAIL, locale));
-                }
-            } catch (ServiceException e) {
-                //Todo add Exc in signature method
+            if (!userService.isEmailUnique(email)) {
+                result.put(EMAIL_ERROR, LocaleSetter.getInstance().getMassage(MESSAGE_ERROR_EMAIL, locale));
             }
         } else {
             result.put(EMAIL_ERROR, LocaleSetter.getInstance().getMassage(EMAIL.getMessage(), locale));

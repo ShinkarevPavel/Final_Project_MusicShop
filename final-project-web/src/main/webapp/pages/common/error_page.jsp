@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: Pavel_Shinkarev
@@ -6,8 +7,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="${curr_lang}" scope="request"/>
-<fmt:setBundle basename="localization"/>
+<%@ page isErrorPage="true"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <html lang="en">
 <head>
@@ -18,12 +20,10 @@
 <body>
 
 <div class="not-found">
-    <h2 ><span>404</span><br>Page not found</h2>
-    <h3>${error}</h3>
+    <h2 ><span>${pageContext.errorData.statusCode}</span><br>${pageContext.exception.message}<br>${error}</h2>
     <p>Unfortunately the action you performed led to getting to this page<br>Please correct your request or ...</p>
     <div class="go-on">
-        <a href="#">Visit Homepage</a>
-        <a href="#">Contact Us</a>
+        <a href="${pageContext.request.contextPath}/pages/common/main_page.jsp">Visit Homepage</a>
     </div>
 </div>
 </body>

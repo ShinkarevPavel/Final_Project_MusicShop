@@ -36,21 +36,22 @@ public class ChangePasswordCommand implements Command {
 
         String method = request.getMethod();
         if (method.equals(METHOD_POST)) {
-            Map<String, String> errors = registrationValidator.checkValues(registrationValues, locale);
-            if (!errors.isEmpty()) {
-                request.setAttribute(REGISTRATION_VALUES, registrationValues);
-                request.setAttribute(ERRORS_LIST, errors);
-                router.setPagePath(PageName.CHANGE_PASSWORD_PAGE);
-            } else {
-                try {
+            Map<String, String> errors;
+            try {
+                errors = registrationValidator.checkValues(registrationValues, locale);
+                if (!errors.isEmpty()) {
+                    request.setAttribute(REGISTRATION_VALUES, registrationValues);
+                    request.setAttribute(ERRORS_LIST, errors);
+                    router.setPagePath(PageName.CHANGE_PASSWORD_PAGE);
+                } else {
                     if (userService.changePassword(user.getId(), password)) {
                         request.getSession().removeAttribute(USER);
                         router.setPagePath(LOGIN_PAGE);
                     }
-                } catch (ServiceException ex) {
-                    request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops. something went wrong. We will work with it...");
-                    router.setPagePath(ERROR_PAGE);
                 }
+            } catch (ServiceException e) {
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops. something went wrong. We will work with it...");
+                router.setPagePath(ERROR_PAGE);
             }
         } else {
             router.setPagePath(CHANGE_PASSWORD_PAGE);

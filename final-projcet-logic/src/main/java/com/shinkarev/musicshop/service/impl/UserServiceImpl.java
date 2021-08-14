@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> login(String login, String password) {
+    public Optional<User> login(String login, String password) throws ServiceException{
         User user = null;
         try {
             Optional<User> currentUser = userDao.findUserByLoginAndPassword(login, password);
@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
                 user = currentUser.get();
             }
         } catch (DaoException e) {
-//            TODO
+            throw new ServiceException("Error with find all Users .", e);
         }
         return Optional.ofNullable(user);
     }

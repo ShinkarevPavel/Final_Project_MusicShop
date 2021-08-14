@@ -175,6 +175,9 @@
 
                 </div>
             </div>
+            <strong>
+                <p class="text-danger">${message}</p>
+            </strong>
             <br>
             <div class="col">
                 <label class="labels">Order id:</label>

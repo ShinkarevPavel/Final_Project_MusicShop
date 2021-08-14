@@ -8,6 +8,7 @@ import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.OrderService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -15,6 +16,27 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao = new OrderDaoImpl();
 
+    @Override
+    public List<Order> findOrderByStatus(OderType status) throws ServiceException {
+        List<Order> orders;
+        try {
+            orders = orderDao.findOrdersByStatus(status);
+        } catch (DaoException ex) {
+            throw new ServiceException("Fatal. Error of getting orders", ex);
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> findAllOrders() throws ServiceException {
+        List<Order> orders= new ArrayList<>();
+        try {
+            orders = orderDao.findAll();
+        } catch (DaoException ex) {
+            throw new ServiceException("Fatal. Error of getting orders", ex);
+        }
+        return orders;
+    }
 
     @Override
     public boolean addOrder(Order order, Map<Long, Integer> items) throws ServiceException {
@@ -52,10 +74,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findOrderByStatus(long userId, OderType status) throws ServiceException {
+    public List<Order> findUserOrderByStatus(long userId, OderType status) throws ServiceException {
         List<Order> orders;
         try {
-            orders = orderDao.findOrderByStatus(userId, status);
+            orders = orderDao.findUserOrderByStatus(userId, status);
         } catch (DaoException ex) {
             throw new ServiceException("Fatal. Error of getting order", ex);
         }

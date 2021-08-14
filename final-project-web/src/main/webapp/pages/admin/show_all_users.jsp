@@ -14,14 +14,19 @@
 
     <table border="4" class="table table-striped">
         <tr>
+            <th>User id</th>
             <th>Login</th>
             <th>Email</th>
             <th>Role</th>
             <th>Status</th>
             <th>User Control</th>
         </tr>
+        <strong>
+            <p class="text-danger">${message}</p>
+        </strong>
         <c:forEach items="${users}" var="user">
         <tr>
+            <td>${user.id}</td>
             <td>${user.login}</td>
             <td>${user.email}</td>
             <td>
@@ -69,6 +74,5 @@
             </li>
         </ul>
     </nav>
-
 </body>
 </html>

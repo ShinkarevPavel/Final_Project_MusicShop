@@ -1,46 +1,42 @@
-package com.shinkarev.finalproject.command.client;
+package com.shinkarev.finalproject.command.admin;
 
-import com.oracle.wls.shaded.org.apache.xpath.operations.Or;
 import com.shinkarev.finalproject.command.Command;
-import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.ParamName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.musicshop.entity.OderType;
 import com.shinkarev.musicshop.entity.Order;
-import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.OrderService;
 import com.shinkarev.musicshop.service.impl.OrderServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
-public class FindOrderCommand implements Command {
+public class FindOrderByType implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
-        User user = (User) request.getSession().getAttribute(USER);
-        String orderType = request.getParameter(ENTITY_NEW_TYPE_PARAM);
         OrderService orderService = new OrderServiceImpl();
+        String type = request.getParameter(ParamName.ENTITY_NEW_TYPE_PARAM);
+
         List<Order> orders;
+
         try {
-            orders = orderService.findOrderByStatus(user.getId(), OderType.valueOf(orderType));
-            if (orders.size() != 0) {
-                request.setAttribute(ParamName.ORDERS_PARAM, orders);
+            orders = orderService.findOrderByStatus(OderType.valueOf(type));
+            if (!orders.isEmpty()) {
+                request.setAttribute(ORDERS_PARAM, orders);
             } else {
-                request.setAttribute(ParamName.ORDER_MESSAGE, "You don't have " + orderType + " orders");
+                request.setAttribute(ADMIN_MESSAGE, "There is no orders");
             }
-            router.setPagePath(CABINET_PAGE);
+            router.setPagePath(SHOW_ALL_ORDERS);
         } catch (ServiceException e) {
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops, something went wrong. We fix it, later ;)");
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops");
             router.setPagePath(ERROR_PAGE);
         }
-
         return router;
     }
 }

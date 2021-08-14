@@ -53,7 +53,6 @@
                             <form>
                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-
                                     <li class="nav-item active">
                                         <div class="dropdown">
                                             <a class="btn btn-secondary" href="${abs_path}/pages/common/main_page.jsp">Home</a>
@@ -72,9 +71,7 @@
                                                 aria-labelledby="d">
 
                                                 <li><a class="dropdown-item"  href="${abs_path}/pages/admin/find_user.jsp">Find user</a></li>
-                                                <li><a class="dropdown-item" href="#">Add user</a></li>
-                                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-
+                                                <li><a class="dropdown-item" href="${abs_path}/pages/admin/add_user.jsp">Add user</a></li>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
@@ -98,7 +95,12 @@
                                             <ul class="dropdown-menu dropdown-menu-sm-start"
                                                 aria-labelledby="d">
                                                 <li><a class="dropdown-item"
-                                                       href="${abs_path}/pages/admin/add_instrument.jsp">Add instrument</a></li>
+                                                       href="${abs_path}/pages/admin/add_instrument.jsp">Add instrument</a>
+                                                </li>
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+
                                                 <li><a class="dropdown-item"
                                                        href="${abs_path}/controller?command=show_type_instrument&instrumentType=GUITARS">
                                                     Show Guitars</a></li>
@@ -122,6 +124,42 @@
                                             </ul>
                                         </div>
                                     </li>
+
+                                    <li class="nav-item">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton4" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                Order Tool
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                <li><a class="dropdown-item"
+                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=CREATED">Created</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=PROCESSING">Processing</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=ACCEPTED">Accepted</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=ON_DELIVERY">On delivery</a>
+                                                </li>
+                                                <li><a class="dropdown-item"
+                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=DELIVERED">Delivered</a>
+                                                </li>
+
+                                                <li>
+                                                    <hr class="dropdown-divider">
+                                                </li>
+
+                                                <li><a class="dropdown-item btn-outline-secondary"
+                                                       href="${abs_path}/controller?command=show_all_orders_command">Show all Orders</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
 
                                 </ul>
                             </form>

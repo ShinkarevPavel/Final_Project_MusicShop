@@ -23,6 +23,17 @@ public class InstrumentServiceImpl implements InstrumentService {
     private InstrumentDao instrumentDao = new InstrumentDaoImpl();
 
     @Override
+    public boolean update(Instrument instrument) throws ServiceException {
+        boolean flag;
+        try {
+            flag =instrumentDao.update(instrument);
+        } catch (DaoException e) {
+            throw new ServiceException("Error with instrument updating .", e);
+        }
+        return flag;
+    }
+
+    @Override
     public int getInstrumentCount() throws ServiceException {
         try {
             return instrumentDao.getInstrumentCount();
@@ -84,10 +95,10 @@ public class InstrumentServiceImpl implements InstrumentService {
     }
 
     @Override
-    public List<Instrument> findInstrumentByType(InstrumentType instrumentType) throws ServiceException {
+    public List<Instrument> findInstrumentByType(InstrumentType instrumentType, int page) throws ServiceException {
         List<Instrument> instruments;
         try {
-            instruments = instrumentDao.findInstrumentByType(instrumentType);
+            instruments = instrumentDao.findInstrumentByType(instrumentType, page);
         } catch (DaoException ex) {
             throw new ServiceException("Error. Impossible get instrument(s) from DB", ex);
         }

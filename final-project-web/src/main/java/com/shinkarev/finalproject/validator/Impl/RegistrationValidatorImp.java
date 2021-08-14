@@ -14,7 +14,7 @@ import static com.shinkarev.finalproject.validator.UserValidator.*;
 
 public class RegistrationValidatorImp implements InputDataValidator {
     @Override
-    public Map<String, String> checkValues(Map<String, String> values, String locale) {
+    public Map<String, String> checkValues(Map<String, String> values, String locale) throws ServiceException {
         Map<String, String> result = new HashMap<>();
         UserService userService = new UserServiceImpl();
         String login = values.get(LOGIN.getFieldName());
@@ -22,12 +22,8 @@ public class RegistrationValidatorImp implements InputDataValidator {
          *This block checking login on RegEx conformity and unique
          */
         if (login != null && login.matches(LOGIN.getRegExp())) {
-            try {
-                if (!userService.isLoginUnique(login)) {
-                    result.put(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(MESSAGE_ERROR_LOGIN, locale));
-                }
-            } catch (ServiceException e) {
-                // TODO ?????
+            if (!userService.isLoginUnique(login)) {
+                result.put(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(MESSAGE_ERROR_LOGIN, locale));
             }
         } else {
             result.put(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(LOGIN.getMessage(), locale));
@@ -40,7 +36,7 @@ public class RegistrationValidatorImp implements InputDataValidator {
         String checkPassword = values.get(CHECKPASSWORD.getFieldName());
         if (password != null && password.matches(PASSWORD.getRegExp())) {
             if (!password.equals(checkPassword)) {
-                result.put(PASSWORD_ERROR,LocaleSetter.getInstance().getMassage(CHECKPASSWORD.getMessage(), locale));
+                result.put(PASSWORD_ERROR, LocaleSetter.getInstance().getMassage(CHECKPASSWORD.getMessage(), locale));
             }
         } else {
             result.put(PASSWORD_ERROR, LocaleSetter.getInstance().getMassage(PASSWORD.getMessage(), locale));
@@ -51,13 +47,10 @@ public class RegistrationValidatorImp implements InputDataValidator {
          */
         String email = values.get(EMAIL.getFieldName());
         if (email != null && email.matches(EMAIL.getRegExp())) {
-            try {
-                if (!userService.isEmailUnique(email)) {
-                    result.put(EMAIL_ERROR, LocaleSetter.getInstance().getMassage(MESSAGE_ERROR_EMAIL, locale));
-                }
-            } catch (ServiceException e) {
-               // todo
+            if (!userService.isEmailUnique(email)) {
+                result.put(EMAIL_ERROR, LocaleSetter.getInstance().getMassage(MESSAGE_ERROR_EMAIL, locale));
             }
+
         } else {
             result.put(EMAIL_ERROR, LocaleSetter.getInstance().getMassage(EMAIL.getMessage(), locale));
         }

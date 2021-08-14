@@ -26,6 +26,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
         return rowCountByQuery(SQL_GET_ALL_INSTRUMENTS);
     }
 
+
     private int rowCountByQuery(String sourceQuery) throws DaoException {
         int result = 0;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
@@ -180,16 +181,21 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
-    public boolean update(Instrument instrument) throws DaoException { // TODO For what boolean ?
-        boolean flag;
+    public boolean update(Instrument instrument) throws DaoException {
+        int rowsUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_INSTRUMENT)) {
-            setParameters(instrument, statement);
-            flag = statement.executeUpdate() != 0;
+            statement.setString(1, instrument.getName());
+            statement.setString(2, instrument.getBrand());
+            statement.setString(3, instrument.getCountry());
+            statement.setDouble(4, instrument.getPrice());
+            statement.setString(5, instrument.getDescription());
+            statement.setLong(6, instrument.getInstrument_id());
+            rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
             throw new DaoException("Error of updating instrument", ex);
         }
-        return flag;
+        return rowsUpdate == 1;
     }
 
     @Override
@@ -227,10 +233,10 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
-    public List<Instrument> findInstrumentByType(InstrumentType type) throws DaoException {
+    public List<Instrument> findInstrumentByType(InstrumentType type, int page) throws DaoException {
         List<Instrument> instruments = new ArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_INSTRUMENT_BY_TYPE)) {
+             PreparedStatement statement = connection.prepareStatement(buildPageableQuery(SQL_FIND_INSTRUMENT_BY_TYPE + INSTRUMENT_ORDER_BY, page) )) {
             statement.setInt(1, InstrumentType.ordinal(type));
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

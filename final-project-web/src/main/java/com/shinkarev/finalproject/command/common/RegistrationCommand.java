@@ -24,55 +24,56 @@ public class RegistrationCommand implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
-            Router router = new Router();
-            String login = request.getParameter(LOGIN.getFieldName());
-            String password = request.getParameter(PASSWORD.getFieldName());
-            String checkPassword = request.getParameter(CHECKPASSWORD.getFieldName());
-            String email = request.getParameter(EMAIL.getFieldName());
-            String nickname = request.getParameter(NICKNAME.getFieldName());
-            String name = request.getParameter(NAME.getFieldName());
-            String surename = request.getParameter(SURENAME.getFieldName());
-            String locale = (String) request.getSession().getAttribute(LOCALE);
+        Router router = new Router();
+        String login = request.getParameter(LOGIN.getFieldName());
+        String password = request.getParameter(PASSWORD.getFieldName());
+        String checkPassword = request.getParameter(CHECKPASSWORD.getFieldName());
+        String email = request.getParameter(EMAIL.getFieldName());
+        String nickname = request.getParameter(NICKNAME.getFieldName());
+        String name = request.getParameter(NAME.getFieldName());
+        String surename = request.getParameter(SURENAME.getFieldName());
+        String locale = (String) request.getSession().getAttribute(LOCALE);
 
-            Map<String, String> registrationValues = new HashMap<>();
+        Map<String, String> registrationValues = new HashMap<>();
 
-            registrationValues.put(LOGIN.getFieldName(), login);
-            registrationValues.put(PASSWORD.getFieldName(), password);
-            registrationValues.put(CHECKPASSWORD.getFieldName(), checkPassword);
-            registrationValues.put(EMAIL.getFieldName(), email);
-            registrationValues.put(NICKNAME.getFieldName(), nickname);
-            registrationValues.put(NAME.getFieldName(), name);
-            registrationValues.put(SURENAME.getFieldName(), surename);
+        registrationValues.put(LOGIN.getFieldName(), login);
+        registrationValues.put(PASSWORD.getFieldName(), password);
+        registrationValues.put(CHECKPASSWORD.getFieldName(), checkPassword);
+        registrationValues.put(EMAIL.getFieldName(), email);
+        registrationValues.put(NICKNAME.getFieldName(), nickname);
+        registrationValues.put(NAME.getFieldName(), name);
+        registrationValues.put(SURENAME.getFieldName(), surename);
 
 
-             String method = request.getMethod();
-             if (method.equals(METHOD_POST)) {
-                 InputDataValidator registrationValidator = new RegistrationValidatorImp();
-                 Map<String, String> errors = registrationValidator.checkValues(registrationValues, locale);
-                 if (!errors.isEmpty()) {
-                     request.setAttribute(REGISTRATION_VALUES, registrationValues);
-                     request.setAttribute(ERRORS_LIST, errors);
-                     router.setPagePath(REGISTRATION_PAGE);
-                 } else {
-                     User user = new User(login, email, nickname, name, surename, UserStatusType.ACTIVE, UserRoleType.GUEST);
-                     UserServiceImpl userService = new UserServiceImpl();
-                     try {
-                         String registrationKey = RegistrationConfirmator.setRegistrationToken(email, login);
-                         if (userService.addUser(user, password, registrationKey)) {
-                             router.setPagePath(REGISTRATION_IS_DONE);
-                         } else {
-                             request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops! Something went wrong...");
-                             router.setPagePath(ERROR_PAGE);
-                         }
-                     } catch (ServiceException e) {
-                         request.setAttribute(ERRORS_ON_ERROR_PAGE, "looks like our service is bullshit");
-                         router.setPagePath(ERROR_PAGE);
-                     }
-                 }
-             } else {
-                 router.setPagePath(REGISTRATION_PAGE);
-             }
+        String method = request.getMethod();
+        if (method.equals(METHOD_POST)) {
+            InputDataValidator registrationValidator = new RegistrationValidatorImp();
+            Map<String, String> errors;
+            try {
+                errors = registrationValidator.checkValues(registrationValues, locale);
+                if (!errors.isEmpty()) {
+                    request.setAttribute(REGISTRATION_VALUES, registrationValues);
+                    request.setAttribute(ERRORS_LIST, errors);
+                    router.setPagePath(REGISTRATION_PAGE);
+                } else {
+                    User user = new User(login, email, nickname, name, surename, UserStatusType.ACTIVE, UserRoleType.GUEST);
+                    UserServiceImpl userService = new UserServiceImpl();
 
+                    String registrationKey = RegistrationConfirmator.setRegistrationToken(email, login);
+                    if (userService.addUser(user, password, registrationKey)) {
+                        router.setPagePath(REGISTRATION_IS_DONE);
+                    } else {
+                        request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops! Something went wrong...");
+                        router.setPagePath(ERROR_PAGE);
+                    }
+                }
+            } catch (ServiceException e) {
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, "looks like our service is bullshit");
+                router.setPagePath(ERROR_PAGE);
+            }
+        } else {
+            router.setPagePath(REGISTRATION_PAGE);
+        }
         return router;
     }
 }

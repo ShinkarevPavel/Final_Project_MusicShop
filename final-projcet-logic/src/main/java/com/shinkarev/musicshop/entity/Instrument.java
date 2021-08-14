@@ -41,6 +41,15 @@ public class Instrument extends Entity {
         this.type = type;
     }
 
+    public Instrument(long instrument_id, String name, String brand, String country, double price, String description) {
+        this.instrument_id = instrument_id;
+        this.name = name;
+        this.brand = brand;
+        this.country = country;
+        this.price = price;
+        this.description = description;
+    }
+
     public long getInstrument_id() {
         return instrument_id;
     }

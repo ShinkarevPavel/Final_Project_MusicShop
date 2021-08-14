@@ -24,11 +24,12 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.InstrumentValidator.*;
 
 public class AddInstrumentCommand implements Command {
-    private Router router = new Router();
 
     @Override
     public Router execute(HttpServletRequest request) {
-        if (request.getMethod().equals(METHOD_POST)) {
+        Router router = new Router();
+        String method = request.getMethod();
+        if (method.equals(METHOD_POST)) {
             String instrumentName = request.getParameter(INSTRUMENT_NAME.getFieldName());
             String instrumentBrand = request.getParameter(INSTRUMENT_BRAND.getFieldName());
             String instrumentCountry = request.getParameter(INSTRUMENT_COUNTRY.getFieldName());
@@ -71,7 +72,7 @@ public class AddInstrumentCommand implements Command {
                     if (instrumentService.addInstrument(instrument, images)) {
                         router.setPagePath(ADMIN_PAGE);
                     }
-                } catch (ServiceException e) {
+                } catch (ServiceException | NumberFormatException e) {
                     request.setAttribute(ERRORS_ON_ERROR_PAGE, "Error of adding instrument");
                     router.setPagePath(ERROR_PAGE);
                 } catch (IOException | ServletException ex) {
@@ -83,6 +84,8 @@ public class AddInstrumentCommand implements Command {
                 request.setAttribute(ERRORS_LIST, errors);
                 router.setPagePath(ADD_INSTRUMENT);
             }
+        } else {
+            router.setPagePath(ADD_INSTRUMENT);
         }
         return router;
     }

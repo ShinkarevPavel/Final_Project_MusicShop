@@ -23,7 +23,7 @@ public class GetOderByStatusCommand implements Command {
         OrderServiceImpl orderService = new OrderServiceImpl();
 
         try {
-            orders = orderService.findOrderByStatus(Long.parseLong(userId), OderType.valueOf(status));
+            orders = orderService.findUserOrderByStatus(Long.parseLong(userId), OderType.valueOf(status));
             if (orders.size() != 0) {
 //                request.setAttribute(); sent list on jsp
             } else {

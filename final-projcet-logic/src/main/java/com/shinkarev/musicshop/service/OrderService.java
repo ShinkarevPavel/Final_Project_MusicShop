@@ -9,15 +9,19 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface OrderService {
+    List<Order> findAllOrders() throws ServiceException;
+
     boolean addOrder(Order order, Map<Long, Integer> items) throws ServiceException;
 
     List<Order> getOderByUserId(long userId) throws ServiceException;
 
     Optional<Order> getOderByOrderId(long orderId) throws ServiceException;
 
-    List<Order> findOrderByStatus(long userId, OderType status) throws ServiceException;
+    List<Order> findUserOrderByStatus(long userId, OderType status) throws ServiceException;
 
     boolean changeOrderStatusByOrderId(long orderId, OderType status) throws ServiceException;
 
     Optional<Order> findOrderById(long orderId) throws ServiceException;
+
+    List<Order> findOrderByStatus(OderType status) throws ServiceException;
 }

@@ -14,7 +14,7 @@ public interface UserService {
 
     List<User> readByPage(int page) throws ServiceException;
 
-    Optional<User> login(String login, String password);
+    Optional<User> login(String login, String password) throws ServiceException;
 
     boolean isLoginUnique(String login) throws ServiceException;
 

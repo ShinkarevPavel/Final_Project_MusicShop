@@ -19,11 +19,14 @@ public class OrderProcessingCommand implements Command {
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
         User user = (User) request.getSession().getAttribute(USER);
-        String total = request.getParameter(TOTAL_CART);
         InstrumentService instrumentService = new InstrumentServiceImpl();
 
         try {
             Map<Instrument, Integer> items = instrumentService.getUserBucket(user.getId());
+            double total = 0;
+            for (Map.Entry<Instrument, Integer> item : items.entrySet()) {
+                total += (item.getKey().getPrice() * item.getValue());
+            }
             request.setAttribute(TOTAL_CART, total);
             request.setAttribute(CART_ITEMS, items);
         } catch (ServiceException | NumberFormatException ex) {

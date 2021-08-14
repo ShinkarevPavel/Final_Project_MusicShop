@@ -40,22 +40,22 @@ public class EditProfileCommand implements Command {
         String method = request.getMethod();
         if (method.equals(METHOD_POST)) {
             InputDataValidator dataValidator = new EditProfileValidatorImpl();
-            Map<String, String> errors = dataValidator.checkValues(registrationValues, locale);
-            if (!errors.isEmpty()) {
-                request.setAttribute(NICKNAME.getFieldName(), errors.get(NICKNAME.getFieldName()));
-                router.setPagePath(EDIT_PROFILE_PAGE);
-            } else {
-                user.setNickname(nickname);
-                user.setName(name);
-                user.setSurename(surename);
-                router.setPagePath(EDIT_PROFILE_PAGE);
-                try {
+            Map<String, String> errors;
+            try {
+                errors = dataValidator.checkValues(registrationValues, locale);
+                if (!errors.isEmpty()) {
+                    request.setAttribute(NICKNAME.getFieldName(), errors.get(NICKNAME.getFieldName()));
+                    router.setPagePath(EDIT_PROFILE_PAGE);
+                } else {
+                    user.setNickname(nickname);
+                    user.setName(name);
+                    user.setSurename(surename);
                     if (userService.updateUser(user)) {
-                        request.setAttribute(ERRORS_ON_ERROR_PAGE, "Impossible update User");
+                        router.setPagePath(EDIT_PROFILE_PAGE);
                     }
-                } catch (ServiceException e) {
-//
                 }
+            } catch (ServiceException e) {
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, "Impossible update User");
             }
         }
         return router;

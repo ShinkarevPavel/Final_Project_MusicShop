@@ -84,7 +84,7 @@ background-size: cover">
                                name="instrument_rating"
                                value="${registrationValues.instrument_rating}"
                                id="form1Example8"
-                               pattern="[0-5]"
+                               pattern="^(\d+\.\d+)$"
                                class="form-control"/>
                         <strong>
                             <p class="text-danger">${errors.instrumentRatingError}</p>
@@ -98,7 +98,7 @@ background-size: cover">
                                name="instrument_description"
                                value="${registrationValues.instrument_description}"
                                id="form1Example5"
-                               pattern="^[\w\s,.А-Яа-я():;!?@#$%^&\-+=]{2,800}$"
+                               pattern="^[\w\s,\\.А-Яа-я():;'"*!?@#$%^&\-+=]{2,800}$"
                                class="form-control"/>
                         <strong>
                             <p class="text-danger">${errors.instrumentDescriptionError}</p>

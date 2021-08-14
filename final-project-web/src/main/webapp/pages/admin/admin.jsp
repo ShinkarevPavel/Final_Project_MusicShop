@@ -21,5 +21,6 @@ background-size: cover">
 <%@include file="/include/admin_header.jsp"%>
 
             ${user.nickname}
+            ${message}
 </body>
 </html>

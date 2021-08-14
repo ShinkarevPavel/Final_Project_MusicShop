@@ -168,3 +168,95 @@
 2021-08-11 16:38 INFO  BaseDao -Were found 1 instruments
 2021-08-11 17:38 INFO  PoolChecker -Service mode was switched on
 2021-08-11 17:38 INFO  PoolChecker -Service mode was switched off
+2021-08-13 01:51 INFO  BaseDao -Were found 1 instruments
+2021-08-13 01:53 INFO  BaseDao -Were found 1 instruments
+2021-08-14 09:58 ERROR BaseDao -Can't count row count. 
+java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1020) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:39) [classes/:?]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.getInstrumentTypeCount(InstrumentDaoImpl.java:31) [classes/:?]
+	at com.shinkarev.musicshop.service.impl.InstrumentServiceImpl.getInstrumentTypeCount(InstrumentServiceImpl.java:28) [classes/:?]
+	at com.shinkarev.musicshop.Main.main(Main.java:98) [classes/:?]
+2021-08-14 09:58 ERROR InstrumentServiceImpl -Error with instrument count .
+com.shinkarev.musicshop.exception.DaoException: Can't count row count.
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:45) ~[classes/:?]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.getInstrumentTypeCount(InstrumentDaoImpl.java:31) ~[classes/:?]
+	at com.shinkarev.musicshop.service.impl.InstrumentServiceImpl.getInstrumentTypeCount(InstrumentServiceImpl.java:28) [classes/:?]
+	at com.shinkarev.musicshop.Main.main(Main.java:98) [classes/:?]
+Caused by: java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1020) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:39) ~[classes/:?]
+	... 3 more
+2021-08-14 10:03 ERROR BaseDao -Can't count row count. 
+java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1020) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:39) [classes/:?]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.getInstrumentTypeCount(InstrumentDaoImpl.java:31) [classes/:?]
+	at com.shinkarev.musicshop.service.impl.InstrumentServiceImpl.getInstrumentTypeCount(InstrumentServiceImpl.java:28) [classes/:?]
+	at com.shinkarev.musicshop.Main.main(Main.java:98) [classes/:?]
+2021-08-14 10:03 ERROR InstrumentServiceImpl -Error with instrument count .
+com.shinkarev.musicshop.exception.DaoException: Can't count row count.
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:45) ~[classes/:?]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.getInstrumentTypeCount(InstrumentDaoImpl.java:31) ~[classes/:?]
+	at com.shinkarev.musicshop.service.impl.InstrumentServiceImpl.getInstrumentTypeCount(InstrumentServiceImpl.java:28) [classes/:?]
+	at com.shinkarev.musicshop.Main.main(Main.java:98) [classes/:?]
+Caused by: java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1020) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:39) ~[classes/:?]
+	... 3 more
+2021-08-14 10:07 ERROR BaseDao -Can't count row count. 
+java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1020) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:39) [classes/:?]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.getInstrumentTypeCount(InstrumentDaoImpl.java:31) [classes/:?]
+	at com.shinkarev.musicshop.service.impl.InstrumentServiceImpl.getInstrumentTypeCount(InstrumentServiceImpl.java:28) [classes/:?]
+	at com.shinkarev.musicshop.Main.main(Main.java:98) [classes/:?]
+2021-08-14 10:07 ERROR InstrumentServiceImpl -Error with instrument count .
+com.shinkarev.musicshop.exception.DaoException: Can't count row count.
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:45) ~[classes/:?]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.getInstrumentTypeCount(InstrumentDaoImpl.java:31) ~[classes/:?]
+	at com.shinkarev.musicshop.service.impl.InstrumentServiceImpl.getInstrumentTypeCount(InstrumentServiceImpl.java:28) [classes/:?]
+	at com.shinkarev.musicshop.Main.main(Main.java:98) [classes/:?]
+Caused by: java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1020) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:39) ~[classes/:?]
+	... 3 more
+2021-08-14 10:08 ERROR BaseDao -Can't count row count. 
+java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1020) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:39) [classes/:?]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.getInstrumentTypeCount(InstrumentDaoImpl.java:31) [classes/:?]
+	at com.shinkarev.musicshop.service.impl.InstrumentServiceImpl.getInstrumentTypeCount(InstrumentServiceImpl.java:28) [classes/:?]
+	at com.shinkarev.musicshop.Main.main(Main.java:98) [classes/:?]
+2021-08-14 10:08 ERROR InstrumentServiceImpl -Error with instrument count .
+com.shinkarev.musicshop.exception.DaoException: Can't count row count.
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:45) ~[classes/:?]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.getInstrumentTypeCount(InstrumentDaoImpl.java:31) ~[classes/:?]
+	at com.shinkarev.musicshop.service.impl.InstrumentServiceImpl.getInstrumentTypeCount(InstrumentServiceImpl.java:28) [classes/:?]
+	at com.shinkarev.musicshop.Main.main(Main.java:98) [classes/:?]
+Caused by: java.sql.SQLException: No value specified for parameter 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:1020) ~[mysql-connector-java-8.0.25.jar:8.0.25]
+	at com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl.rowCountByQuery(InstrumentDaoImpl.java:39) ~[classes/:?]
+	... 3 more
+2021-08-14 13:19 INFO  PoolChecker -Service mode was switched on
+2021-08-14 13:19 INFO  PoolChecker -Service mode was switched off
+2021-08-14 14:19 INFO  PoolChecker -Service mode was switched on
+2021-08-14 14:19 INFO  PoolChecker -Service mode was switched off
+2021-08-14 18:06 INFO  PoolChecker -Service mode was switched on
+2021-08-14 18:06 INFO  PoolChecker -Service mode was switched off

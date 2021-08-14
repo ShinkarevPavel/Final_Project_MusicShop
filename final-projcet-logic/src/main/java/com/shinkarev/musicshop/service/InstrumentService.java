@@ -20,7 +20,7 @@ public interface InstrumentService {
 
     Optional<Instrument> findInstrumentById(long instrumentId) throws ServiceException;
 
-    List<Instrument> findInstrumentByType(InstrumentType instrumentType) throws ServiceException;
+    List<Instrument> findInstrumentByType(InstrumentType instrumentType, int page) throws ServiceException;
 
     boolean instrumentStatusControl(long instrumentId, InstrumentStatusType statusType) throws ServiceException;
 
@@ -47,4 +47,6 @@ public interface InstrumentService {
     boolean setInstrumentQuantity(long userId, long instrumentId, int quantity) throws ServiceException;
 
      Map<Instrument, Integer> getUserBucket(long userId) throws ServiceException;
+
+    boolean update(Instrument instrument) throws ServiceException;
 }

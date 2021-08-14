@@ -7,6 +7,7 @@ import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.UserValidator;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.entity.UserStatusType;
+import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
@@ -43,23 +44,27 @@ public class LoginCommand implements Command {
             String login = request.getParameter(UserValidator.LOGIN.getFieldName());
             String password = request.getParameter(UserValidator.PASSWORD.getFieldName());
             UserServiceImpl userService = new UserServiceImpl();
-            Optional<User> optionalUser = userService.login(login, password);
-
-            if (optionalUser.isPresent()) {
-                user = optionalUser.get();
-                logger.log(Level.DEBUG, "Logged user is present on DB" + user);
-                if (user.getStatus().equals(UserStatusType.ACTIVE)) {
-                    userPageControl(request, user, router);
+            try {
+                Optional<User> optionalUser = userService.login(login, password);
+                if (optionalUser.isPresent()) {
+                    user = optionalUser.get();
+                    logger.log(Level.DEBUG, "Logged user is present on DB" + user);
+                    if (user.getStatus().equals(UserStatusType.ACTIVE)) {
+                        userPageControl(request, user, router);
+                    } // toDO do smth with Blocked users
+                } else {
+                    request.setAttribute(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(PAGE_ERRORS_LOGIN_PASSWORD, locale));
+                    router.setPagePath(PageName.LOGIN_PAGE);
                 }
-            } else {
-                request.setAttribute(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(PAGE_ERRORS_LOGIN_PASSWORD, locale));
-                router.setPagePath(PageName.LOGIN_PAGE);
+            } catch (ServiceException e) {
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops");
+                router.setPagePath(ERROR_PAGE);
             }
+
+
         } else {
             router.setPagePath(LOGIN_PAGE);
         }
-
-
     }
 
     private void userPageControl(HttpServletRequest request, User user, Router router) {

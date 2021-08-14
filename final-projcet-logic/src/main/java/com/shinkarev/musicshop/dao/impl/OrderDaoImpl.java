@@ -36,7 +36,21 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public List<Order> findAll() throws DaoException {
-        throw new UnsupportedOperationException("Impossible get All orders");
+        Order order;
+        List<Order> orders = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_ORDERS)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                order = OrderCreator.createOrder(resultSet);
+                order.setItems(getOrderItems(order.getId()));
+                orders.add(order);
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("Error of creating of order", ex);
+        }
+        return orders;
+
     }
 
     @Override
@@ -55,6 +69,7 @@ public class OrderDaoImpl implements OrderDao {
             statement.setString(3, order.getAddress());
             statement.setInt(4, OderType.ordinal(order.getStatus()));
             statement.setDouble(5, order.getPrice());
+            statement.setString(6, order.getPayment());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             while (resultSet.next()) {
@@ -129,11 +144,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> findOrderByStatus(long userId, OderType status) throws DaoException {
+    public List<Order> findUserOrderByStatus(long userId, OderType status) throws DaoException {
         Order order;
         List<Order> orders = new ArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER_BY_STATUS)) {
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_ORDER_BY_STATUS)) {
             statement.setLong(1, userId);
             statement.setLong(2, OderType.ordinal(status));
             ResultSet resultSet = statement.executeQuery();
@@ -160,5 +175,24 @@ public class OrderDaoImpl implements OrderDao {
             throw new DaoException("Error. Impossible change data into DB.", ex);
         }
         return rowsUpdate == 1;
+    }
+
+    @Override
+    public List<Order> findOrdersByStatus(OderType status) throws DaoException {
+        Order order;
+        List<Order> orders = new ArrayList<>();
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ORDER_BY_STATUS)) {
+            statement.setLong(1, OderType.ordinal(status));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                order = OrderCreator.createOrder(resultSet);
+                order.setItems(getOrderItems(order.getId()));
+                orders.add(order);
+            }
+        } catch (SQLException ex) {
+            throw new DaoException("Error. Impossible get orders from DB.", ex);
+        }
+        return orders;
     }
 }

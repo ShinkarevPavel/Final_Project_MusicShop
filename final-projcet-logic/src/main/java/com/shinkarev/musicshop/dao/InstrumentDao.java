@@ -22,7 +22,7 @@ public interface InstrumentDao extends BaseDao<Long, Instrument> {
 
     List<Instrument> findInstrumentByStatus(InstrumentStatusType status) throws DaoException;
 
-    List<Instrument> findInstrumentByType(InstrumentType type) throws DaoException;
+    List<Instrument> findInstrumentByType(InstrumentType type, int page) throws DaoException;
 
     List<Instrument> findInstrumentByRating(int rating, InstrumentType type) throws DaoException;
 
