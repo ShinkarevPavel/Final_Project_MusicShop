@@ -97,7 +97,7 @@
                     </div>
                     <div class="cart_buttons">
                         <div class="btn-group">
-                            <form method="post" action="${abs_path}/pages/common/main_page.jsp">
+                            <form method="post" action="${abs_path}/controller?command=to_main_page">
                                 <button type="submit" class="button cart_button_clear">Continue Shopping</button>
                             </form>
                             <c:if test="${not empty items}">

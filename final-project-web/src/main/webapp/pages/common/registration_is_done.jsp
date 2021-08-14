@@ -25,7 +25,7 @@ background-size: cover">
             <div class="login-form bg-light mt-4 p-4">
                 <h4 class="offset-xxl-2"><fmt:message key="page.registration_is_done"/></h4>
                 <p class="mb-3 center-block"><fmt:message key="page.registration_is_done_text"/></p>
-                <form method="post" action="${abs_path}/pages/common/login.jsp">
+                <form method="post" action="${abs_path}/controller?command=to_login_page_command">
                     <div class="input-group - offset-xxl-5">
                         <button type="submit" class="input-group-text btn-primary"><fmt:message key="page.login.sign_in.button"/></button>
                     </div>

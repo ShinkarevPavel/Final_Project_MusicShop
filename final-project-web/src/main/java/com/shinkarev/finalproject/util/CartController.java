@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
 
+import static com.shinkarev.finalproject.command.ParamName.*;
+
 public class CartController {
     public static Router cartQuantityControl(HttpServletRequest request, Map<Instrument, Integer> cartItems) {
         Router router = new Router();
@@ -14,8 +16,8 @@ public class CartController {
         for (Map.Entry<Instrument, Integer> item : cartItems.entrySet()) {
             summa += item.getKey().getPrice() * item.getValue();
         }
-        request.setAttribute("total", summa);
-        request.setAttribute("items", cartItems);
+        request.setAttribute(TOTAL_CART, summa);
+        request.setAttribute(CART_ITEMS, cartItems);
         router.setPagePath(PageName.CLIENT_BUCKET_PAGE);
         return router;
     }

@@ -13,7 +13,7 @@ import java.io.IOException;
 
 import static com.shinkarev.finalproject.command.ParamName.USER;
 
-@WebFilter("/pages/admin/*")
+@WebFilter("/pages/*")
 public class UnSafeUserFilter implements Filter {
     private static final Logger logger= LogManager.getLogger();
 

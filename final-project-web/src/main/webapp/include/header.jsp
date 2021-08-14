@@ -131,14 +131,14 @@
             </c:if>
             <c:if test="${empty sessionScope.user}">
                 <div class="text-end">
-                    <form action="${abs_path}/pages/common/login.jsp" method="post">
+                    <form action="${abs_path}/controller?command=to_login_page_command" method="post">
                         <button type="submit" class="btn btn-outline-light me-2">
                             <fmt:message key="page.login.sign_in.button"/>
                         </button>
                     </form>
                 </div>
                 <div class="text-xxl-end">
-                    <form action="${abs_path}/pages/common/registration.jsp" method="post">
+                    <form action="${abs_path}/controller?command=to_registration_page_command" method="post">
                         <button type="submit" class="btn btn-outline-light me-2">
                             <fmt:message key="page.login.register"/>
                         </button>

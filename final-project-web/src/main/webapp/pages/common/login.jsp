@@ -53,7 +53,7 @@ background-size: cover">
                 <div class="col-12">
                     <p class="text-center mb-0">
                         <fmt:message key="page.head.registration_text"/>
-                        <a href="${abs_path}/pages/common/registration.jsp">
+                        <a href="${abs_path}/controller?command=to_registration_page_command">
                             <fmt:message key="page.login.register"/>
                         </a>
                     </p>

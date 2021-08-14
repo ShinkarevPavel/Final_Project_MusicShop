@@ -150,7 +150,7 @@ background-size: cover">
         <div class="col-12">
             <p class="text-center mb-0" style="color: white">
                 <fmt:message key="page.head.registration_text"/>
-                <a href="${abs_path}/pages/common/login.jsp">
+                <a href="${abs_path}/controller?command=to_login_page_command">
                     <fmt:message key="page.login.sign_in.button"/>
                 </a>
             </p>

@@ -92,7 +92,8 @@
 
                     <div class="buttons d-flex flex-row mt-5 gap-3">
                         <c:if test="${not empty user}">
-                            <form method="post" action="${abs_path}/controller?command=create_order_command">
+                            <form method="post" action="${abs_path}/controller?command=by_now_command">
+                                <input type="hidden" name="instrumentId" value="${instrument.instrument_id}">
                                 <button class="btn btn-outline-dark">Buy Now</button>
                             </form>
                             <c:if test="${not requestScope.containsValue(instrument.instrument_id)}">
@@ -107,10 +108,10 @@
                             </c:if>
                         </c:if>
                         <c:if test="${empty sessionScope.user}">
-                            <form method="post" action="${abs_path}/pages/common/login.jsp">
+                            <form method="post" action="${abs_path}/controller?command=to_login_page_command">
                                 <button class="btn btn-outline-dark">Buy Now</button>
                             </form>
-                            <form method="post" action="${abs_path}/pages/common/login.jsp">
+                            <form method="post" action="${abs_path}/controller?command=to_login_page_command">
                                 <button class="btn btn-dark">Add to Basket</button>
                             </form>
                         </c:if>
