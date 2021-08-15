@@ -14,7 +14,6 @@ class InstrumentField {
     static final String INSTRUMENT_KEY_PARAM = "instrument_image";
     static final String INSTRUMENT_QUANTITY = "quantity";
 
-
     private InstrumentField() {
     }
 }

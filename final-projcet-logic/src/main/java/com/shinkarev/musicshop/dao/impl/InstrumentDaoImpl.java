@@ -21,6 +21,7 @@ import static com.shinkarev.musicshop.dao.impl.SqlQuery.*;
 
 public class InstrumentDaoImpl implements InstrumentDao {
 
+
     @Override
     public int getInstrumentCount() throws DaoException {
         return rowCountByQuery(SQL_GET_ALL_INSTRUMENTS);

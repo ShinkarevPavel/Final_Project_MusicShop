@@ -1,6 +1,5 @@
 package com.shinkarev.musicshop.dao.impl;
 
-import com.shinkarev.musicshop.dao.InstrumentDao;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;

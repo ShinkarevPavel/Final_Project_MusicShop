@@ -11,14 +11,8 @@
       <base-name>localization</base-name>
     </custom-resource-bundle>
     <custom-resource-bundle>
-      <file value="file://$PROJECT_DIR$/final-project-web/src/main/resources/localization_ru_RU.properties" />
-      <file value="file://$PROJECT_DIR$/final-project-web/src/main/resources/mail.properties" />
-      <base-name>localization</base-name>
-    </custom-resource-bundle>
-    <custom-resource-bundle>
       <file value="file://$PROJECT_DIR$/final-project-web/src/main/resources/localization_en_US.properties" />
       <file value="file://$PROJECT_DIR$/final-project-web/src/main/resources/localization_ru_RU.properties" />
-      <file value="file://$PROJECT_DIR$/final-project-web/src/main/resources/mail.properties" />
       <base-name>localization</base-name>
     </custom-resource-bundle>
   </component>

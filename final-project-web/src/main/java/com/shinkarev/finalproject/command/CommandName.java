@@ -12,6 +12,7 @@ import static com.shinkarev.musicshop.entity.UserRoleType.*;
 
 public enum CommandName {
     LOGIN(new LoginCommand(), EnumSet.of(ANONYMOUS)),
+    TO_CABINET_PAGE_COMMAND(new ToCabinetPageCommand(), EnumSet.of(ADMIN, CLIENT)),
     TO_MAIN_PAGE(new ToMainPageCommand(), EnumSet.of(ADMIN, CLIENT)),
     TO_LOGIN_PAGE_COMMAND(new ToLoginPageCommand(), EnumSet.of(ADMIN, CLIENT, GUEST, ANONYMOUS)),
     TO_REGISTRATION_PAGE_COMMAND(new ToRegistrationPageCommand(), EnumSet.of(ADMIN, CLIENT, GUEST, ANONYMOUS)),
@@ -19,7 +20,7 @@ public enum CommandName {
     REGISTRATION(new RegistrationCommand(), EnumSet.of(ANONYMOUS)),
     SHOW_ALL_USERS(new ShowAllUsersCommand(), EnumSet.of(ADMIN)),
     USER_INFO(new UserInfoCommand(), EnumSet.of(ADMIN)),
-    LOGOUT(new LogoutCommand(), EnumSet.of(ADMIN, CLIENT)),
+    LOGOUT(new LogoutCommand(), EnumSet.of(ADMIN, CLIENT, ANONYMOUS)),
     USER_STATUS_CONTROL_COMMAND(new UserStatusControlCommand(), EnumSet.of(ADMIN)),
     USER_ROLE_CONTROL_COMMAND(new UserRoleControlCommand(), EnumSet.of(ADMIN)),
     ADD_USER_COMMAND(new AddUserCommand(), EnumSet.of(ADMIN)),

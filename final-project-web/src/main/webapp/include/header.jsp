@@ -77,18 +77,7 @@
                     </ul>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Products
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-
-                <li><a href="#" class="nav-link px-2 link-dark">Fuck you again</a></li>
+                <li><a href="https://www.youtube.com/watch?v=_E6mIYNO3So&ab_channel=DavidGilmour" class="nav-link px-2 link-dark">Fuck you</a></li>
             </ul>
 
             <c:if test="${not empty sessionScope.user}">
@@ -113,9 +102,8 @@
                         <ctg:is-admin>
                             <li><a class="dropdown-item" href="${abs_path}/pages/admin/admin.jsp">Admin cabinet</a></li>
                         </ctg:is-admin>
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=check_cart_command">Mu orders</a></li>
                         <li><a class="dropdown-item" href="${abs_path}/controller?command=check_cart_command">My cart</a></li>
-                        <li><a class="dropdown-item" href="${abs_path}/pages/client/cabinet_page.jsp">Profile</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=to_cabinet_page_command">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
