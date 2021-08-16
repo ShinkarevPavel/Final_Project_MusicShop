@@ -2,15 +2,21 @@ package com.shinkarev.finalproject.command.common;
 
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
+import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.util.RegistrationConfirmator;
-import com.shinkarev.finalproject.validator.Impl.RegistrationValidatorImp;
 import com.shinkarev.finalproject.validator.InputDataValidator;
+import com.shinkarev.finalproject.validator.ValidatorProvider;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.entity.UserRoleType;
 import com.shinkarev.musicshop.entity.UserStatusType;
 import com.shinkarev.musicshop.exception.ServiceException;
-import com.shinkarev.musicshop.service.impl.UserServiceImpl;
+import com.shinkarev.musicshop.service.ServiceProvider;
+import com.shinkarev.musicshop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +26,7 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
 public class RegistrationCommand implements Command {
-
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public Router execute(HttpServletRequest request) {
@@ -47,7 +53,7 @@ public class RegistrationCommand implements Command {
 
         String method = request.getMethod();
         if (method.equals(METHOD_POST)) {
-            InputDataValidator registrationValidator = new RegistrationValidatorImp();
+            InputDataValidator registrationValidator = ValidatorProvider.REGISTRATION_VALIDATOR;
             Map<String, String> errors;
             try {
                 errors = registrationValidator.checkValues(registrationValues, locale);
@@ -57,19 +63,20 @@ public class RegistrationCommand implements Command {
                     router.setPagePath(REGISTRATION_PAGE);
                 } else {
                     User user = new User(login, email, nickname, name, surename, UserStatusType.ACTIVE, UserRoleType.GUEST);
-                    UserServiceImpl userService = new UserServiceImpl();
+                    UserService userService = ServiceProvider.USER_SERVICE;
 
                     String registrationKey = RegistrationConfirmator.setRegistrationToken(email, login);
                     if (userService.addUser(user, password, registrationKey)) {
                         router.setPagePath(REGISTRATION_IS_DONE);
                     } else {
-                        request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops! Something went wrong...");
-                        router.setPagePath(ERROR_PAGE);
+                        request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
+                        router.setErrorCode(HttpServletResponse.SC_BAD_REQUEST);
                     }
                 }
-            } catch (ServiceException e) {
-                request.setAttribute(ERRORS_ON_ERROR_PAGE, "looks like our service is bullshit");
-                router.setPagePath(ERROR_PAGE);
+            } catch (ServiceException ex) {
+                logger.log(Level.ERROR, "Error of user registration", ex);
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         } else {
             router.setPagePath(REGISTRATION_PAGE);

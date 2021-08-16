@@ -1,7 +1,10 @@
 package com.shinkarev.finalproject.filter;
 
+import com.shinkarev.finalproject.command.ParamName;
+import com.shinkarev.musicshop.entity.User;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;

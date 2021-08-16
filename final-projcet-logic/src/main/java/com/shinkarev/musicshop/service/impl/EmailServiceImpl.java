@@ -14,11 +14,24 @@ import java.util.Properties;
 
 public class EmailServiceImpl implements EmailService {
     private static final Logger logger = LogManager.getLogger();
-    private final static String USER_KEY = "mail.user_name";
-    public static final String PASSWORD_KEY = "mail.password";
-    public static final String EMAIL_PROPERTIES = "mail.properties";
-    public static final String EMAIL_CONFIRMATION = "Email Confirmation";
-    public static final String CONTENT_TYPE = "text/html";
+    private static final String USER_KEY = "mail.user_name";
+    private static final String PASSWORD_KEY = "mail.password";
+    private static final String EMAIL_PROPERTIES = "mail.properties";
+    private static final String EMAIL_CONFIRMATION = "Email Confirmation";
+    private static final String CONTENT_TYPE = "text/html";
+    private static EmailService instance;
+
+
+    private EmailServiceImpl() {
+    }
+
+    public static EmailService getInstance() {
+        if (instance == null) {
+            instance = new EmailServiceImpl();
+        }
+        return instance;
+    }
+
 
     @Override
     public boolean sendEmail(String emailTo, String clientMessage) throws ServiceException {

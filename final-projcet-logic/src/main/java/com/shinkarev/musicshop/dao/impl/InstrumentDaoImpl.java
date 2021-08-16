@@ -26,13 +26,17 @@ public class InstrumentDaoImpl implements InstrumentDao {
     public int getInstrumentCount() throws DaoException {
         return rowCountByQuery(SQL_GET_ALL_INSTRUMENTS);
     }
+    @Override
+    public int getInstrumentCount(InstrumentType type) throws DaoException {
+        return instrumentRowCountByQuery(type);
+    }
 
-
-    private int rowCountByQuery(String sourceQuery) throws DaoException {
+    private int instrumentRowCountByQuery(InstrumentType type) throws DaoException {
         int result = 0;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl" )
+             PreparedStatement statement = connection.prepareStatement(SQL_INSTRUMENT_ROW_COUNT_BY_TYPE)
         ) {
+            statement.setInt(1, InstrumentType.ordinal(type));
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 result = resultSet.getInt(1);
@@ -72,6 +76,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
                 instruments.add(instrument);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of creating list instrument", ex);
             throw new DaoException("Error of creating list instrument", ex);
         }
         return instruments;
@@ -88,6 +93,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
                 instrument = InstrumentCreator.createInstrument(resultSet);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of finding instrument", ex);
             throw new DaoException("Error of finding instrument", ex);
         }
         return Optional.ofNullable(instrument);
@@ -132,6 +138,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
                 flag = true;
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of creating instrument", ex);
             throw new DaoException("Error of creating instrument", ex);
         }
         return flag;
@@ -150,6 +157,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
                 flag = pinImagesToInstrument(instrument.getInstrument_id(), images);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of adding instrument", ex);
             throw new DaoException("Error of creating instrument", ex);
         }
         return flag;
@@ -194,6 +202,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
             statement.setLong(6, instrument.getInstrument_id());
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of updating instrument", ex);
             throw new DaoException("Error of updating instrument", ex);
         }
         return rowsUpdate == 1;
@@ -211,6 +220,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
                 instruments.add(instrument);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of finding instrument with " + brand, ex);
             throw new DaoException("Error of finding instruments", ex);
         }
         return instruments;
@@ -228,6 +238,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
                 instruments.add(instrument);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of finding instrument with " + status, ex);
             throw new DaoException("Error of finding instruments", ex);
         }
         return instruments;
@@ -245,6 +256,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
                 instruments.add(instrument);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of finding instruments with " + type, ex);
             throw new DaoException("Error of finding instruments", ex);
         }
         return instruments;
@@ -281,6 +293,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
                 marks.add(mark);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of finding instruments", ex);
             throw new DaoException("Error of getting rating", ex);
         }
         OptionalDouble average = marks.stream().mapToInt(e -> e).average();
@@ -303,6 +316,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
                 result = true;
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of finding instrument", ex);
             throw new DaoException("Error of getting rating", ex);
         }
         return result;
@@ -320,6 +334,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
                 result = true;
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of finding instruments", ex);
             throw new DaoException("Error of getting rating", ex);
         }
         return result;
@@ -335,6 +350,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
             statement.setInt(3, rating);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of finding instrument", ex);
             throw new DaoException("Error of getting rating", ex);
         }
         return rowsUpdate == 1;
@@ -349,6 +365,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
             statement.setLong(2, instrumentId);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of changing instrument status", ex);
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return rowsUpdate == 1;
@@ -363,6 +380,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
             statement.setLong(2, instrumentId);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of changing instrument type", ex);
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return rowsUpdate == 1;
@@ -378,6 +396,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
             statement.setInt(3, 1);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of adding instrument to cart", ex);
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return rowsUpdate == 1;
@@ -392,6 +411,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
             statement.setLong(2, instrumentId);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of removing instrument from cart", ex);
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return rowsUpdate == 1;
@@ -410,6 +430,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
                 cartItems.put(instrument, quantity);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of getting instrument from cart", ex);
             throw new DaoException("Error of finding instruments", ex);
         }
         return cartItems;
@@ -423,6 +444,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
             statement.setLong(1, userId);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of clearing instrument from cart", ex);
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return rowsUpdate == 1;
@@ -437,6 +459,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
             statement.setBlob(2, inputStream);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of adding instrument to db", ex);
             throw new DaoException("Error. Impossible put image to data base.", ex);
         }
         return rowsUpdate == 1;
@@ -452,6 +475,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
             statement.setLong(3, instrumentId);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error of setting instrument quantity", ex);
             throw new DaoException("Error. Impossible put image to data base.", ex);
         }
         return rowsUpdate == 1;

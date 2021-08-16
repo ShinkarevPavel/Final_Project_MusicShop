@@ -17,8 +17,18 @@ import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger();
+    private static UserService instance;
     private UserDao userDao = new UserDaoImpl();
 
+    private UserServiceImpl() {
+    }
+
+    public static UserService getInstance() {
+        if (instance == null) {
+            instance = new UserServiceImpl();
+        }
+        return instance;
+    }
 
     @Override
     public boolean updateUser(User user) throws ServiceException {

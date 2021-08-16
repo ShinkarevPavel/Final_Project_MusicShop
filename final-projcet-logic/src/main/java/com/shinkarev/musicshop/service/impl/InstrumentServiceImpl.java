@@ -5,7 +5,6 @@ import com.shinkarev.musicshop.dao.impl.InstrumentDaoImpl;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;
-import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
@@ -19,14 +18,36 @@ import java.util.Map;
 import java.util.Optional;
 
 public class InstrumentServiceImpl implements InstrumentService {
-    private Logger logger = LogManager.getLogger();
+    private static InstrumentService instance;
+    private static Logger logger = LogManager.getLogger();
     private InstrumentDao instrumentDao = new InstrumentDaoImpl();
+
+    private InstrumentServiceImpl() {
+    }
+
+    public static InstrumentService getInstance() {
+        if (instance == null) {
+            instance = new InstrumentServiceImpl();
+        }
+        return instance;
+    }
+
+    @Override
+    public int getInstrumentCount(InstrumentType type) throws ServiceException {
+        try {
+            return instrumentDao.getInstrumentCount(type);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with instrument count .", e);
+            throw new ServiceException("Error with instrument count .", e);
+        }
+    }
+
 
     @Override
     public boolean update(Instrument instrument) throws ServiceException {
         boolean flag;
         try {
-            flag =instrumentDao.update(instrument);
+            flag = instrumentDao.update(instrument);
         } catch (DaoException e) {
             throw new ServiceException("Error with instrument updating .", e);
         }
@@ -42,7 +63,6 @@ public class InstrumentServiceImpl implements InstrumentService {
             throw new ServiceException("Error with instrument count .", e);
         }
     }
-
 
 
     @Override
@@ -84,12 +104,12 @@ public class InstrumentServiceImpl implements InstrumentService {
     }
 
     @Override
-    public boolean addInstrument(Instrument instrument, List<InputStream> images) throws ServiceException{
+    public boolean addInstrument(Instrument instrument, List<InputStream> images) throws ServiceException {
         boolean result;
         try {
-            result= instrumentDao.addInstrument(instrument, images);
+            result = instrumentDao.addInstrument(instrument, images);
         } catch (DaoException ex) {
-           throw new ServiceException("Error. Impossible create instrument", ex);
+            throw new ServiceException("Error. Impossible create instrument", ex);
         }
         return result;
     }

@@ -12,6 +12,18 @@ import static com.shinkarev.finalproject.validator.UserValidator.PASSWORD;
 
 public class ChangePasswordValidatorImpl implements InputDataValidator {
 
+    private static InputDataValidator instance;
+
+    private ChangePasswordValidatorImpl() {
+    }
+
+    public static InputDataValidator getInstance() {
+        if (instance == null) {
+            instance = new ChangePasswordValidatorImpl();
+        }
+        return instance;
+    }
+
     @Override
     public Map<String, String> checkValues(Map<String, String> values, String locale) {
 

@@ -3,7 +3,8 @@ package com.shinkarev.finalproject.validator.Impl;
 import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.InputDataValidator;
 import com.shinkarev.musicshop.exception.ServiceException;
-import com.shinkarev.musicshop.service.impl.UserServiceImpl;
+import com.shinkarev.musicshop.service.ServiceProvider;
+import com.shinkarev.musicshop.service.UserService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,10 +14,22 @@ import static com.shinkarev.finalproject.validator.UserValidator.*;
 
 
 public class AdminRegistrationValidatorImpl implements InputDataValidator {
+    public static InputDataValidator instance;
+
+    private AdminRegistrationValidatorImpl() {
+    }
+
+    public static InputDataValidator getInstance() {
+        if (instance == null) {
+            instance = new AdminRegistrationValidatorImpl();
+        }
+        return instance;
+    }
+
     @Override
     public Map<String, String> checkValues(Map<String, String> values, String locale) throws ServiceException {
         Map<String, String> result = new HashMap<>();
-        UserServiceImpl userService = new UserServiceImpl();
+        UserService userService = ServiceProvider.USER_SERVICE;
 
         /*
          *This block checking login on RegEx conformity and unique

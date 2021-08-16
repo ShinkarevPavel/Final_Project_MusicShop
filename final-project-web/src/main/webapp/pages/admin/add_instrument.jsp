@@ -24,7 +24,7 @@ background-size: cover">
                 <div class="login-form bg-light mt-4 p-4">
                     <!-- Name input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example1">Name</label>
+                        <label class="form-label" for="form1Example1"><fmt:message key="page.admin_page.add_instrument.name"/></label>
                         <input type="text"
                                name="instrument_name"
                                value="${registrationValues.instrument_name}"
@@ -37,7 +37,7 @@ background-size: cover">
                     </div>
                     <!-- Brand input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example2">Brand</label>
+                        <label class="form-label" for="form1Example2"><fmt:message key="page.admin_page.add_instrument.brand"/></label>
                         <input type="text"
                                name="instrument_brand"
                                value="${registrationValues.instrument_brand}"
@@ -51,7 +51,7 @@ background-size: cover">
 
                     <!-- Country input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example2">Country</label>
+                        <label class="form-label" for="form1Example2"><fmt:message key="page.admin_page.add_instrument.country"/></label>
                         <input type="text"
                                name="instrument_country"
                                value="${registrationValues.instrument_country}"
@@ -65,7 +65,7 @@ background-size: cover">
 
                     <!-- Price input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example2">Price</label>
+                        <label class="form-label" for="form1Example2"><fmt:message key="page.admin_page.add_instrument.price"/></label>
                         <input type="text"
                                name="instrument_price"
                                value="${registrationValues.instrument_price}"
@@ -79,7 +79,7 @@ background-size: cover">
 
                     <!-- Rating input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example2">Rating</label>
+                        <label class="form-label" for="form1Example2"><fmt:message key="page.admin_page.add_instrument.rating"/></label>
                         <input type="text"
                                name="instrument_rating"
                                value="${registrationValues.instrument_rating}"
@@ -93,7 +93,7 @@ background-size: cover">
 
                     <!-- Description input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example2">Description</label>
+                        <label class="form-label" for="form1Example2"><fmt:message key="page.admin_page.add_instrument.description"/></label>
                         <input type="text"
                                name="instrument_description"
                                value="${registrationValues.instrument_description}"
@@ -108,9 +108,9 @@ background-size: cover">
                     <!-- Status input -->
                     <select class="form-select" name="instrumentStatus" id="fuck1" aria-label="Default select example">
                         <option selected>Chose Status</option>
-                        <option value="AVAILABLE">AVAILABLE</option>
-                        <option value="NOT_AVAILABLE">NOT_AVAILABLE</option>
-                        <option value="ON_DEMAND">ON_DEMAND</option>
+                        <option value="AVAILABLE"><fmt:message key="page.admin_page.add_instrument.available"/></option>
+                        <option value="NOT_AVAILABLE"><fmt:message key="page.admin_page.add_instrument.not_available"/></option>
+                        <option value="ON_DEMAND"><fmt:message key="page.admin_page.add_instrument.on_demand"/></option>
                     </select>
                     <strong>
                         <p class="text-danger">${errors.instrumentStatusError}</p>
@@ -120,11 +120,11 @@ background-size: cover">
 
                     <!-- Type input -->
                     <select class="form-select" name="instrumentType" id="fuck2"aria-label="Default select example">
-                        <option selected>Chose type</option>
-                        <option value="GUITARS">GUITARS</option>
-                        <option value="DRUMS">DRUMS</option>
-                        <option value="KEYBOARDS">KEYBOARDS</option>
-                        <option value="OTHER">OTHER</option>
+                        <option selected><fmt:message key="page.admin_page.add_instrument.chose_type"/></option>
+                        <option value="GUITARS"><fmt:message key="page.header.guitars"/></option>
+                        <option value="DRUMS"><fmt:message key="page.header.drums"/></option>
+                        <option value="KEYBOARDS"><fmt:message key="page.header.keyboards"/></option>
+                        <option value="OTHER"><fmt:message key="page.header.other"/></option>
                     </select>
                     <strong>
                         <p class="text-danger">${errors.instrumentTypeError}</p>
@@ -133,11 +133,11 @@ background-size: cover">
                     <div class="row">
                         <div class="col-md-9 pe-5">
                             <input class="form-control form-control-sm" id="imageId" name="image" type="file" multiple/>
-                            <div class="small text-muted mt-2">Upload your photo. Max file size 1 MB</div>
+                            <div class="small text-muted mt-2"><fmt:message key="page.admin_page.photo.requirements"/></div>
                         </div>
                     </div>
                     <!-- Submit button -->
-                    <button type="submit" class="btn btn-warning">Add</button>
+                    <button type="submit" class="btn btn-warning"><fmt:message key="page.admin_page.add"/></button>
                 </div>
             </div>
         </div>

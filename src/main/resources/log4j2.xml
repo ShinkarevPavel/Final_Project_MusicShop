@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="info">
+<Configuration status="error">
     <Properties>
         <property name="pattern_console">%d{yyy-MM-dd HH:mm} %-5level %logger{1} -%msg%n</property>
     </Properties>
@@ -22,7 +22,7 @@
         </File>
     </Appenders>
     <Loggers>
-        <Root level="debug">
+        <Root level="error">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="CustomFile"/>
         </Root>

@@ -35,9 +35,9 @@
                             ${user.role}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_role_control_command&userId=${user.id}&new_role=ADMIN">ADMIN</a></li>
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_role_control_command&userId=${user.id}&new_role=CLIENT">CLIENT</a></li>
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_role_control_command&userId=${user.id}&new_role=GUEST">GUEST</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_role_control_command&userId=${user.id}&new_role=ADMIN"><fmt:message key="page.show_all_users.admin"/></a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_role_control_command&userId=${user.id}&new_role=CLIENT"><fmt:message key="page.show_all_users.client"/></a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_role_control_command&userId=${user.id}&new_role=GUEST"><fmt:message key="page.show_all_users.guest"/></a></li>
                     </ul>
                 </div>
             </td>
@@ -47,13 +47,13 @@
                         ${user.status}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_state=ACTIVE">ACTIVE</a></li>
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_state=BLOCKED">BLOCKED</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_state=ACTIVE"><fmt:message key="page.show_all_users.active"/></a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=user_status_control_command&userId=${user.id}&new_state=BLOCKED"><fmt:message key="page.show_all_users.blocked"/></a></li>
                     </ul>
                 </div>
             </td>
             <td>
-                <a href="${abs_path}/controller?command=user_info&userId=${user.id}">Control</a>
+                <a href="${abs_path}/controller?command=user_info&userId=${user.id}"><fmt:message key="page.show_all_users.control"/></a>
             </td>
             </c:forEach>
     </table>
@@ -62,7 +62,7 @@
         <ul class="pagination justify-content-center">
             <li class="page-item ${pageable.isFirstPage() ? 'disabled': ''}">
                 <a class="page-link"
-                   href="${abs_path}/controller?command=show_all_users&page=${pageable.currentPage - 1}" tabindex="-1">Previous</a>
+                   href="${abs_path}/controller?command=show_all_users&page=${pageable.currentPage - 1}" tabindex="-1"><fmt:message key="page.previous"/></a>
             </li>
             <c:forEach var="i" begin="1" end="${pageable.pageCount()}">
                 <li class="page-item ${pageable.currentPage eq i ? 'active': ''}">
@@ -70,7 +70,7 @@
             </c:forEach>
             <li class="page-item ${pageable.isLastPage() ? 'disabled': ''}">
                 <a class="page-link"
-                   href="${abs_path}/controller?command=show_all_users&page=${pageable.currentPage + 1}">Next</a>
+                   href="${abs_path}/controller?command=show_all_users&page=${pageable.currentPage + 1}"><fmt:message key="page.next"/></a>
             </li>
         </ul>
     </nav>

@@ -11,9 +11,11 @@ import static com.shinkarev.musicshop.entity.UserRoleType.*;
 
 
 public enum CommandName {
-    LOGIN(new LoginCommand(), EnumSet.of(ANONYMOUS)),
+    LOGIN(new LoginCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
     TO_CABINET_PAGE_COMMAND(new ToCabinetPageCommand(), EnumSet.of(ADMIN, CLIENT)),
-    TO_MAIN_PAGE(new ToMainPageCommand(), EnumSet.of(ADMIN, CLIENT)),
+    TO_EDIT_PROFILE_PAGE_COMMAND(new ToEditProfilePageCommand(), EnumSet.of(ADMIN, CLIENT)),
+    TO_CHANGE_PASSWORD_COMMAND(new ToChangePasswordCommand(), EnumSet.of(ADMIN, CLIENT)),
+    TO_MAIN_PAGE(new ToMainPageCommand(), EnumSet.of(ADMIN, CLIENT, ANONYMOUS, GUEST)),
     TO_LOGIN_PAGE_COMMAND(new ToLoginPageCommand(), EnumSet.of(ADMIN, CLIENT, GUEST, ANONYMOUS)),
     TO_REGISTRATION_PAGE_COMMAND(new ToRegistrationPageCommand(), EnumSet.of(ADMIN, CLIENT, GUEST, ANONYMOUS)),
     CHANGE_LOCALE(new ChangeLocalCommand(), EnumSet.of(ADMIN, CLIENT, GUEST, ANONYMOUS)),

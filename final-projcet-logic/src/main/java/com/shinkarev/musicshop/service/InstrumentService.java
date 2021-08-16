@@ -4,7 +4,7 @@ package com.shinkarev.musicshop.service;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;
-import com.shinkarev.musicshop.entity.User;
+import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.exception.ServiceException;
 
 import java.io.InputStream;
@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface InstrumentService {
+
+    int getInstrumentCount(InstrumentType type) throws ServiceException;
 
     int getInstrumentCount() throws ServiceException;
 

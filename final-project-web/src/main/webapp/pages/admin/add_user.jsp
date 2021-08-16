@@ -18,15 +18,15 @@ background-position: center center;
 background-size: cover">
 <%@include file="/include/admin_header.jsp" %>
 <section class="vh-100" >
-    <form method="post" id="fuck" name="" action="${abs_path}/controller?command=add_user_command">
+    <form method="post" id="fuck" action="${abs_path}/controller?command=add_user_command">
         <div class="row">
             <div class="col-md-3 offset-md-8">
                 <div class="login-form bg-light mt-4 p-4">
                     <!-- Login input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example1">Login</label>
+                        <label class="form-label" for="form1Example1"><fmt:message key="page.registration.login"/></label>
                         <input type="text"
-                               name="instrument_name"
+                               name="login"
                                value="${registrationValues.login}"
                                pattern="^[\w@#$%^&+=]{7,25}$"
                                id="form1Example1"
@@ -37,9 +37,9 @@ background-size: cover">
                     </div>
                     <!-- Email input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example2">Email</label>
+                        <label class="form-label" for="form1Example2"><fmt:message key="page.registration.email"/></label>
                         <input type="text"
-                               name="instrument_brand"
+                               name="email"
                                value="${registrationValues.email}"
                                id="form1Example2"
                                pattern="^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$"
@@ -51,9 +51,9 @@ background-size: cover">
 
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example2">Password</label>
-                        <input type="text"
-                               name="instrument_brand"
+                        <label class="form-label" for="form1Example2"><fmt:message key="page.registration.password"/></label>
+                        <input type="password"
+                               name="password"
                                value="${registrationValues.password}"
                                id="form1Example6"
                                class="form-control" required/>
@@ -61,9 +61,9 @@ background-size: cover">
 
                     <!-- Nickname input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example2">Nickname</label>
+                        <label class="form-label" for="form1Example2"><fmt:message key="page.registration.nickname"/></label>
                         <input type="text"
-                               name="instrument_country"
+                               name="nickname"
                                value="${registrationValues.nickname}"
                                id="form1Example3"
                                class="form-control" required/>
@@ -72,9 +72,9 @@ background-size: cover">
 
                     <!-- Name input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example2">Name</label>
+                        <label class="form-label" for="form1Example2"><fmt:message key="page.registration.name"/></label>
                         <input type="text"
-                               name="instrument_price"
+                               name="name"
                                value="${registrationValues.name}"
                                id="form1Example4"
                                class="form-control"/>
@@ -82,12 +82,11 @@ background-size: cover">
 
                     <!-- Surename input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="form1Example2">Surename</label>
+                        <label class="form-label" for="form1Example2"><fmt:message key="page.registration.surename"/></label>
                         <input type="text"
-                               name="instrument_rating"
+                               name="surename"
                                value="${registrationValues.surename}"
                                id="form1Example8"
-                               pattern="[0-5]"
                                class="form-control"/>
                     </div>
 
@@ -106,7 +105,7 @@ background-size: cover">
                     <br>
 
                     <!-- Submit button -->
-                    <button type="submit" class="btn btn-warning">Add</button>
+                    <button type="submit" class="btn btn-warning"><fmt:message key="page.admin_page.add"/></button>
                 </div>
             </div>
         </div>

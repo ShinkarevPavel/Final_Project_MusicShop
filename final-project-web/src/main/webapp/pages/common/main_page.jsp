@@ -109,14 +109,11 @@ background-size: cover">
                     <a href="https://www.rollingstone.com/music/music-news/fred-durst-new-look-limp-bizkit-lollapalooza-2021-set-1205652/"
                        class="link-secondary">
                         <p class="card-text" style="color: white">
-                            Alexi Laiho, Frontman for Finnish Metal Giants Children of Bodom, Dead at 41
+                            Fred Durst Shows Off Surprising New Look at Limp Bizkit’s Lollapalooza 2021 Set
                         </p>
                     </a>
                 </div>
             </div>
-
-
-
 
 
         </div>

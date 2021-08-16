@@ -1,6 +1,5 @@
 package com.shinkarev.finalproject.validator.Impl;
 
-import com.shinkarev.finalproject.command.ParamName;
 import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.InputDataValidator;
 
@@ -13,6 +12,19 @@ import static com.shinkarev.finalproject.validator.InstrumentValidator.INSTRUMEN
 import static com.shinkarev.finalproject.validator.InstrumentValidator.INSTRUMENT_TYPE;
 
 public class InstrumentCreationValidator implements InputDataValidator {
+
+    private static InputDataValidator instance;
+
+    private InstrumentCreationValidator() {
+    }
+
+    public static InputDataValidator getInstance() {
+        if (instance == null) {
+            instance = new InstrumentCreationValidator();
+        }
+        return instance;
+    }
+
     @Override
     public Map<String, String> checkValues(Map<String, String> values, String locale) {
         Map<String, String> result = new HashMap<>();

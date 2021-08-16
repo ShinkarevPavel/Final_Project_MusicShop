@@ -9,10 +9,48 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <style>
+        .rating {
+            float:left;
+            border:none;
+        }
+        .rating:not(:checked) > input {
+            position:absolute;
+            top:-9999px;
+            clip:rect(0, 0, 0, 0);
+        }
+        .rating:not(:checked) > label {
+            float:right;
+            width:1em;
+            padding:0 .1em;
+            overflow:hidden;
+            white-space:nowrap;
+            cursor:pointer;
+            font-size:200%;
+            line-height:1.2;
+            color:#ddd;
+        }
+        .rating:not(:checked) > label:before {
+            content:'★ ';
+        }
+        .rating > input:checked ~ label {
+            color: #f70;
+        }
+        .rating:not(:checked) > label:hover, .rating:not(:checked) > label:hover ~ label {
+            color: gold;
+        }
+        .rating > input:checked + label:hover, .rating > input:checked + label:hover ~ label, .rating > input:checked ~ label:hover, .rating > input:checked ~ label:hover ~ label, .rating > label:hover ~ input:checked ~ label {
+            color: #ea0;
+        }
+        .rating > label:active {
+            position: relative;
+        }
+    </style>
+    <link href="${pageContext.request.contextPath}/pages/instrumentsStyle.css" rel="stylesheet"/>
+<%--    <link href="${pageContext.request.contextPath}/pages/rating.css" rel="stylesheet">--%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/pages/instrumentsStyle.css" rel="stylesheet"/>
-    <link href="${pageContext.request.contextPath}/pages/ratingStyle.css" rel="stylesheet"/>
+
     <script type="text/javascript" src=""></script>
     <script type="text/javascript"
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
@@ -57,8 +95,6 @@
 
 
 
-
-
                     <div class="ratings d-flex flex-row align-items-center">
                         <c:if test="${empty message}">
                             <c:if test="${not empty instrument}">
@@ -81,7 +117,6 @@
                         <span>${message}</span>
                     </div>
 
-
                     <div class="mt-5">
                         <span class="fw-bold">Country: ${instrument.country}</span>
                     </div>
@@ -94,25 +129,25 @@
                         <c:if test="${not empty user}">
                             <form method="post" action="${abs_path}/controller?command=by_now_command">
                                 <input type="hidden" name="instrumentId" value="${instrument.instrument_id}">
-                                <button class="btn btn-outline-dark">Buy Now</button>
+                                <button class="btn btn-outline-dark"><fmt:message key="page.item.details.by_now"/></button>
                             </form>
                             <c:if test="${not requestScope.containsValue(instrument.instrument_id)}">
                                 <form method="post" action="${abs_path}/controller?command=add_to_bucket_command">
-                                    <button class="btn btn-dark">Add to Bucket</button>
+                                    <button class="btn btn-dark"><fmt:message key="page.item.details.add_to_cart"/></button>
                                 </form>
                             </c:if>
                             <c:if test="${requestScope.containsValue(instrument.instrument_id)}">
                                 <form method="post" action="${abs_path}/controller?command=add_to_bucket_command">
-                                    <button class="btn btn-success">Added to bucket</button>
+                                    <button class="btn btn-success"><fmt:message key="page.item.details.add_to_cart"/></button>
                                 </form>
                             </c:if>
                         </c:if>
                         <c:if test="${empty sessionScope.user}">
                             <form method="post" action="${abs_path}/controller?command=to_login_page_command">
-                                <button class="btn btn-outline-dark">Buy Now</button>
+                                <button class="btn btn-outline-dark"><fmt:message key="page.item.details.by_now"/></button>
                             </form>
                             <form method="post" action="${abs_path}/controller?command=to_login_page_command">
-                                <button class="btn btn-dark">Add to Basket</button>
+                                <button class="btn btn-dark"><fmt:message key="page.item.details.add_to_cart"/></button>
                             </form>
                         </c:if>
                     </div>

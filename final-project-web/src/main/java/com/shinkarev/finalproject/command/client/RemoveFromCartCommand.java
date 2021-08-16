@@ -1,39 +1,44 @@
 package com.shinkarev.finalproject.command.client;
 
 import com.shinkarev.finalproject.command.Command;
-import com.shinkarev.finalproject.command.ParamName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.CartController;
+import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
-import com.shinkarev.musicshop.service.impl.InstrumentServiceImpl;
+import com.shinkarev.musicshop.service.InstrumentService;
+import com.shinkarev.musicshop.service.ServiceProvider;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import static com.shinkarev.finalproject.command.PageName.CLIENT_BUCKET_PAGE;
-import static com.shinkarev.finalproject.command.PageName.ERROR_PAGE;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
 public class RemoveFromCartCommand implements Command {
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
+        String locale = (String) request.getSession().getAttribute(LOCALE);
         User user = (User) request.getSession().getAttribute(USER);
         String itemId = request.getParameter(INSTRUMENT_ID_PARAM);
-        InstrumentServiceImpl instrumentService = new InstrumentServiceImpl();
+        InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
         try {
             if (instrumentService.removeItemFromBucket(user.getId(), Long.parseLong(itemId))) {
                 request.getSession().removeAttribute(itemId);
                 router = CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
             } else {
-
-                request.setAttribute(ERRORS_ON_ERROR_PAGE, "There is no that item in your bucket");
-                router.setPagePath(ERROR_PAGE);
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ADMIN, locale));
+                router.setErrorCode(HttpServletResponse.SC_NOT_FOUND);
             }
-        } catch (ServiceException | NumberFormatException e) {
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops, something went wrong. We fix it, later ;)");
+        } catch (ServiceException | NumberFormatException ex) {
+            logger.log(Level.ERROR, "Error with removing items from cart", ex);
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-
         return router;
     }
 }

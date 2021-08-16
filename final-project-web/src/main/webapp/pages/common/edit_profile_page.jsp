@@ -30,12 +30,12 @@
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile Settings</h4>
+                    <h4 class="text-right"><fmt:message key="page.user_info.profile_settings"/></h4>
                 </div>
                 <form action="${abs_path}/controller?command=edit_profile_command" method="post">
                 <div class="row mt-2">
                     <div class="col-md-6">
-                        <label class="labels">Nickname:</label>
+                        <label class="labels"><fmt:message key="page.registration.nickname"/></label>
                         <label class="form-control">
                         <input type="text" pattern="^[\w@#$%^&+=]{2,30}$" name="nickname" value="${sessionScope.user.nickname}" required></label>
                         <strong>
@@ -43,40 +43,39 @@
                         </strong>
                     </div>
                     <div class="col-md-6">
-                        <label class="labels">Email:</label>
+                        <label class="labels"><fmt:message key="page.registration.email"/></label>
                         <label class="form-control">${sessionScope.user.email}</label>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <label class="labels">Your id:</label>
+                        <label class="labels"><fmt:message key="page.registration.user_id"/></label>
                         <label class="form-control">${sessionScope.user.id}</label>
                     </div>
                     <div class="col-md-6">
-                        <label class="labels">Status:</label>
+                        <label class="labels"><fmt:message key="page.registration.status"/></label>
                         <label class="form-control">${sessionScope.user.status}</label>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <label class="labels">Name:</label>
+                        <label class="labels"><fmt:message key="page.registration.name"/></label>
                         <label class="form-control">
                             <input type="text" name="name" value="${sessionScope.user.name}"></label>
                     </div>
                     <div class="col-md-6">
-                        <label class="labels">Surename:</label>
+                        <label class="labels"><fmt:message key="page.registration.surename"/></label>
                         <label class="form-control">
                             <input type="text" name="surename" value="${sessionScope.user.surename}"></label>
                     </div>
                 </div>
 
                 <div class="mt-5 text-center">
-                        <button class="btn btn-success profile-button" type="submit">Update</button>
+                        <button class="btn btn-success profile-button" type="submit"><fmt:message key="page.admin.update"/></button>
                 </div>
                 </form>
             </div>
         </div>
-
 
         <%--Buttons--%>
         <div class="col-md-4">

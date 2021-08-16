@@ -1,6 +1,8 @@
 package com.shinkarev.musicshop.dao.impl;
 
 class SqlQuery {
+
+
     private SqlQuery() {
     }
 
@@ -86,6 +88,8 @@ class SqlQuery {
             "LEFT JOIN buckets ON instruments.instrument_id=buckets.instrument_id WHERE user_id=?";
     static final String SQL_SET_INSTRUMENT_IMAGE = "INSERT INTO instrument_images(instrument_id, instrument_image) VALUES(?, ?)";
     static final String INSTRUMENT_ORDER_BY = " ORDER BY brand ";
+    public static final String SQL_INSTRUMENT_ROW_COUNT_BY_TYPE = "SELECT COUNT(*) FROM instruments WHERE instrument_type=?";
+
 
     /**
      * Requests to 'orders' table into musician instruments database
@@ -102,10 +106,11 @@ class SqlQuery {
             "LEFT JOIN instruments_statuses ON instruments.status_id=id " +
             "LEFT JOIN instruments_types ON instruments.instrument_type=type_id " +
             "LEFT JOIN order_items ON instruments.instrument_id=order_items.item_id WHERE order_id=?";
-    public static final String SQL_CHANGE_ORDER_STATUS = "UPDATE orders SET status_id=? WHERE order_id=?";
+    static final String SQL_CHANGE_ORDER_STATUS = "UPDATE orders SET status_id=? WHERE order_id=?";
     static final String SQL_FIND_USER_ORDER_BY_STATUS = "SELECT order_id, user_id, order_date, address, status, price, payment FROM orders " +
             "LEFT JOIN order_statuses ON orders.status_id=order_statuses.status_id WHERE user_id=? and orders.status_id=?";
     static final String SQL_FIND_ORDER_BY_STATUS = "SELECT order_id, user_id, order_date, address, status, price, payment FROM orders " +
             "LEFT JOIN order_statuses ON orders.status_id=order_statuses.status_id WHERE orders.status_id=?";
-
+    static final String SQL_ORDER_ROW_COUNT_BY_TYPE = "SELECT COUNT(*) FROM orders WHERE status_id=?";
+    static final String ORDER_ORDER_BY = " ORDER BY order_date ";
 }

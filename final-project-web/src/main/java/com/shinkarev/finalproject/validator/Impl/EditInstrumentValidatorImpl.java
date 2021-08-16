@@ -13,6 +13,18 @@ import static com.shinkarev.finalproject.validator.InstrumentValidator.INSTRUMEN
 
 public class EditInstrumentValidatorImpl implements InputDataValidator {
 
+    private static InputDataValidator instance;
+
+    private EditInstrumentValidatorImpl() {
+    }
+
+    public static InputDataValidator getInstance() {
+        if (instance == null) {
+            instance = new EditInstrumentValidatorImpl();
+        }
+        return instance;
+    }
+
     @Override
     public Map<String, String> checkValues(Map<String, String> values, String locale) throws ServiceException {
         Map<String, String> result = new HashMap<>();

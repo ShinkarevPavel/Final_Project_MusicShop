@@ -27,22 +27,6 @@ public class UserDaoImpl implements UserDao {
     }
 
 
-    private int rowCountByQuery(String sourceQuery) throws DaoException {
-        int result = 0;
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl" )
-        ) {
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                result = resultSet.getInt(1);
-            }
-        } catch (SQLException e) {
-            logger.log(Level.ERROR, "Can't count row count. ", e);
-            throw new DaoException("Can't count row count.", e);
-        }
-        return result;
-    }
-
 
     @Override
     public List<User> findByPage(int page) throws DaoException {
@@ -90,6 +74,7 @@ public class UserDaoImpl implements UserDao {
                 user = UserCreator.createUser(resultSet);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error. Impossible get data from data base.", ex);
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return Optional.ofNullable(user);
@@ -104,7 +89,8 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(2, userId);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
-            throw new DaoException("Error. Impossible get data from data base.", ex);
+            logger.log(Level.ERROR, "Error. Impossible change status into data base.", ex);
+            throw new DaoException("Error. Impossible change status into data base.", ex);
         }
         return rowsUpdate == 1;
     }
@@ -118,7 +104,8 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(2, userId);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
-            throw new DaoException("Error. Impossible get data from data base.", ex);
+            logger.log(Level.ERROR, "Error. Impossible change role into data base.", ex);
+            throw new DaoException("Error. Impossible change role into data base.", ex);
         }
         return rowsUpdate == 1;
     }
@@ -143,6 +130,7 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(8, user.getId());
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error. Impossible change role into data base.", ex);
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return rowsUpdate == 1;
@@ -162,6 +150,7 @@ public class UserDaoImpl implements UserDao {
                     user = UserCreator.createUser(resultSet);
                 }
             } catch (SQLException ex) {
+                logger.log(Level.ERROR, "Error. Impossible change role into data base.", ex);
                 throw new DaoException("Error. Impossible get data from data base.", ex);
             }
         }
@@ -180,6 +169,7 @@ public class UserDaoImpl implements UserDao {
                 users.add(user);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error. Impossible get data from data base.", ex);
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return users;
@@ -197,6 +187,7 @@ public class UserDaoImpl implements UserDao {
                 users.add(user);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error. Impossible get data from data base.", ex);
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return users;
@@ -224,6 +215,7 @@ public class UserDaoImpl implements UserDao {
                     isAdded = true;
                 }
             } catch (SQLException ex) {
+                logger.log(Level.ERROR, "Error. Impossible add user to data base.", ex);
                 throw new DaoException("Error. Impossible add user to data base.", ex);
             }
         }
@@ -247,6 +239,7 @@ public class UserDaoImpl implements UserDao {
                     user = UserCreator.createUser(resultSet);
                 }
             } catch (SQLException ex) {
+                logger.log(Level.ERROR, "Error. Impossible get data from data base.", ex);
                 throw new DaoException("Error. Impossible get data from data base.", ex);
             }
         }
@@ -274,6 +267,7 @@ public class UserDaoImpl implements UserDao {
                     user = UserCreator.createUser(resultSet);
                 }
             } catch (SQLException ex) {
+                logger.log(Level.ERROR, "Error. Impossible get user from data base.", ex);
                 throw new DaoException("Error. Impossible get user from data base.", ex);
             }
         }
@@ -291,6 +285,7 @@ public class UserDaoImpl implements UserDao {
                 user = UserCreator.createUser(resultSet);
             }
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error. Impossible get data from data base.", ex);
             throw new DaoException("Error. Impossible get data from data base.", ex);
         }
         return Optional.ofNullable(user);
@@ -305,6 +300,7 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(2, userId);
             rowsUpdate = statement.executeUpdate();
         } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error. Impossible change password.", ex);
             throw new DaoException("Error. Impossible change password.", ex);
         }
         return rowsUpdate == 1;

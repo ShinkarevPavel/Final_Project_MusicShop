@@ -37,11 +37,11 @@
                         <table class="table table-success table-striped">
                             <thead>
                             <tr>
-                                <th scope="col">id</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Brand</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Quantity</th>
+                                <th scope="col"><fmt:message key="page.instrument_id"/></th>
+                                <th scope="col"><fmt:message key="page.admin_page.add_instrument.name"/></th>
+                                <th scope="col"><fmt:message key="page.admin_page.add_instrument.brand"/></th>
+                                <th scope="col"><fmt:message key="page.admin_page.add_instrument.price"/></th>
+                                <th scope="col"><fmt:message key="page.registration.quantity"/></th>
                             </tr>
                             </thead>
                             <c:forEach items="${items}" var="item">
@@ -67,16 +67,15 @@
                 <div class="p-3 right-side">
                     <div class="card p-5">
                         <div>
-                            <h4 class="heading">Your Order</h4>
-                            <p class="text">Please make the payment to start enjoying all the features of our
-                                premium plan as soon as possible</p>
+                            <h4 class="heading"><fmt:message key="page.orderring.your_order"/></h4>
+                            <p class="text"><fmt:message key="page.orderring.message"/></p>
                         </div>
                         <div class="pricing p-3 rounded mt-4 d-flex justify-content-between">
                             <div class="images d-flex flex-row align-items-center"><img
                                     src="https://img.mobigama.net/app/6722-real_guitar/1_real_guitar.png"
                                     class="rounded" width="60">
                                 <div class="d-flex flex-column ml-4">
-                                    <span class="plan">Total</span></div>
+                                    <span class="plan"><fmt:message key="page.cart.total"/></span></div>
                             </div>
                             <!--pricing table-->
                             <div class="d-flex flex-row align-items-center">
@@ -84,13 +83,13 @@
                                 <input type="hidden" form="order" name="total" value="${total}">
                             </div> <!-- /pricing table-->
                         </div>
-                        <span class="detail mt-5">Payment details</span>
+                        <span class="detail mt-5"><fmt:message key="page.orderring.paymwnt_details"/></span>
                         <div class="credit rounded mt-4 d-flex justify-content-between align-items-center">
                             <div class="d-flex flex-row align-items-center"><img
                                     src="https://i2.wp.com/itc.ua/wp-content/uploads/2015/02/MasterCard.png"
                                     class="rounded" width="70">
                                 <div class="d-flex flex-column ml-3"><span
-                                        class="business">Credit Card to Courier</span> <span
+                                        class="business"><fmt:message key="page.orderring.curier"/></span> <span
                                         class="plan">1234 XXXX XXXX 2570</span></div>
                             </div>
                             <div class="form-check">
@@ -105,7 +104,7 @@
                                     class="rounded"
                                     width="70">
                                 <div class="d-flex flex-column ml-3">
-                                    <span class="business">Cash to Courier</span>
+                                    <span class="business"><fmt:message key="page.orderring.cash"/></span>
                                     <span class="plan">$100</span>
                                 </div>
                             </div>
@@ -117,14 +116,14 @@
 
 
                         </div>
-                        <h6 class="mt-4 text-secondary">Delivery address</h6>
+                        <h6 class="mt-4 text-secondary"><fmt:message key="page.orderring.address"/></h6>
                         <div class="email mt-2">
                             <input type="text" form="order"  name="address" class="form-control email-text"
                                                        placeholder="Delivery Address" required>
                         </div>
                         <div class="mt-3">
                             <form method="post" id="order" action="${abs_path}/controller?command=create_order_command">
-                                <button class="btn btn-secondary btn-block payment-button">Proceed to payment
+                                <button class="btn btn-secondary btn-block payment-button"><fmt:message key="page.orderring.done"/>
                                     <i class="fa fa-long-arrow-right"></i>
                                 </button>
                             </form>

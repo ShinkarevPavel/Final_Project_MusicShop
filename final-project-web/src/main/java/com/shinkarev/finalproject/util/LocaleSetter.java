@@ -1,7 +1,6 @@
 package com.shinkarev.finalproject.util;
 
 import com.shinkarev.musicshop.pool.ResourceManager;
-import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

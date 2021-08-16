@@ -10,17 +10,13 @@
 
 <html>
 <head>
-
-
 </head>
-
 <body style="background-image: url(https://wallpapercave.com/wp/wp8202724.jpg);
 background-repeat: no-repeat;
 background-position: center center;
 background-size: cover">
-<%@include file="/include/admin_header.jsp"%>
+<%@include file="/include/admin_header.jsp" %>
 
-            ${user.nickname}
-            ${message}
+<h5><span style="color: white">${message}</span></h5>
 </body>
 </html>

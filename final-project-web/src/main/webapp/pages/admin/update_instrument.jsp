@@ -24,7 +24,7 @@ background-size: cover">
         <div class="login-form bg-light mt-4 p-4">
           <!-- Name input -->
           <div class="form-outline mb-4">
-            <label class="form-label" for="form1Example1">Name</label>
+            <label class="form-label" for="form1Example1"><fmt:message key="page.admin_page.add_instrument.name"/></label>
             <input type="text"
                    name="instrument_name"
                    value="${updateValues.instrument_name}"
@@ -37,7 +37,7 @@ background-size: cover">
           </div>
           <!-- Brand input -->
           <div class="form-outline mb-4">
-            <label class="form-label" for="form1Example2">Brand</label>
+            <label class="form-label" for="form1Example2"><fmt:message key="page.admin_page.add_instrument.brand"/></label>
             <input type="text"
                    name="instrument_brand"
                    value="${updateValues.instrument_brand}"
@@ -51,7 +51,7 @@ background-size: cover">
 
           <!-- Country input -->
           <div class="form-outline mb-4">
-            <label class="form-label" for="form1Example2">Country</label>
+            <label class="form-label" for="form1Example2"><fmt:message key="page.admin_page.add_instrument.country"/></label>
             <input type="text"
                    name="instrument_country"
                    value="${updateValues.instrument_country}"
@@ -65,7 +65,7 @@ background-size: cover">
 
           <!-- Price input -->
           <div class="form-outline mb-4">
-            <label class="form-label" for="form1Example2">Price</label>
+            <label class="form-label" for="form1Example2"><fmt:message key="page.admin_page.add_instrument.price"/></label>
             <input type="text"
                    name="instrument_price"
                    value="${updateValues.instrument_price}"
@@ -79,7 +79,7 @@ background-size: cover">
 
           <!-- Description input -->
           <div class="form-outline mb-4">
-            <label class="form-label" for="form1Example2">Description</label>
+            <label class="form-label" for="form1Example2"><fmt:message key="page.admin_page.add_instrument.description"/></label>
             <input type="text"
                    name="instrument_description"
                    value="${updateValues.instrument_description}"
@@ -94,7 +94,7 @@ background-size: cover">
           <br>
           <input type="hidden" name="instrumentId" value="${updateValues.instrumentId}">
           <!-- Submit button -->
-          <button type="submit" class="btn btn-warning">Update</button>
+          <button type="submit" class="btn btn-warning"><fmt:message key="page.admin_page.add_instrument.update"/></button>
         </div>
       </div>
     </div>

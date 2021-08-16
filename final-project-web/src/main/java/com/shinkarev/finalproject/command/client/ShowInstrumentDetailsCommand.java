@@ -2,12 +2,17 @@ package com.shinkarev.finalproject.command.client;
 
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
+import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
-import com.shinkarev.musicshop.service.impl.InstrumentServiceImpl;
+import com.shinkarev.musicshop.service.ServiceProvider;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Optional;
 
@@ -15,12 +20,14 @@ import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
 public class ShowInstrumentDetailsCommand implements Command {
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
+        String locale = (String) request.getSession().getAttribute(LOCALE);
         String instrumentId = request.getParameter(INSTRUMENT_ID_PARAM);
-        InstrumentService instrumentService = new InstrumentServiceImpl();
+        InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
         try {
             Optional<Instrument> optionalInstrument = instrumentService.findInstrumentById(Long.parseLong(instrumentId));
             if (optionalInstrument.isPresent()) {
@@ -33,13 +40,12 @@ public class ShowInstrumentDetailsCommand implements Command {
                     request.setAttribute(INSTRUMENT_PARAM, instrument);
                 }
                 request.getSession().setAttribute(INSTRUMENT_PARAM, instrument);
-            } else {
-                request.setAttribute(INSTRUMENT_DETAILS_ERROR, "Looks like there is no that instrument");
             }
             router.setPagePath(CLIENT_SHOW_INSTRUMENT_DETAILS);
-        } catch (ServiceException ex) {
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops, something went wrong. We fix it, later ;)");
-            router.setPagePath(ERROR_PAGE);
+        } catch (ServiceException | NumberFormatException ex) {
+            logger.log(Level.ERROR, "Error with showing instrument details", ex);
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;
     }

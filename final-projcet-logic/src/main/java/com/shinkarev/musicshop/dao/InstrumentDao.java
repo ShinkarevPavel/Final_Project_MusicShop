@@ -11,6 +11,8 @@ import java.util.Map;
 
 public interface InstrumentDao extends BaseDao<Long, Instrument> {
 
+    int getInstrumentCount(InstrumentType type) throws DaoException;
+
     int getInstrumentCount() throws DaoException;
 
     List<Instrument> findByPage(int page) throws DaoException;

@@ -2,14 +2,18 @@ package com.shinkarev.finalproject.command.admin;
 
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
-import com.shinkarev.finalproject.validator.Impl.EditInstrumentValidatorImpl;
-import com.shinkarev.finalproject.validator.Impl.InstrumentCreationValidator;
+import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.InputDataValidator;
+import com.shinkarev.finalproject.validator.ValidatorProvider;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
-import com.shinkarev.musicshop.service.impl.InstrumentServiceImpl;
+import com.shinkarev.musicshop.service.ServiceProvider;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +24,7 @@ import static com.shinkarev.finalproject.validator.InstrumentValidator.*;
 
 
 public class SaveUpdatedInstrumentCommand implements Command {
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public Router execute(HttpServletRequest request) {
@@ -41,7 +46,7 @@ public class SaveUpdatedInstrumentCommand implements Command {
             updateValues.put(INSTRUMENT_DESCRIPTION.getFieldName(), instrumentDescription);
 
             try {
-                InputDataValidator creationValidator = new EditInstrumentValidatorImpl();
+                InputDataValidator creationValidator = ValidatorProvider.EDIT_INSTRUMENT_VALIDATOR;
                 Map<String, String> errors = creationValidator.checkValues(updateValues, locale);
                 if (errors.isEmpty()) {
                     Instrument instrument = new Instrument(
@@ -51,22 +56,21 @@ public class SaveUpdatedInstrumentCommand implements Command {
                             instrumentCountry,
                             Double.parseDouble(instrumentPrice),
                             instrumentDescription);
-                    InstrumentService instrumentService = new InstrumentServiceImpl();
+                    InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
                     if (instrumentService.update(instrument)) {
                         router.setPagePath(ADMIN_PAGE);
-                        request.setAttribute(ADMIN_MESSAGE, "Item was updated");
-                    } else {
-                        router.setPagePath(ADMIN_PAGE);
-                        request.setAttribute(ADMIN_MESSAGE, "Error item updating");
+                        request.setAttribute(ADMIN_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ADMIN_UPDATE, locale));
+                        logger.log(Level.DEBUG, "Instrument was updated");
                     }
                 } else {
                     request.setAttribute(UPDATE_INSTRUMENT_PARAM, updateValues);
                     request.setAttribute(ERRORS_LIST, errors);
                     router.setPagePath(UPDATE_INSTRUMENT_PAGE);
                 }
-            } catch (ServiceException | NumberFormatException e) {
-                request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops");
-                router.setPagePath(ERROR_PAGE);
+            } catch (ServiceException | IllegalStateException | NumberFormatException ex) {
+                logger.log(Level.ERROR, "Instrument wasn't updated ", ex);
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_CHANGE_DATA + ex.getMessage(), locale));
+                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         } else {
             router.setPagePath(UPDATE_INSTRUMENT_PAGE);

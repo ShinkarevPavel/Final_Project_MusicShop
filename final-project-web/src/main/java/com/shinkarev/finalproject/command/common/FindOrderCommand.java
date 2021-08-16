@@ -3,15 +3,19 @@ package com.shinkarev.finalproject.command.common;
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.ParamName;
 import com.shinkarev.finalproject.command.Router;
+import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.musicshop.entity.OderType;
 import com.shinkarev.musicshop.entity.Order;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.OrderService;
+import com.shinkarev.musicshop.service.ServiceProvider;
 import com.shinkarev.musicshop.service.UserService;
-import com.shinkarev.musicshop.service.impl.OrderServiceImpl;
-import com.shinkarev.musicshop.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,17 +25,19 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 
 /**
  * This command use both
- * for user with admin role
+ * for users with admin role
  * and for users with client role
  */
 
 public class FindOrderCommand implements Command {
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
-        OrderService orderService = new OrderServiceImpl();
-        UserService userService = new UserServiceImpl();
+        String locale = (String) request.getSession().getAttribute(LOCALE);
+        OrderService orderService = ServiceProvider.ORDER_SERVICE;
+        UserService userService = ServiceProvider.USER_SERVICE;
         List<Order> orders;
         User user;
         String userId = request.getParameter(USER_ID_PARAM);
@@ -53,11 +59,12 @@ public class FindOrderCommand implements Command {
             if (orders.size() != 0) {
                 request.setAttribute(ParamName.ORDERS_PARAM, orders);
             } else {
-                request.setAttribute(ParamName.ADMIN_MESSAGE, "Didn't found orders with " + orderType + " type");
+                request.setAttribute(ParamName.ADMIN_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ADMIN, locale));
             }
-        } catch (ServiceException e) {
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops, something went wrong. We fix it, later ;)");
-            router.setPagePath(ERROR_PAGE);
+        } catch (ServiceException | NumberFormatException | IllegalStateException ex) {
+            logger.log(Level.ERROR, "Error of order finding", ex);
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;
     }

@@ -12,8 +12,7 @@ public class RegistrationConfirmator {
     public static String setRegistrationToken(String email, String key) throws ServiceException {
         String registrationKey = PasswordHashGenerator.encodePassword(key);
         String link = LINK_HEAD + registrationKey + LINK_FOOT;
-        EmailServiceImpl emailService = new EmailServiceImpl();
-        emailService.sendEmail(email, link);
+        EmailServiceImpl.getInstance().sendEmail(email, link);
         return registrationKey;
     }
 }

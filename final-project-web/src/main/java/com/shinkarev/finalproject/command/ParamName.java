@@ -60,8 +60,6 @@ public class ParamName {
     public static final String PAYMENT = "payment";
     public static final String ORDERS_PARAM = "orders";
     public static final String ADMIN_MESSAGE = "message";
-    public static final String PAGE_ERRORS_LOGIN_PASSWORD = "page.errors.login_password_error";
-    public static final String PAGE_ERRORS_REGISTRATION_CONFIRMING = "page.errors.registration_confirming_error";
     public static final String EMPTY_INSTRUMENTS_LIST = "page.instruments.message";
     public static final String ORDER_DETAILS = "details";
     public static final String ORDER = "order";
@@ -71,5 +69,20 @@ public class ParamName {
     public static final String MARK = "mark";
     public static final String ERROR_CODE = "error_code";
     public static final String ERROR_NAME = "error_name";
-    public static final Object SERVER_ERROR = "Server Error";
-}
+    public static final String EMAIL_MESSAGE = "Your order was created. You can control and track it in your acc. Thanks that chose our shop";
+
+    public static final String PAGE_ERRORS_LOGIN_PASSWORD = "page.errors.login_password_error";
+    public static final String PAGE_ERRORS_REGISTRATION_CONFIRMING = "page.errors.registration_confirming_error";
+    public static final String PAGE_ERROR_ERROR_PAGE = "page.errors.on_error_page.catch_message";
+    public static final String PAGE_ERROR_ADD_DATA = "page.errors.on_error_page.add_data";
+    public static final String PAGE_ERROR_ADD_IMAGE = "page.errors.on_error_page.add_image";
+    public static final String PAGE_ERROR_CHANGE_DATA = "page.errors.on_error_page.change_data";
+    public static final String PAGE_MESSAGE_ADMIN = "page.errors.on_admin_page";
+    public static final String PAGE_MESSAGE_ADMIN_UPDATE = "page.errors.on_admin_update";
+    public static final String PAGE_MESSAGE_ORDER_CREATED = "page.order_created";
+    public static final String PAGE_MESSAGE_RATING = "page.rating";
+    public static final String PAGE_MESSAGE_RATING_DONE = "page.rating_done";
+    public static final String PAGE_MESSAGE_RATING_ERROR = "page.rating_error";
+    public static final String PAGE_FILTER_MESSAGE = "page.filter_message";
+
+ }

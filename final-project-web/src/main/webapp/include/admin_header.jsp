@@ -55,7 +55,7 @@
 
                                     <li class="nav-item active">
                                         <div class="dropdown">
-                                            <a class="btn btn-secondary" href="${abs_path}/pages/common/main_page.jsp">Home</a>
+                                            <a class="btn btn-secondary" href="${abs_path}/pages/common/main_page.jsp"><fmt:message key="page.header.home"/></a>
                                         </div>
                                     </li>
 
@@ -65,13 +65,13 @@
                                             <button class="btn btn-secondary dropdown-toggle" type="button"
                                                     id="dropdownMenuButton2" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
-                                                Users Tool
+                                                <fmt:message key="page.header.user_tool"/>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-sm-start"
                                                 aria-labelledby="d">
 
-                                                <li><a class="dropdown-item"  href="${abs_path}/pages/admin/find_user.jsp">Find user</a></li>
-                                                <li><a class="dropdown-item" href="${abs_path}/pages/admin/add_user.jsp">Add user</a></li>
+                                                <li><a class="dropdown-item"  href="${abs_path}/pages/admin/find_user.jsp"><fmt:message key="page.header.find_user"/></a></li>
+                                                <li><a class="dropdown-item" href="${abs_path}/pages/admin/add_user.jsp"><fmt:message key="page.header.add_user"/></a></li>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
@@ -90,12 +90,12 @@
                                             <button class="btn btn-secondary dropdown-toggle" type="button"
                                                     id="dropdownMenuButton3" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
-                                                Instruments Tool
+                                                <fmt:message key="page.header.instrument_tool"/>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-sm-start"
                                                 aria-labelledby="d">
                                                 <li><a class="dropdown-item"
-                                                       href="${abs_path}/pages/admin/add_instrument.jsp">Add instrument</a>
+                                                       href="${abs_path}/pages/admin/add_instrument.jsp"><fmt:message key="page.header.add_instrument"/></a>
                                                 </li>
                                                 <li>
                                                     <hr class="dropdown-divider">
@@ -103,24 +103,23 @@
 
                                                 <li><a class="dropdown-item"
                                                        href="${abs_path}/controller?command=show_type_instrument&instrumentType=GUITARS">
-                                                    Show Guitars</a></li>
+                                                    <fmt:message key="page.header.show_guitars"/></a></li>
                                                 <li><a class="dropdown-item"
                                                        href="${abs_path}/controller?command=show_type_instrument&instrumentType=DRUMS">
-                                                    Show Drums</a></li>
+                                                    <fmt:message key="page.header.show_drums"/></a></li>
                                                 <li><a class="dropdown-item"
                                                        href="${abs_path}/controller?command=show_type_instrument&instrumentType=KEYBOARDS">
-                                                    Show Keyboards</a></li>
+                                                    <fmt:message key="page.header.show_keyboards"/></a></li>
                                                 <li><a class="dropdown-item"
                                                        href="${abs_path}/controller?command=show_type_instrument&instrumentType=OTHER">
-                                                    Show Other</a></li>
+                                                    <fmt:message key="page.header.show_other"/></a></li>
                                                 <li>
                                                     <hr class="dropdown-divider">
                                                 </li>
 
                                                 <li><a class="dropdown-item btn-outline-secondary"
-                                                       href="${abs_path}/controller?command=show_all_instruments_command">Show all instrument</a>
+                                                       href="${abs_path}/controller?command=show_all_instruments_command"><fmt:message key="page.admin.show_all_instruments"/></a>
                                                 </li>
-
                                             </ul>
                                         </div>
                                     </li>
@@ -130,23 +129,23 @@
                                             <button class="btn btn-secondary dropdown-toggle" type="button"
                                                     id="dropdownMenuButton4" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
-                                                Order Tool
+                                                <fmt:message key="page.header.order_tool"/>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <li><a class="dropdown-item"
-                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=CREATED">Created</a>
+                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=CREATED"><fmt:message key="page.header.created_order"/></a>
                                                 </li>
                                                 <li><a class="dropdown-item"
-                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=PROCESSING">Processing</a>
+                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=PROCESSING"><fmt:message key="page.header.created_processing"/></a>
                                                 </li>
                                                 <li><a class="dropdown-item"
-                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=ACCEPTED">Accepted</a>
+                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=ACCEPTED"><fmt:message key="page.header.accepted"/></a>
                                                 </li>
                                                 <li><a class="dropdown-item"
-                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=ON_DELIVERY">On delivery</a>
+                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=ON_DELIVERY"><fmt:message key="page.header.on_delivery"/></a>
                                                 </li>
                                                 <li><a class="dropdown-item"
-                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=DELIVERED">Delivered</a>
+                                                       href="${abs_path}/controller?command=find_order_by_type&new_type=DELIVERED"><fmt:message key="page.header.delivered"/></a>
                                                 </li>
 
                                                 <li>
@@ -154,7 +153,7 @@
                                                 </li>
 
                                                 <li><a class="dropdown-item btn-outline-secondary"
-                                                       href="${abs_path}/controller?command=show_all_orders_command">Show all Orders</a>
+                                                       href="${abs_path}/controller?command=show_all_orders_command"><fmt:message key="page.header.show_all_orders"/></a>
                                                 </li>
                                             </ul>
                                         </div>

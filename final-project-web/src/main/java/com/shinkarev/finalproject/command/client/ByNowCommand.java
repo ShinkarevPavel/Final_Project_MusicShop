@@ -4,23 +4,29 @@ import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.CartController;
+import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
-import com.shinkarev.musicshop.service.impl.InstrumentServiceImpl;
+import com.shinkarev.musicshop.service.ServiceProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static com.shinkarev.finalproject.command.ParamName.*;
 
 public class ByNowCommand implements Command {
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
+        String locale = (String) request.getSession().getAttribute(LOCALE);
         User user = (User) request.getSession().getAttribute(USER);
         String instrumentId = request.getParameter(INSTRUMENT_ID_PARAM);
-        InstrumentService instrumentService = new InstrumentServiceImpl();
+        InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
         try {
             if (user != null) {
                 if (!instrumentService.isInBucket(user.getId(), Long.parseLong(instrumentId))) {
@@ -28,7 +34,7 @@ public class ByNowCommand implements Command {
                         router.setPagePath(PageName.CLIENT_BUCKET_PAGE);
                         CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
                     } else {
-                        request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops");
+                        request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
                         router.setErrorCode(HttpServletResponse.SC_BAD_REQUEST);
                     }
                 } else {
@@ -37,7 +43,8 @@ public class ByNowCommand implements Command {
                 }
             }
         } catch (ServiceException | NumberFormatException ex) {
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, "Error with loading users form db. Reason: " + ex.getMessage());
+            logger.log(Level.ERROR, "Error of buying instrument", ex);
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;

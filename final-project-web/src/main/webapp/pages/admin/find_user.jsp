@@ -22,9 +22,10 @@
                     <div class="input-group">
                         <input type="search" class="form-control rounded" placeholder="Search by Id" aria-label="Search"
                                aria-describedby="search-addon" name="admin_search_by_id" required/>
-                        <button type="submit" class="btn btn-outline-warning">search</button>
+                        <button type="submit" class="btn btn-outline-warning"><fmt:message key="page.admin_page.search"/></button>
                     </div>
                 </form>
+                <span>${message}</span>
             </div>
         </div>
     </div>

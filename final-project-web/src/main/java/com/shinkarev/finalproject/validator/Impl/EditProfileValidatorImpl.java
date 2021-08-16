@@ -2,8 +2,6 @@ package com.shinkarev.finalproject.validator.Impl;
 
 import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.InputDataValidator;
-import com.shinkarev.musicshop.service.UserService;
-import com.shinkarev.musicshop.service.impl.UserServiceImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +10,17 @@ import static com.shinkarev.finalproject.command.ParamName.NICKNAME_ERROR;
 import static com.shinkarev.finalproject.validator.UserValidator.NICKNAME;
 
 public class EditProfileValidatorImpl implements InputDataValidator {
+    private static InputDataValidator instance;
+
+    private EditProfileValidatorImpl() {
+    }
+
+    public static InputDataValidator getInstance() {
+        if (instance == null) {
+            instance = new EditProfileValidatorImpl();
+        }
+        return instance;
+    }
 
 
     @Override

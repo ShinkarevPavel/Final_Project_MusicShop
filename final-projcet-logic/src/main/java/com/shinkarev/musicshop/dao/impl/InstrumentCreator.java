@@ -4,6 +4,9 @@ import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;
 import com.shinkarev.musicshop.exception.DaoException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -14,6 +17,7 @@ import java.util.List;
 import static com.shinkarev.musicshop.dao.impl.InstrumentField.*;
 
 public class InstrumentCreator {
+    private static Logger logger = LogManager.getLogger();
     private InstrumentCreator() {
     }
 
@@ -35,7 +39,7 @@ public class InstrumentCreator {
             List<Blob> images = instrumentDao.getInstrumentImages(instrument.getInstrument_id());
             List<String> convertedImages = instrumentDao.convertBlobToString(images);
             instrument.setImage(convertedImages);
-
+            logger.log(Level.DEBUG, "Instrument was created");
         } catch (SQLException ex) {
             throw new DaoException("Error. Impossible create instrument", ex);
         } catch (IOException e) {

@@ -29,8 +29,7 @@
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
                 <div class="cart_container">
-                    <div class="cart_title">Your cart<small> (${items.size()} item in your
-                        cart) </small>
+                    <div class="cart_title"><fmt:message key="page.cart.your_cart"/><small> (${items.size()} <fmt:message key="page.cart.text"/>) </small>
                     </div>
 
                     <c:forEach items="${items}" var="item">
@@ -48,20 +47,20 @@
                                             </div>
                                         </div>
                                         <div class="cart_item_color cart_info_col">
-                                            <div class="cart_item_title">You can remove it</div>
+                                            <div class="cart_item_title"><fmt:message key="page.cart.remmove_message"/></div>
                                             <form action="${abs_path}/controller?command=remove_from_cart_command"
                                                   method="post">
                                                 <div class="cart_item_text">
                                                     <input type="hidden" name="instrumentId"
                                                            value="${item.key.instrument_id}">
-                                                    <button type="submit" class="btn btn-outline-success">Remove
+                                                    <button type="submit" class="btn btn-outline-success"><fmt:message key="page.cart.remmove"/>
                                                     </button>
                                                 </div>
                                             </form>
                                         </div>
 
                                         <div class="cart_item_quantity cart_info_col">
-                                            <div class="cart_item_title">Quantity</div>
+                                            <div class="cart_item_title"><fmt:message key="page.registration.quantity"/></div>
                                             <div class="cart_item_text">
                                                 <form method="post" action="${abs_path}/controller?command=quantity_control_command">
                                                     <input type="hidden" name="instrumentId" value="${item.key.instrument_id}" form="order" multiple>
@@ -75,11 +74,11 @@
                                         </div>
 
                                         <div class="cart_item_price cart_info_col">
-                                            <div class="cart_item_title">Price</div>
+                                            <div class="cart_item_title"><fmt:message key="page.admin_page.add_instrument.price"/></div>
                                             <div class="cart_item_text">$${item.key.price}</div>
                                         </div>
                                         <div class="cart_item_total cart_info_col">
-                                            <div class="cart_item_title">Total</div>
+                                            <div class="cart_item_title"><fmt:message key="page.cart.total"/></div>
                                             <div class="cart_item_text">$${item.key.price*item.value}</div>
                                         </div>
                                     </div>
@@ -90,7 +89,7 @@
 
                     <div class="order_total">
                         <div class="order_total_content text-sm-right">
-                            <div class="order_total_title">Order Total:</div>
+                            <div class="order_total_title"><fmt:message key="page.cart.order_total"/></div>
                             <input type="hidden" form="order" name="total" value="${total}">
                             <div class="order_total_amount">$${total}</div>
                         </div>
@@ -98,11 +97,11 @@
                     <div class="cart_buttons">
                         <div class="btn-group">
                             <form method="post" action="${abs_path}/controller?command=to_main_page">
-                                <button type="submit" class="button cart_button_clear">Continue Shopping</button>
+                                <button type="submit" class="button cart_button_clear"><fmt:message key="page.cart.continiue"/></button>
                             </form>
                             <c:if test="${not empty items}">
                                 <form method="post" id="order" action="${abs_path}/controller?command=order_processing_command">
-                                    <button type="submit" class="button cart_button_checkout">To Order</button>
+                                    <button type="submit" class="button cart_button_checkout"><fmt:message key="page.cart.to_order"/></button>
                                 </form>
                             </c:if>
                         </div>

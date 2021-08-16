@@ -3,15 +3,21 @@ package com.shinkarev.finalproject.command.admin;
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.ImageConverter;
-import com.shinkarev.finalproject.validator.Impl.InstrumentCreationValidator;
+import com.shinkarev.finalproject.util.LocaleSetter;
+import com.shinkarev.finalproject.validator.InputDataValidator;
+import com.shinkarev.finalproject.validator.ValidatorProvider;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
-import com.shinkarev.musicshop.service.impl.InstrumentServiceImpl;
+import com.shinkarev.musicshop.service.ServiceProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 import java.io.IOException;
@@ -24,6 +30,7 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.InstrumentValidator.*;
 
 public class AddInstrumentCommand implements Command {
+    private static Logger logger = LogManager.getLogger();
 
     @Override
     public Router execute(HttpServletRequest request) {
@@ -39,7 +46,6 @@ public class AddInstrumentCommand implements Command {
             String instrumentType = request.getParameter(INSTRUMENT_TYPE_PARAM);
             String instrumentStatus = request.getParameter(INSTRUMENT_STATUS_PARAM);
 
-
             String locale = (String) request.getSession().getAttribute(LOCALE);
 
             Map<String, String> registrationValues = new HashMap<>();
@@ -52,11 +58,12 @@ public class AddInstrumentCommand implements Command {
             registrationValues.put(INSTRUMENT_TYPE_PARAM, instrumentType);
             registrationValues.put(INSTRUMENT_STATUS_PARAM, instrumentStatus);
 
-            InstrumentCreationValidator creationValidator = new InstrumentCreationValidator();
-            Map<String, String> errors = creationValidator.checkValues(registrationValues, locale);
-            if (errors.isEmpty()) {
-                List<InputStream> images;
-                try {
+            try {
+                InputDataValidator creationValidator = ValidatorProvider.INSTRUMENT_CREATION_VALIDATOR;
+                Map<String, String> errors = creationValidator.checkValues(registrationValues, locale);
+                if (errors.isEmpty()) {
+                    List<InputStream> images;
+
                     images = ImageConverter.convertImage(request);
                     Instrument instrument = new Instrument(
                             instrumentName,
@@ -68,21 +75,25 @@ public class AddInstrumentCommand implements Command {
                             InstrumentStatusType.valueOf(instrumentStatus),
                             InstrumentType.valueOf(instrumentType));
 
-                    InstrumentService instrumentService = new InstrumentServiceImpl();
+                    InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
                     if (instrumentService.addInstrument(instrument, images)) {
                         router.setPagePath(ADMIN_PAGE);
+                        logger.log(Level.DEBUG, "Instrument was added");
                     }
-                } catch (ServiceException | NumberFormatException e) {
-                    request.setAttribute(ERRORS_ON_ERROR_PAGE, "Error of adding instrument");
-                    router.setPagePath(ERROR_PAGE);
-                } catch (IOException | ServletException ex) {
-                    request.setAttribute(ERRORS_ON_ERROR_PAGE, "Error with image addition");
-                    router.setPagePath(ERROR_PAGE);
+                } else {
+                    request.setAttribute(REGISTRATION_VALUES, registrationValues);
+                    request.setAttribute(ERRORS_LIST, errors);
+                    router.setPagePath(ADD_INSTRUMENT);
                 }
-            } else {
-                request.setAttribute(REGISTRATION_VALUES, registrationValues);
-                request.setAttribute(ERRORS_LIST, errors);
-                router.setPagePath(ADD_INSTRUMENT);
+            } catch (ServiceException | IllegalStateException | NumberFormatException ex) {
+                logger.log(Level.ERROR, "Error creating instrument");
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_DATA + ex.getMessage(), locale));
+                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
+            } catch (IOException | ServletException ex) {
+                logger.log(Level.ERROR, "Error creating instrument", ex);
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_IMAGE + ex.getMessage(), locale));
+                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         } else {
             router.setPagePath(ADD_INSTRUMENT);

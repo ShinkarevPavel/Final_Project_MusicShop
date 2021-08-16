@@ -2,11 +2,15 @@ package com.shinkarev.musicshop.service.impl;
 
 import com.shinkarev.musicshop.dao.OrderDao;
 import com.shinkarev.musicshop.dao.impl.OrderDaoImpl;
+import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.OderType;
 import com.shinkarev.musicshop.entity.Order;
 import com.shinkarev.musicshop.exception.DaoException;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.OrderService;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +18,57 @@ import java.util.Map;
 import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
+    private static Logger logger = LogManager.getLogger();
     private OrderDao orderDao = new OrderDaoImpl();
+    private static OrderService instance;
+
+    private OrderServiceImpl() {
+    }
+
+    public static OrderService getInstance() {
+        if (instance == null) {
+            instance = new OrderServiceImpl();
+        }
+        return instance;
+    }
 
     @Override
-    public List<Order> findOrderByStatus(OderType status) throws ServiceException {
+    public int getOrderCount(OderType type) throws ServiceException {
+        try {
+            return orderDao.getOrderCount(type);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with instrument count .", e);
+            throw new ServiceException("Error with instrument count .", e);
+        }
+    }
+
+    @Override
+    public List<Order> readByPage(int page) throws ServiceException {
         List<Order> orders;
         try {
-            orders = orderDao.findOrdersByStatus(status);
+            orders = orderDao.findByPage(page);
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with find all Users .", e);
+            throw new ServiceException("Error with find all Users .", e);
+        }
+        return orders;
+    }
+
+    @Override
+    public int getOrderCount() throws ServiceException {
+        try {
+            return orderDao.getOrderCount();
+        } catch (DaoException e) {
+            logger.log(Level.ERROR, "Error with instrument count .", e);
+            throw new ServiceException("Error with instrument count .", e);
+        }
+    }
+
+    @Override
+    public List<Order> findOrderByStatus(OderType status, int page) throws ServiceException {
+        List<Order> orders;
+        try {
+            orders = orderDao.findOrdersByStatus(status, page);
         } catch (DaoException ex) {
             throw new ServiceException("Fatal. Error of getting orders", ex);
         }

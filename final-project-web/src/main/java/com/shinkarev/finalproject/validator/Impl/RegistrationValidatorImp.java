@@ -3,8 +3,9 @@ package com.shinkarev.finalproject.validator.Impl;
 import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.InputDataValidator;
 import com.shinkarev.musicshop.exception.ServiceException;
+import com.shinkarev.musicshop.service.ServiceProvider;
 import com.shinkarev.musicshop.service.UserService;
-import com.shinkarev.musicshop.service.impl.UserServiceImpl;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,10 +14,23 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
 public class RegistrationValidatorImp implements InputDataValidator {
+
+    private static InputDataValidator instance;
+
+    private RegistrationValidatorImp() {
+    }
+
+    public static InputDataValidator getInstance() {
+        if (instance == null) {
+            instance = new RegistrationValidatorImp();
+        }
+        return instance;
+    }
+
     @Override
     public Map<String, String> checkValues(Map<String, String> values, String locale) throws ServiceException {
         Map<String, String> result = new HashMap<>();
-        UserService userService = new UserServiceImpl();
+        UserService userService = ServiceProvider.USER_SERVICE;
         String login = values.get(LOGIN.getFieldName());
         /*
          *This block checking login on RegEx conformity and unique

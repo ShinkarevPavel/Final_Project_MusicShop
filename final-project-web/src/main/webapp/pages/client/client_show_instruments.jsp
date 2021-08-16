@@ -70,10 +70,9 @@ background-size: cover">
                             </h4>
                         </div>
                     </div>
-                    <form method="post" action="${abs_path}/controller?command=show_instrument_details_command">
+                    <form method="post" action="${abs_path}/controller?command=show_instrument_details_command&instrumentId=${instrument.instrument_id}">
                         <div class="product-1 align-items-center p-2 text-center">
-                            <input type="hidden" name="instrumentId" value="${instrument.instrument_id}">
-                            <button type="submit" class="btn btn-outline-secondary">More details</button>
+                            <button type="submit" class="btn btn-outline-secondary"><fmt:message key="page.item_details.more_details"/></button>
                         </div>
                     </form>
                 </div>
@@ -81,21 +80,24 @@ background-size: cover">
         </c:forEach>
     </div>
 </div>
-<nav aria-label="Page navigation area">
-    <ul class="pagination justify-content-center">
-        <li class="page-item ${pageable.isFirstPage() ? 'disabled': ''}">
-            <a class="page-link"
-               href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=${instruments[0].type}&page=${pageable.currentPage - 1}" tabindex="-1">Previous</a>
-        </li>
-        <c:forEach var="i" begin="1" end="${pageable.pageCount()}">
-            <li class="page-item ${pageable.currentPage eq i ? 'active': ''}">
-                <a class="page-link" href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=${instruments[0].type}&page=${i}">${i}</a></li>
-        </c:forEach>
-        <li class="page-item ${pageable.isLastPage() ? 'disabled': ''}">
-            <a class="page-link"
-               href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=${instruments[0].type}&page=${pageable.currentPage + 1}">Next</a>
-        </li>
-    </ul>
-</nav>
+<c:if test="${not empty instruments}">
+    <nav aria-label="Page navigation area">
+        <ul class="pagination justify-content-center">
+            <li class="page-item ${pageable.isFirstPage() ? 'disabled': ''}">
+                <a class="page-link"
+                   href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=${instruments[0].type}&page=${pageable.currentPage - 1}" tabindex="-1"><fmt:message key="page.previous"/></a>
+            </li>
+            <c:forEach var="i" begin="1" end="${pageable.pageCount()}">
+                <li class="page-item ${pageable.currentPage eq i ? 'active': ''}">
+                    <a class="page-link" href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=${instruments[0].type}&page=${i}">${i}</a></li>
+            </c:forEach>
+            <li class="page-item ${pageable.isLastPage() ? 'disabled': ''}">
+                <a class="page-link"
+                   href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=${instruments[0].type}&page=${pageable.currentPage + 1}"><fmt:message key="page.next"/></a>
+            </li>
+        </ul>
+    </nav>
+</c:if>
+
 </body>
 </html>

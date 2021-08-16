@@ -62,22 +62,22 @@
                         <input type="submit" form="locale"  class="btn btn-outline-light me-2" value="${curr_lang}">
                     </form>
                 </li>
-                <li><a href="${abs_path}/pages/common/main_page.jsp" class="nav-link px-2 link-secondary">Home</a></li>
+                <li><a href="${abs_path}/pages/common/main_page.jsp" class="nav-link px-2 link-secondary"><fmt:message key="page.header.home"/></a></li>
 
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Products
+                        <fmt:message key="page.header.products"/>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=GUITARS">Guitars</a></li>
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=DRUMS">Drums</a></li>
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=KEYBOARDS">Keyboards</a></li>
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=OTHER">Other</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=GUITARS"><fmt:message key="page.header.guitars"/></a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=DRUMS"><fmt:message key="page.header.drums"/></a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=KEYBOARDS"><fmt:message key="page.header.keyboards"/></a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=show_instrument_by_type_command&instrument_type=OTHER"><fmt:message key="page.header.other"/></a></li>
                     </ul>
                 </li>
 
-                <li><a href="https://www.youtube.com/watch?v=_E6mIYNO3So&ab_channel=DavidGilmour" class="nav-link px-2 link-dark">Fuck you</a></li>
+                <li><a href="https://www.youtube.com/watch?v=_E6mIYNO3So&ab_channel=DavidGilmour" class="nav-link px-2 link-dark"><fmt:message key="page.header.promo"/></a></li>
             </ul>
 
             <c:if test="${not empty sessionScope.user}">
@@ -100,10 +100,10 @@
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
                         <ctg:is-admin>
-                            <li><a class="dropdown-item" href="${abs_path}/pages/admin/admin.jsp">Admin cabinet</a></li>
+                            <li><a class="dropdown-item" href="${abs_path}/pages/admin/admin.jsp"><fmt:message key="page.header.admin_cabinet"/></a></li>
                         </ctg:is-admin>
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=check_cart_command">My cart</a></li>
-                        <li><a class="dropdown-item" href="${abs_path}/controller?command=to_cabinet_page_command">Profile</a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=check_cart_command"><fmt:message key="page.header.cart"/></a></li>
+                        <li><a class="dropdown-item" href="${abs_path}/controller?command=to_cabinet_page_command"><fmt:message key="page.header.cabinet"/></a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

@@ -30,10 +30,10 @@
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">Profile Settings</h4>
+                    <h4 class="text-right"><fmt:message key="page.user_info.profile_settings"/></h4>
                 </div>
 
-                <div class="col-md-12"><label class="labels">Enter password:</label>
+                <div class="col-md-12"><label class="labels"><fmt:message key="page.change_password.enter_password"/></label>
                     <input type="password"
                            form="change"
                            class="form-control"
@@ -42,7 +42,7 @@
                            required>
                 </div>
                 <br>
-                <div class="col-md-12"><label class="labels">Confirm password:</label>
+                <div class="col-md-12"><label class="labels"><fmt:message key="page.change_password.cofirm_password"/></label>
                     <input type="password"
                            form="change"
                            name="checkPassword"
@@ -54,7 +54,7 @@
                 </strong>
                 <form method="post" id="change" action="${abs_path}/controller?command=change_password_command">
                     <div class="mt-5 text-center">
-                        <button class="btn btn-success profile-button" type="submit">Save</button>
+                        <button class="btn btn-success profile-button" type="submit"><fmt:message key="page.change_password.save"/></button>
                     </div>
                 </form>
             </div>

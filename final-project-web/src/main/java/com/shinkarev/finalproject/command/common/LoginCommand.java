@@ -8,8 +8,10 @@ import com.shinkarev.finalproject.validator.UserValidator;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.entity.UserStatusType;
 import com.shinkarev.musicshop.exception.ServiceException;
-import com.shinkarev.musicshop.service.impl.UserServiceImpl;
+import com.shinkarev.musicshop.service.ServiceProvider;
+import com.shinkarev.musicshop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,8 +29,12 @@ public class LoginCommand implements Command {
         Router router = new Router();
         User user = (User) request.getSession().getAttribute(USER);
         if (user != null) {
-            request.setAttribute(USER, user);
-            userPageControl(request, user, router);
+            if (user.getStatus().equals(UserStatusType.BLOCKED)) {
+                router.setPagePath(BLOCKED_PAGE);
+            } else {
+                request.setAttribute(USER, user);
+                userPageControl(request, user, router);
+            }
         } else {
             logger.log(Level.DEBUG, "Session is empty");
             getUser(request, router);
@@ -43,7 +49,7 @@ public class LoginCommand implements Command {
             User user;
             String login = request.getParameter(UserValidator.LOGIN.getFieldName());
             String password = request.getParameter(UserValidator.PASSWORD.getFieldName());
-            UserServiceImpl userService = new UserServiceImpl();
+            UserService userService = ServiceProvider.USER_SERVICE;
             try {
                 Optional<User> optionalUser = userService.login(login, password);
                 if (optionalUser.isPresent()) {
@@ -51,14 +57,18 @@ public class LoginCommand implements Command {
                     logger.log(Level.DEBUG, "Logged user is present on DB" + user);
                     if (user.getStatus().equals(UserStatusType.ACTIVE)) {
                         userPageControl(request, user, router);
-                    } // toDO do smth with Blocked users
+                    } else {
+                        request.getSession().setAttribute(USER, user);
+                        router.setPagePath(BLOCKED_PAGE);
+                    }
                 } else {
                     request.setAttribute(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(PAGE_ERRORS_LOGIN_PASSWORD, locale));
-                    router.setPagePath(PageName.LOGIN_PAGE);
+                    router.setPagePath(LOGIN_PAGE);
                 }
-            } catch (ServiceException e) {
-                request.setAttribute(ERRORS_ON_ERROR_PAGE, "Oops");
-                router.setPagePath(ERROR_PAGE);
+            } catch (ServiceException ex) {
+                logger.log(Level.ERROR, "Error of user adding", ex);
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
 
 
@@ -78,11 +88,11 @@ public class LoginCommand implements Command {
             case CLIENT -> {
                 request.getSession().setAttribute(USER, user);
                 request.setAttribute(USER, user);
-                router.setPagePath(CLIENT_PAGE);
+                router.setPagePath(MAIN_PAGE);
             }
             case GUEST -> {
                 request.setAttribute(LOGIN_ERROR, LocaleSetter.getInstance().getMassage(PAGE_ERRORS_REGISTRATION_CONFIRMING, locale));
-                router.setPagePath(PageName.LOGIN_PAGE);
+                router.setPagePath(LOGIN_PAGE);
             }
             default -> router.setPagePath(LOGIN_PAGE);
         }
