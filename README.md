@@ -1,4 +1,4 @@
-# The Theme of final project is Music shop.
+# The theme of final project is the shop of musical instruments.
 
 # Project Overview
 This website proposes for customers to choose and buy their own musical instruments and other items for amazing pastime. Here you can find custom musical items that famous guitarists, drummers and other musicians use. Also we propose istruments for keyboardists.  
