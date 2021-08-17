@@ -10,6 +10,7 @@ import java.util.Map;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
 public class CartController {
+
     public static Router cartQuantityControl(HttpServletRequest request, Map<Instrument, Integer> cartItems) {
         Router router = new Router();
         double summa = 0;

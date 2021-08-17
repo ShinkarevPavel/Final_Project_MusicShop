@@ -5,6 +5,7 @@ import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.ParamName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.LocaleSetter;
+import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.Order;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
@@ -21,8 +22,24 @@ import java.util.Optional;
 
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+/**
+ * Show {@link Order} details command.
+ * Used by clients for displaying certain {@link Order} details on the their cabinet page.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class ShowOrderDetailsCommand implements Command {
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router} that contains information about next page
+     * and data that will be display on client's page.
+     *
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.Queue;
 import java.util.Timer;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -15,6 +14,20 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * The {@link ConnectionPool} class has private BlockingQueue in which
+ * ProxyConnections are stored.
+ * The max amount of created connections is set by POOL_SIZE or
+ * otherwise will be take from DEFAULT_POOL_SIZE int value.
+ * The connection can be taken from the BlockingQueue and
+ * released to it. Once an hour {@link PoolChecker} checks the
+ * pool for the quantity of connections in it and add connection
+ * to pool if it necessary.
+ * Thread safe.
+ *
+ * @see ProxyConnection
+ */
 
 public class ConnectionPool {
     private static Logger logger = LogManager.getLogger();

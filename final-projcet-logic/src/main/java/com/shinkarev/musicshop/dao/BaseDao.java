@@ -11,15 +11,45 @@ import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The {@link BaseDao} interface
+ * is a base interface for other DAO interfaces,
+ * provides access to the database
+ */
+
 public interface BaseDao<K, T extends Entity> {
     Logger logger = LogManager.getLogger();
     int PAGE_SIZE = 3;
 
+    /**
+     * @param id sought entity id
+     * @return Optional sought entity
+     * @throws DaoException if the request to data base could not be handled
+     */
+
     Optional<T> findEntityById(K id) throws DaoException;
+
+    /**
+     * @return collection of all entities
+     * @throws DaoException if the request to data base could not be handled
+     */
 
     List<T> findAll() throws DaoException;
 
+    /**
+     * @param t entity that will be added to data base
+     * @return true if entity was added otherwise false
+     * @throws DaoException if the request to data base could not be handled
+     */
+
     boolean create(T t) throws DaoException;
+
+    /**
+     *
+     * @param t entity that will be updated into data base
+     * @return true if entity was updated otherwise false
+     * @throws DaoException if the request to data base could not be handled
+     */
 
     boolean update(T t) throws DaoException;
 
@@ -51,10 +81,16 @@ public interface BaseDao<K, T extends Entity> {
         return queryBuilder.toString();
     }
 
+    /**
+     * @param sourceQuery current query to data base
+     * @return count of rows that data base contains for current query
+     * @throws DaoException if the request to data base could not be handled.
+     */
+
     default int rowCountByQuery(String sourceQuery) throws DaoException {
         int result = 0;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl" )
+             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM (" + sourceQuery + ") as tbl")
         ) {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {

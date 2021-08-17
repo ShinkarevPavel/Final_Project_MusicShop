@@ -9,6 +9,7 @@ import com.shinkarev.finalproject.validator.ValidatorProvider;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;
+import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
 import com.shinkarev.musicshop.service.ServiceProvider;
@@ -29,8 +30,22 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 
 import static com.shinkarev.finalproject.validator.InstrumentValidator.*;
 
+/**
+ * Add {@link Instrument} command. Used for adding {@link Instrument} to data base
+ * by Admin.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class AddInstrumentCommand implements Command {
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router}
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

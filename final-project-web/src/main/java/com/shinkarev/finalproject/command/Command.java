@@ -8,6 +8,13 @@ public interface Command {
     Logger logger = LogManager.getLogger();
     String PAGE_NUMBER_PARAMETER = "page";
 
+    /**
+     * Execute.
+     *
+     * @param request contains information that {@link Command} should processed
+     * @return the Router
+     */
+
     Router execute(HttpServletRequest request);
 
     default int getPage(HttpServletRequest request) {

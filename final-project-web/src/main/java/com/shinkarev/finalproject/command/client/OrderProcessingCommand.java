@@ -19,8 +19,24 @@ import java.util.Map;
 import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+/**
+ * Order processing command.
+ * Used by clients for control order details.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class OrderProcessingCommand implements Command {
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router} that contains information about next page
+     * and data that will be display on client's page.
+     *
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

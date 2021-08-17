@@ -18,8 +18,23 @@ import java.util.Optional;
 import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+/**
+ * Find {@link User} command.
+ * Used by admin for searching certain {@link User}.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
+
 public class FindUserCommand implements Command {
     public static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router}
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

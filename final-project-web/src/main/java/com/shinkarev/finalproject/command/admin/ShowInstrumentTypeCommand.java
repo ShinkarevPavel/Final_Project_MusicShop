@@ -4,6 +4,7 @@ import com.shinkarev.finalproject.command.*;
 import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentType;
+import com.shinkarev.musicshop.entity.Order;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
 import com.shinkarev.musicshop.service.ServiceProvider;
@@ -19,9 +20,25 @@ import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.musicshop.dao.BaseDao.PAGE_SIZE;
 
+/**
+ * Show all {@link Instrument}s by type command.
+ * Used by admin for displaying instruments with certain type.
+ * on admin page.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class ShowInstrumentTypeCommand implements Command {
     private static Logger logger = LogManager.getLogger();
 
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router} that contains information about next page
+     * and data that will be display on client's page.
+     *
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

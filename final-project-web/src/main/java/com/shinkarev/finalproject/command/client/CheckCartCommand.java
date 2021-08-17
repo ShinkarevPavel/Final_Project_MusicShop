@@ -21,8 +21,25 @@ import java.util.Map;
 
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+/**
+ * Check cart command.
+ * Used by clients for checking {@link Instrument}s in their cart.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
+
 public class CheckCartCommand implements Command {
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router} that contains information about next page
+     * and data that will be display on client's page.
+     *
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

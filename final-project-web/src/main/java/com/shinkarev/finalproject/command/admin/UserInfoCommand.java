@@ -3,6 +3,7 @@ package com.shinkarev.finalproject.command.admin;
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.LocaleSetter;
+import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.ServiceProvider;
@@ -18,8 +19,24 @@ import java.util.Optional;
 import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+/**
+ * {@link User} info command.
+ * Used by admin for getting information about certain {@link User}.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class UserInfoCommand implements Command {
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router} that contains information about next page
+     * and data that will be display on client's page.
+     *
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

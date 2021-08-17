@@ -20,9 +20,23 @@ import static com.shinkarev.finalproject.command.PageName.SHOW_INSTRUMENTS;
 import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.musicshop.dao.BaseDao.PAGE_SIZE;
 
+/**
+ * Show all {@link Instrument}s command.
+ * Used by admin for displaying all instruments
+ * from data base on admin page.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class ShowAllInstrumentsCommand implements Command {
     private static Logger logger = LogManager.getLogger();
 
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router}
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

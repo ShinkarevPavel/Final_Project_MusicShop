@@ -2,7 +2,6 @@ package com.shinkarev.musicshop.dao.impl;
 
 import com.shinkarev.musicshop.dao.OrderDao;
 import com.shinkarev.musicshop.entity.Instrument;
-import com.shinkarev.musicshop.entity.InstrumentType;
 import com.shinkarev.musicshop.entity.OderType;
 import com.shinkarev.musicshop.entity.Order;
 import com.shinkarev.musicshop.exception.DaoException;
@@ -17,6 +16,11 @@ import java.util.*;
 
 import static com.shinkarev.musicshop.dao.impl.InstrumentField.INSTRUMENT_QUANTITY;
 import static com.shinkarev.musicshop.dao.impl.SqlQuery.*;
+
+/**
+ * The {@link OrderDaoImpl} class provides access to
+ * orders table in the database
+ */
 
 public class OrderDaoImpl implements OrderDao {
     public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";

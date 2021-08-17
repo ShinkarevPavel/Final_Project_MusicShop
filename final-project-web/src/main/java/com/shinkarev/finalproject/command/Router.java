@@ -1,9 +1,18 @@
 package com.shinkarev.finalproject.command;
 
+/**
+ * The {@link Router} class contains two fields:
+ * pagePath
+ * routeType
+ * that are used with by controller to find out where and how
+ * request and response should be processed after the controller.
+ */
+
 public class Router {
     public enum RouterType {
         FORWARD, REDIRECT
     }
+
     private String pagePath = PageName.INDEX_PAGE;
     private RouterType routerType = RouterType.FORWARD;
     private Integer errorCode = null;

@@ -4,6 +4,7 @@ import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.CartController;
 import com.shinkarev.finalproject.util.LocaleSetter;
+import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
@@ -16,9 +17,24 @@ import org.apache.logging.log4j.Logger;
 
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+/**
+ * Remove from cart command.
+ * Used by clients for removing {@link Instrument} from in their cart.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class RemoveFromCartCommand implements Command {
     private static Logger logger = LogManager.getLogger();
 
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router} that contains information about next page
+     * and data that will be display on client's page.
+     *
+     * @throws ServiceException if the request could not be handled.
+     */
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();

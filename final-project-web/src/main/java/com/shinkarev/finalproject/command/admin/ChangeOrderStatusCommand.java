@@ -3,6 +3,7 @@ package com.shinkarev.finalproject.command.admin;
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.ParamName;
 import com.shinkarev.finalproject.command.Router;
+import com.shinkarev.musicshop.entity.Order;
 import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.musicshop.entity.OderType;
 import com.shinkarev.musicshop.exception.ServiceException;
@@ -16,8 +17,23 @@ import org.apache.logging.log4j.Logger;
 
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+/**
+ * Change {@link Order} status command.
+ * Used by admin for control order status.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class ChangeOrderStatusCommand implements Command {
     public static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router}
+     * @throws ServiceException if the request could not be handled.
+     */
+
 
     @Override
     public Router execute(HttpServletRequest request) {

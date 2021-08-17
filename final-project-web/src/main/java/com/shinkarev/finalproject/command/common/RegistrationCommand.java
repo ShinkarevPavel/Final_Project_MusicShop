@@ -25,8 +25,28 @@ import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
+/**
+ * Registration command.
+ * Used by users for registration on website.
+ * Command get entered data and validates them.
+ * If all data correct {@link User} get confirmation email
+ * that registration is done and an invitation for confirm registration on their email.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class RegistrationCommand implements Command {
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router} that contains information about next page
+     * and data that will be display on client's page.
+     *
+     * @throws ServiceException if the request could not be handled.
+     */
+
 
     @Override
     public Router execute(HttpServletRequest request) {

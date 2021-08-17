@@ -25,8 +25,22 @@ import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
+/**
+ * Add {@link User} command. Used for adding {@link User} to data base
+ * by Admin.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class AddUserCommand implements Command {
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router}
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {
@@ -71,7 +85,8 @@ public class AddUserCommand implements Command {
             } catch (ServiceException ex) {
                 logger.log(Level.ERROR, "Error user creating", ex);
                 request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_DATA + ex.getMessage(), locale));
-                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);;
+                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                ;
             }
         } else {
             router.setPagePath(ADD_USER);

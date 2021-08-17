@@ -18,6 +18,11 @@ import java.util.*;
 import static com.shinkarev.musicshop.dao.impl.InstrumentField.*;
 import static com.shinkarev.musicshop.dao.impl.SqlQuery.*;
 
+/**
+ * The {@link InstrumentDaoImpl} class provides access to
+ * instruments table in the database
+ */
+
 
 public class InstrumentDaoImpl implements InstrumentDao {
 
@@ -26,6 +31,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
     public int getInstrumentCount() throws DaoException {
         return rowCountByQuery(SQL_GET_ALL_INSTRUMENTS);
     }
+
     @Override
     public int getInstrumentCount(InstrumentType type) throws DaoException {
         return instrumentRowCountByQuery(type);
@@ -99,7 +105,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
         return Optional.ofNullable(instrument);
     }
 
-     List<String> convertBlobToString(List<Blob> images) throws SQLException, IOException {
+    List<String> convertBlobToString(List<Blob> images) throws SQLException, IOException {
         List<String> stringImages = new ArrayList<>();
         for (Blob blob : images) {
             byte[] byteImage = blob.getBinaryStream().readAllBytes();
@@ -248,7 +254,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
     public List<Instrument> findInstrumentByType(InstrumentType type, int page) throws DaoException {
         List<Instrument> instruments = new ArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(buildPageableQuery(SQL_FIND_INSTRUMENT_BY_TYPE + INSTRUMENT_ORDER_BY, page) )) {
+             PreparedStatement statement = connection.prepareStatement(buildPageableQuery(SQL_FIND_INSTRUMENT_BY_TYPE + INSTRUMENT_ORDER_BY, page))) {
             statement.setInt(1, InstrumentType.ordinal(type));
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -323,7 +329,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
-    public boolean isInBucket(long userId, long instrumentId) throws DaoException {
+    public boolean isInCart(long userId, long instrumentId) throws DaoException {
         boolean result = false;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_IS_IN_BUCKET)) {
@@ -403,7 +409,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
-    public boolean removeItemFromBucket(long userId, long instrumentId) throws DaoException {
+    public boolean removeItemFromCart(long userId, long instrumentId) throws DaoException {
         int rowsUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_REMOVE_INSTRUMENT_FROM_BUCKET)) {
@@ -437,7 +443,7 @@ public class InstrumentDaoImpl implements InstrumentDao {
     }
 
     @Override
-    public boolean clearUserBucket(long userId) throws DaoException {
+    public boolean clearUserCart(long userId) throws DaoException {
         int rowsUpdate;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_CLEAR_USER_BUCKET)) {

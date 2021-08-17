@@ -12,8 +12,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/pages/busket.css" rel="stylesheet"/>
-    <link href="${pageContext.request.contextPath}/pages/cart_input_size.css" id="number" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/pages/css/busket.css" rel="stylesheet"/>
+    <link href="${pageContext.request.contextPath}/pages/css/cart_input_size.css" id="number" rel="stylesheet"/>
 
     <script type="text/javascript" src=""></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>

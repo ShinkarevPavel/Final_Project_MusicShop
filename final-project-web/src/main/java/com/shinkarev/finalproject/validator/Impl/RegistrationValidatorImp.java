@@ -13,6 +13,13 @@ import java.util.Map;
 import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
+/**
+ * Registration validator validates the data entered by the user for registration
+ *
+ * @see InputDataValidator
+ */
+
+
 public class RegistrationValidatorImp implements InputDataValidator {
 
     private static InputDataValidator instance;
@@ -26,6 +33,13 @@ public class RegistrationValidatorImp implements InputDataValidator {
         }
         return instance;
     }
+
+    /**
+     * @param values Map of registration values where K is field name
+     *               and V is - filed value.
+     * @param locale - current locale
+     * @return Map of errors (if errors present) or empty Map (if not).
+     */
 
     @Override
     public Map<String, String> checkValues(Map<String, String> values, String locale) throws ServiceException {

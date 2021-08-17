@@ -5,6 +5,7 @@ import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.InputDataValidator;
 import com.shinkarev.finalproject.validator.ValidatorProvider;
+import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.ServiceProvider;
@@ -22,8 +23,24 @@ import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
+/**
+ * Edit profile command.
+ * Used by clients for editing their personal data.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class EditProfileCommand implements Command {
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router} that contains information about next page
+     * and data that will be display on client's page.
+     *
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

@@ -20,8 +20,26 @@ import java.util.Optional;
 import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+/**
+ * Registration confirmation command.
+ * Used for sending confirmation email to {@link User}
+ * if all input data were correct
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
+
 public class RegistrationConfirmationCommand implements Command {
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router} that contains information about next page
+     * and data that will be display on client's page.
+     *
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

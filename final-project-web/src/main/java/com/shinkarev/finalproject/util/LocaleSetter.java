@@ -9,6 +9,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+/**
+ * Locale setter provides a message that it receives from resources.
+ */
+
 public class LocaleSetter {
     public static Logger logger = LogManager.getLogger();
     private static final AtomicBoolean isInitialised = new AtomicBoolean(false);
@@ -33,6 +37,10 @@ public class LocaleSetter {
         return instance;
     }
 
+    /**
+     * @return result - collection of locales that are supported by the website
+     */
+
     private List<String> getAllLocales() {
         List<String> result = new ArrayList<>();
         ResourceManager resourceManager = new ResourceManager();
@@ -47,6 +55,12 @@ public class LocaleSetter {
         }
         return result;
     }
+
+    /**
+     * @param key - string parameter that used for getting message from resources
+     * @param locale - current client's locale
+     * @return message according to client's locale
+     */
 
     public String getMassage(String key, String locale) {
         if (locale == null) {

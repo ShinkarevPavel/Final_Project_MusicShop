@@ -171,7 +171,7 @@ public class InstrumentServiceImpl implements InstrumentService {
     public boolean removeItemFromBucket(long userId, long instrumentId) throws ServiceException {
         boolean isRemoved;
         try {
-            isRemoved = instrumentDao.removeItemFromBucket(userId, instrumentId);
+            isRemoved = instrumentDao.removeItemFromCart(userId, instrumentId);
         } catch (DaoException ex) {
             throw new ServiceException("Error. Item wasn't added to DB", ex);
         }
@@ -193,7 +193,7 @@ public class InstrumentServiceImpl implements InstrumentService {
     public boolean clearUserBucket(long userId) throws ServiceException {
         boolean isAdded;
         try {
-            isAdded = instrumentDao.clearUserBucket(userId);
+            isAdded = instrumentDao.clearUserCart(userId);
         } catch (DaoException ex) {
             throw new ServiceException("Error. Item wasn't clear user bucket in DB", ex);
         }
@@ -226,7 +226,7 @@ public class InstrumentServiceImpl implements InstrumentService {
     public boolean isInBucket(long userId, long instrumentId) throws ServiceException {
         boolean result;
         try {
-            result = instrumentDao.isInBucket(userId, instrumentId);
+            result = instrumentDao.isInCart(userId, instrumentId);
         } catch (DaoException ex) {
             throw new ServiceException("Error of getting request", ex);
         }

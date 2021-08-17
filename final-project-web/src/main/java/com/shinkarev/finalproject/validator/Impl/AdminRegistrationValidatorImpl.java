@@ -12,6 +12,12 @@ import java.util.Map;
 import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
+/**
+ * Admin registration validator validates the data entered by the admin to add a user
+ *
+ * @see InputDataValidator
+ */
+
 
 public class AdminRegistrationValidatorImpl implements InputDataValidator {
     public static InputDataValidator instance;
@@ -25,6 +31,13 @@ public class AdminRegistrationValidatorImpl implements InputDataValidator {
         }
         return instance;
     }
+
+    /**
+     * @param values Map of registration values where K is field name
+     *               and V is - filed value.
+     * @param locale - current locale
+     * @return Map of errors (if errors present) or empty Map (if not).
+     */
 
     @Override
     public Map<String, String> checkValues(Map<String, String> values, String locale) throws ServiceException {

@@ -22,9 +22,24 @@ import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.InstrumentValidator.*;
 
+/**
+ * Save updated {@link Instrument} command.
+ * Used by admin for saving instruments after
+ * updating for sending to client new information.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 
 public class SaveUpdatedInstrumentCommand implements Command {
     private static Logger logger = LogManager.getLogger();
+
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router}
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

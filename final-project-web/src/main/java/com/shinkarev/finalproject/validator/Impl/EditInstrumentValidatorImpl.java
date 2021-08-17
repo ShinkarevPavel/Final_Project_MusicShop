@@ -11,6 +11,13 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.InstrumentValidator.*;
 import static com.shinkarev.finalproject.validator.InstrumentValidator.INSTRUMENT_DESCRIPTION;
 
+/**
+ * Edit instrument validator validates the data entered by the admin to edit instrument
+ *
+ * @see InputDataValidator
+ */
+
+
 public class EditInstrumentValidatorImpl implements InputDataValidator {
 
     private static InputDataValidator instance;
@@ -24,6 +31,14 @@ public class EditInstrumentValidatorImpl implements InputDataValidator {
         }
         return instance;
     }
+
+    /**
+     *
+     * @param values Map of registration values where K is field name
+     *               and V is - filed value.
+     * @param locale - current locale
+     * @return Map of errors (if errors present) or empty Map (if not).
+     */
 
     @Override
     public Map<String, String> checkValues(Map<String, String> values, String locale) throws ServiceException {

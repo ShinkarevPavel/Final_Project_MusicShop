@@ -4,6 +4,7 @@ import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.ParamName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.LocaleSetter;
+import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentType;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
@@ -16,9 +17,23 @@ import org.apache.logging.log4j.Logger;
 
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+/**
+ * Control {@link Instrument} type command.
+ * Used by admin for control instruments types
+ * before sending to client.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
+
 public class InstrumentTypeControlCommand implements Command {
     private Logger logger = LogManager.getLogger();
 
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router}
+     * @throws ServiceException if the request could not be handled.
+     */
 
     @Override
     public Router execute(HttpServletRequest request) {

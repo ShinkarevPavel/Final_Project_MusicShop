@@ -50,7 +50,7 @@ public enum CommandName {
     FIND_ORDER_BY_TYPE(new FindOrderByType(), EnumSet.of(ADMIN)),
     UPDATE_INSTRUMENT_COMMAND(new UpdateInstrumentCommand(), EnumSet.of(ADMIN)),
     SAVE_UPDATED_INSTRUMENT_COMMAND(new SaveUpdatedInstrumentCommand(), EnumSet.of(ADMIN)),
-    ADD_TO_BUCKET_COMMAND(new AddToBucketCommand(), EnumSet.of(ADMIN, CLIENT)),
+    ADD_TO_BUCKET_COMMAND(new AddToCartCommand(), EnumSet.of(ADMIN, CLIENT)),
     BY_NOW_COMMAND(new ByNowCommand(), EnumSet.of(ADMIN, CLIENT)),
     WRONG_COMMAND(new WrongCommand());
 

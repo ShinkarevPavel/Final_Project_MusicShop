@@ -1,7 +1,6 @@
 package com.shinkarev.finalproject.command.common;
 
 import com.shinkarev.finalproject.command.Command;
-import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.UserValidator;
@@ -21,9 +20,23 @@ import java.util.Optional;
 import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+/**
+ * {@link User} Login command. Check there is {@link User} in system
+ * and if not, check input by user data in data base.
+ *
+ * @see Command
+ * @see com.shinkarev.finalproject.command.Command
+ */
 public class LoginCommand implements Command {
     private final Logger logger = LogManager.getLogger();
 
+    /**
+     * @param request the HttpServletRequest
+     * @return the {@link Router} that contains information about next page
+     * and data that will be display on client's page.
+     *
+     * @throws ServiceException if the request could not be handled.
+     */
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
