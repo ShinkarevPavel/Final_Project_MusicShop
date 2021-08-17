@@ -55,7 +55,7 @@ public class OrderProcessingCommand implements Command {
             request.setAttribute(CART_ITEMS, items);
         } catch (ServiceException | NumberFormatException ex) {
             logger.log(Level.ERROR, "Error with order processing", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         router.setPagePath(ORDER_PAGE);

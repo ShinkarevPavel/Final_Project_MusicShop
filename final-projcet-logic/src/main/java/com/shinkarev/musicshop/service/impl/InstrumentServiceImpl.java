@@ -79,17 +79,11 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     @Override
     public Optional<Instrument> findInstrumentById(long instrumentId) throws ServiceException {
-        Instrument instrument = null;
         try {
-            Optional<Instrument> optionalInstrument = instrumentDao.findEntityById(instrumentId);
-            if (optionalInstrument.isPresent()) {
-                instrument = optionalInstrument.get();
-            }
+            return instrumentDao.findEntityById(instrumentId);
         } catch (DaoException ex) {
             throw new ServiceException("Error. Impossible get data from Dao", ex);
         }
-
-        return Optional.ofNullable(instrument);
     }
 
     @Override

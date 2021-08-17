@@ -29,7 +29,7 @@ import static com.shinkarev.finalproject.validator.UserValidator.*;
  * Registration command.
  * Used by users for registration on website.
  * Command get entered data and validates them.
- * If all data correct {@link User} get confirmation email
+ * If input data are correct {@link User} get confirmation email
  * that registration is done and an invitation for confirm registration on their email.
  *
  * @see Command
@@ -95,7 +95,7 @@ public class RegistrationCommand implements Command {
                 }
             } catch (ServiceException ex) {
                 logger.log(Level.ERROR, "Error of user registration", ex);
-                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
                 router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         } else {

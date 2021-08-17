@@ -162,42 +162,6 @@ public class UserDaoImpl implements UserDao {
         return Optional.ofNullable(user);
     }
 
-//    @Override
-//    public List<User> findUsersByRole(UserRoleType role) throws DaoException {
-//        List<User> users = new ArrayList<>();
-//        try (Connection connection = ConnectionPool.getInstance().getConnection();
-//             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_ROLE)) {
-//            statement.setLong(1, UserRoleType.ordinal(role));
-//            ResultSet resultSet = statement.executeQuery();
-//            while (resultSet.next()) {
-//                User user = UserCreator.createUser(resultSet);
-//                users.add(user);
-//            }
-//        } catch (SQLException ex) {
-//            logger.log(Level.ERROR, "Error. Impossible get data from data base.", ex);
-//            throw new DaoException("Error. Impossible get data from data base.", ex);
-//        }
-//        return users;
-//    }
-
-//    @Override
-//    public List<User> findUsersByStatus(UserStatusType status) throws DaoException {
-//        List<User> users = new ArrayList<>();
-//        try (Connection connection = ConnectionPool.getInstance().getConnection();
-//             PreparedStatement statement = connection.prepareStatement(SQL_FIND_USER_BY_STATUS)) {
-//            statement.setLong(1, UserStatusType.ordinal(status));
-//            ResultSet resultSet = statement.executeQuery();
-//            while (resultSet.next()) {
-//                User user = UserCreator.createUser(resultSet);
-//                users.add(user);
-//            }
-//        } catch (SQLException ex) {
-//            logger.log(Level.ERROR, "Error. Impossible get data from data base.", ex);
-//            throw new DaoException("Error. Impossible get data from data base.", ex);
-//        }
-//        return users;
-//    }
-
     @Override
     public boolean addUser(User user, String password, String registrationKey) throws DaoException {
         boolean isAdded = false;
@@ -232,24 +196,6 @@ public class UserDaoImpl implements UserDao {
         return getUser(login, SQL_FIND_USER_BY_LOGIN);
     }
 
-//    @Override
-//    public Optional<User> getUserPasswordByLogin(String login) throws DaoException {
-//        User user = null;
-//        if (login != null) {
-//            try (Connection connection = ConnectionPool.getInstance().getConnection();
-//                 PreparedStatement statement = connection.prepareStatement(SQL_GET_USER_PASSWORD)) {
-//                statement.setString(1, login);
-//                ResultSet resultSet = statement.executeQuery();
-//                while (resultSet.next()) {
-//                    user = UserCreator.createUser(resultSet);
-//                }
-//            } catch (SQLException ex) {
-//                logger.log(Level.ERROR, "Error. Impossible get data from data base.", ex);
-//                throw new DaoException("Error. Impossible get data from data base.", ex);
-//            }
-//        }
-//        return Optional.ofNullable(user);
-//    }
 
     @Override
     public Optional<User> findUserByEmail(String email) throws DaoException {
@@ -309,5 +255,37 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("Error. Impossible change password.", ex);
         }
         return rowsUpdate == 1;
+    }
+
+    @Override
+    public boolean setEmailTokenByEmail(String email, String token) throws DaoException {
+        int rowsUpdate;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SET_EMAIL_TOKEN)) {
+            statement.setString(1, token);
+            statement.setString(2, email);
+            rowsUpdate = statement.executeUpdate();
+        } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error. Impossible set token.", ex);
+            throw new DaoException("Error. Impossible set token.", ex);
+        }
+        return rowsUpdate == 1;
+    }
+
+    @Override
+    public Long getUserIdByEmailToken(String key) throws DaoException {
+        Long userId = null;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_GET_USER_ID_BY_TOKEN)) {
+            statement.setString(1, key);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                userId = resultSet.getLong(UserField.ID);
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.ERROR, "Error. Impossible set token.", ex);
+            throw new DaoException("Error. Impossible set token.", ex);
+        }
+        return userId;
     }
 }

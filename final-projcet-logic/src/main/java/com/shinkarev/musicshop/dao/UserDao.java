@@ -108,5 +108,20 @@ public interface UserDao extends BaseDao<Long, User> {
      */
 
     boolean changePassword(long userId, String password) throws DaoException;
+
+    /**
+     *
+     * @param token token which used if {@link User} forgot password
+     * @return true if token was set, otherwise false
+     * @throws DaoException if the request to data base could not be handled
+     */
+    boolean setEmailTokenByEmail(String email, String token) throws DaoException;
+
+    /**
+     *
+     * @param key email token for {@link User} id finding
+     * @throws DaoException if the request to data base could not be handled
+     */
+    Long getUserIdByEmailToken(String key) throws DaoException;
 }
 

@@ -42,6 +42,8 @@ class SqlQuery {
             "status_value, role_value FROM users LEFT JOIN roles ON users.role_id=roles.id LEFT JOIN statuses ON status_id=statuses.id  WHERE nickname=?";
     static final String USER_ORDER_BY = " ORDER BY login ";
     static final String SQL_USER_CHANGE_PASSWORD = "UPDATE users SET password=? WHERE user_id=?";
+    static final String SQL_SET_EMAIL_TOKEN = "UPDATE users SET token=? WHERE email=?";
+    static final String SQL_GET_USER_ID_BY_TOKEN = "SELECT user_id FROM users WHERE token=?";
 
     /**
      * Requests to 'instruments' table into musician instruments database

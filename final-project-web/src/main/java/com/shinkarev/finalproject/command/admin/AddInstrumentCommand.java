@@ -102,12 +102,12 @@ public class AddInstrumentCommand implements Command {
                 }
             } catch (ServiceException | IllegalStateException | NumberFormatException ex) {
                 logger.log(Level.ERROR, "Error creating instrument");
-                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_DATA + ex.getMessage(), locale));
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_DATA, locale));
                 router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 
             } catch (IOException | ServletException ex) {
                 logger.log(Level.ERROR, "Error creating instrument", ex);
-                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_IMAGE + ex.getMessage(), locale));
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_IMAGE, locale));
                 router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         } else {

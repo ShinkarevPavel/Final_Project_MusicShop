@@ -40,6 +40,9 @@ background-size: cover">
                         <label><fmt:message key="page.login.password"/></label>
                         <input type="password" name="password" class="form-control" placeholder="<fmt:message key="page.login.password"/>" required>
                     </div>
+                    <div class="text-right">
+                        <a href="${abs_path}/controller?command=to_forgot_password_command"><fmt:message key="page.login.forgot_password"/></a>
+                    </div>
                     <div>
                         <span>
                             <strong>

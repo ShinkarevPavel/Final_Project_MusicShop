@@ -84,7 +84,7 @@ public class AddUserCommand implements Command {
                 }
             } catch (ServiceException ex) {
                 logger.log(Level.ERROR, "Error user creating", ex);
-                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_DATA + ex.getMessage(), locale));
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_DATA, locale));
                 router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 ;
             }

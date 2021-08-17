@@ -64,7 +64,7 @@ public class ShowInstrumentTypeCommand implements Command {
 
         } catch (ServiceException | NumberFormatException | IllegalStateException ex) {
             logger.log(Level.ERROR, "Error of instruments type showing", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;

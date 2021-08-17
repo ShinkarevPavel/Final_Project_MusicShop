@@ -52,7 +52,7 @@ public class RemoveFromCartCommand implements Command {
             }
         } catch (ServiceException | NumberFormatException ex) {
             logger.log(Level.ERROR, "Error with removing items from cart", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;

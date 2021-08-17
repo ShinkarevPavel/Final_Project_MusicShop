@@ -51,7 +51,7 @@ public class InstrumentStatusControlCommand implements Command {
             }
         } catch (ServiceException | NumberFormatException | IllegalStateException ex) {
             logger.log(Level.DEBUG, "Error. Impossible change status for this " + instrumentId + " instrument", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_CHANGE_DATA + ex.getMessage(), locale));
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_CHANGE_DATA, locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         router.setRouterType(Router.RouterType.REDIRECT);

@@ -51,7 +51,7 @@ public class UserStatusControlCommand implements Command {
             }
         } catch (ServiceException | NumberFormatException | IllegalStateException ex) {
             logger.log(Level.DEBUG, "Error. Impossible change status by this " + userId + " user", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         router.setRouterType(Router.RouterType.REDIRECT);

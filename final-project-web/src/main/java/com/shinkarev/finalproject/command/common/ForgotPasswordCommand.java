@@ -12,8 +12,6 @@ import com.shinkarev.musicshop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,11 +21,10 @@ import static com.shinkarev.finalproject.command.ParamName.*;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
 /**
- * This command used by {@link User} for changing password from their cabinet
+ * This command used by {@link User} for he forgot their password
  */
 
-public class ChangePasswordCommand implements Command {
-    private static Logger logger = LogManager.getLogger();
+public class ForgotPasswordCommand implements Command {
 
     /**
      * @param request the HttpServletRequest
@@ -39,12 +36,10 @@ public class ChangePasswordCommand implements Command {
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
+        String userId = (String) request.getSession().getAttribute(USER_ID_PARAM);
         String locale = (String) request.getSession().getAttribute(LOCALE);
-
-        User user = (User) request.getSession().getAttribute(USER);
         String password = request.getParameter(PASSWORD.getFieldName());
         String checkPassword = request.getParameter(CHECKPASSWORD.getFieldName());
-
 
         Map<String, String> registrationValues = new HashMap<>();
         registrationValues.put(PASSWORD.getFieldName(), password);
@@ -57,13 +52,12 @@ public class ChangePasswordCommand implements Command {
             try {
                 errors = registrationValidator.checkValues(registrationValues, locale);
                 if (!errors.isEmpty()) {
-                    request.setAttribute(REGISTRATION_VALUES, registrationValues);
                     request.setAttribute(ERRORS_LIST, errors);
-                    router.setPagePath(CHANGE_PASSWORD_PAGE);
+                    router.setPagePath(FORGOT_PASSWORD_CHANGE);
                 } else {
                     UserService userService = ServiceProvider.USER_SERVICE;
-                    if (userService.changePassword(user.getId(), password)) {
-                        request.getSession().removeAttribute(USER);
+                    if (userService.changePassword(Long.parseLong(userId), password)) {
+                        request.getSession().removeAttribute(USER_ID_PARAM);
                         router.setPagePath(LOGIN_PAGE);
                     }
                 }
@@ -73,7 +67,7 @@ public class ChangePasswordCommand implements Command {
                 router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         } else {
-            router.setPagePath(CHANGE_PASSWORD_PAGE);
+            router.setPagePath(FORGOT_PASSWORD_CHANGE);
         }
         return router;
     }

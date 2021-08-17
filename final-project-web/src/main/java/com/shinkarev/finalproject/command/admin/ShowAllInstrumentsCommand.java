@@ -57,7 +57,7 @@ public class ShowAllInstrumentsCommand implements Command {
             router.setPagePath(SHOW_INSTRUMENTS);
         } catch (ServiceException ex) {
             logger.log(Level.ERROR, "Error of all instrument showing", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_CHANGE_DATA + ex.getMessage(), locale));
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_CHANGE_DATA, locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;

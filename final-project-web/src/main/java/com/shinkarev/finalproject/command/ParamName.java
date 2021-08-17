@@ -71,6 +71,7 @@ public class ParamName {
     public static final String ERROR_NAME = "error_name";
     public static final String EMAIL_MESSAGE = "Your order was created. You can control and track it in your acc. Thanks that chose our shop";
 
+
     public static final String PAGE_ERRORS_LOGIN_PASSWORD = "page.errors.login_password_error";
     public static final String PAGE_ERRORS_REGISTRATION_CONFIRMING = "page.errors.registration_confirming_error";
     public static final String PAGE_ERROR_ERROR_PAGE = "page.errors.on_error_page.catch_message";
@@ -84,5 +85,7 @@ public class ParamName {
     public static final String PAGE_MESSAGE_RATING_DONE = "page.rating_done";
     public static final String PAGE_MESSAGE_RATING_ERROR = "page.rating_error";
     public static final String PAGE_FILTER_MESSAGE = "page.filter_message";
+    public static final String PAGE_FORGOT_PASSWORD = "page.forgot_password.message";
+    public static final String PAGE_FORGOT_PASSWORD_EMAIL = "page.forgot_password.message_email";
 
  }

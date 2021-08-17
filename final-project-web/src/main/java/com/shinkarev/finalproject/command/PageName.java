@@ -28,4 +28,6 @@ public class PageName {
     public static final String UPDATE_INSTRUMENT_PAGE = "/pages/admin/update_instrument.jsp";
     public static final String MAIN_PAGE = "/pages/common/main_page.jsp";
     public static final String BLOCKED_PAGE = "/pages/client/blocked_page.jsp";
+    public static final String FORGOT_PASSWORD_PAGE = "/pages/common/forgot_password.jsp";
+    public static final String FORGOT_PASSWORD_CHANGE = "/pages/common/enter_new_password.jsp";
 }

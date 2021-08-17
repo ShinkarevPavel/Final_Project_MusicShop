@@ -37,4 +37,8 @@ public interface UserService {
     boolean changePassword(long userId, String password) throws ServiceException;
 
     boolean updateUser(User user) throws ServiceException;
+
+    boolean setEmailToken(String email, String token) throws ServiceException;
+
+    Long getUserIdByEmailToken(String key) throws ServiceException;
 }

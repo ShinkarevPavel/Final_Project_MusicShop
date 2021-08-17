@@ -56,7 +56,7 @@ public class ShowAllOrdersCommand implements Command {
             router.setPagePath(PageName.SHOW_ALL_ORDERS);
         } catch (ServiceException ex) {
             logger.log(Level.ERROR, "Error of all orders showing", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_CHANGE_DATA + ex.getMessage(), locale));
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_CHANGE_DATA, locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;

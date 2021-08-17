@@ -61,7 +61,7 @@ public class ShowAllUsersCommand implements Command {
             router.setPagePath(SHOW_ALL_USERS);
         } catch (ServiceException | NumberFormatException ex) {
             logger.log(Level.ERROR, "Error of all users showing", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_CHANGE_DATA + ex.getMessage(), locale));
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_CHANGE_DATA, locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;

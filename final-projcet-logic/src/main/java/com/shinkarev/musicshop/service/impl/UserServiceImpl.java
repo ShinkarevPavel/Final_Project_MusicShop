@@ -64,17 +64,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> login(String login, String password) throws ServiceException{
-        User user = null;
+    public Optional<User> login(String login, String password) throws ServiceException {
         try {
-            Optional<User> currentUser = userDao.findUserByLoginAndPassword(login, password);
-            if (currentUser.isPresent()) {
-                user = currentUser.get();
-            }
+            return userDao.findUserByLoginAndPassword(login, password);
         } catch (DaoException e) {
             throw new ServiceException("Error with find all Users .", e);
         }
-        return Optional.ofNullable(user);
     }
 
     @Override
@@ -92,7 +87,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isEmailUnique(String email) throws ServiceException{
+    public boolean isEmailUnique(String email) throws ServiceException {
         boolean isUnique = false;
         try {
             Optional<User> currentUser = userDao.findUserByEmail(email);
@@ -148,28 +143,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserById(long userId) throws ServiceException {
-        Optional<User> optionalUser;
-        User user;
         try {
-            optionalUser = userDao.findEntityById(userId);
-            user = optionalUser.orElse(null);
+            return userDao.findEntityById(userId);
         } catch (DaoException ex) {
             throw new ServiceException("Impossible get user with " + userId, ex);
         }
-        return Optional.ofNullable(user);
     }
 
     @Override
     public Optional<User> getUserByNickName(String nickname) throws ServiceException {
-        Optional<User> optionalUser;
-        User user;
         try {
-            optionalUser = userDao.findUserByNickname(nickname);
-            user = optionalUser.orElse(null);
+            return userDao.findUserByNickname(nickname);
         } catch (DaoException ex) {
             throw new ServiceException("Impossible get user with " + nickname, ex);
         }
-        return Optional.ofNullable(user);
     }
 
     @Override
@@ -187,26 +174,41 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserByRegistrationKey(String registrationKey) throws ServiceException {
-        Optional<User> optionalUser;
-        User user;
         try {
-            optionalUser = userDao.findUserByRegistrationKey(registrationKey);
-            user = optionalUser.orElse(null);
+            return userDao.findUserByRegistrationKey(registrationKey);
         } catch (DaoException ex) {
             throw new ServiceException("Impossible get user", ex);
         }
-        return Optional.ofNullable(user);
     }
 
     @Override
     public boolean changePassword(long userId, String password) throws ServiceException {
         boolean result;
-
         try {
             result = userDao.changePassword(userId, password);
         } catch (DaoException ex) {
             throw new ServiceException("Impossible change password", ex);
         }
         return result;
+    }
+
+    @Override
+    public boolean setEmailToken(String email, String token) throws ServiceException {
+        boolean result;
+        try {
+            result = userDao.setEmailTokenByEmail(email, token);
+        } catch (DaoException ex) {
+            throw new ServiceException("Impossible set email token", ex);
+        }
+        return result;
+    }
+
+    @Override
+    public Long getUserIdByEmailToken(String key) throws ServiceException {
+        try {
+            return userDao.getUserIdByEmailToken(key);
+        } catch (DaoException ex) {
+            throw new ServiceException("Impossible get userId by email token", ex);
+        }
     }
 }

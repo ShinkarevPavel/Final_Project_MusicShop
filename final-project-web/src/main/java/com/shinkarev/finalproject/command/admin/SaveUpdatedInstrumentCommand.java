@@ -84,7 +84,7 @@ public class SaveUpdatedInstrumentCommand implements Command {
                 }
             } catch (ServiceException | IllegalStateException | NumberFormatException ex) {
                 logger.log(Level.ERROR, "Instrument wasn't updated ", ex);
-                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_CHANGE_DATA + ex.getMessage(), locale));
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_CHANGE_DATA, locale));
                 router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
         } else {

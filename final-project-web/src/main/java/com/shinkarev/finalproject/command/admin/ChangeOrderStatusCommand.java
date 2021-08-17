@@ -49,7 +49,7 @@ public class ChangeOrderStatusCommand implements Command {
             }
         } catch (ServiceException | IllegalStateException | NumberFormatException ex) {
             logger.log(Level.ERROR, "Error order status changing", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         router.setRouterType(Router.RouterType.REDIRECT);

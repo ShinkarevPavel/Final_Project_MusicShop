@@ -12,7 +12,9 @@ import static com.shinkarev.musicshop.entity.UserRoleType.*;
 
 public enum CommandName {
     LOGIN(new LoginCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
+    TO_RESTORE_PASSWORD_COMMAND(new ToRestorePasswordCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
     TO_CABINET_PAGE_COMMAND(new ToCabinetPageCommand(), EnumSet.of(ADMIN, CLIENT)),
+    TO_FORGOT_PASSWORD_COMMAND(new ToForgotPasswordPageCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
     TO_EDIT_PROFILE_PAGE_COMMAND(new ToEditProfilePageCommand(), EnumSet.of(ADMIN, CLIENT)),
     TO_CHANGE_PASSWORD_COMMAND(new ToChangePasswordCommand(), EnumSet.of(ADMIN, CLIENT)),
     TO_MAIN_PAGE(new ToMainPageCommand(), EnumSet.of(ADMIN, CLIENT, ANONYMOUS, GUEST)),
@@ -39,7 +41,7 @@ public enum CommandName {
     CHECK_CART_COMMAND(new CheckCartCommand(), EnumSet.of(ADMIN, CLIENT)),
     REMOVE_FROM_CART_COMMAND(new RemoveFromCartCommand(), EnumSet.of(ADMIN, CLIENT)),
     ORDER_PROCESSING_COMMAND(new OrderProcessingCommand(), EnumSet.of(ADMIN, CLIENT)),
-    QUANTITY_CONTROL_COMMAND(new QuantityControlCommand(),EnumSet.of(ADMIN, CLIENT)),
+    QUANTITY_CONTROL_COMMAND(new QuantityControlCommand(), EnumSet.of(ADMIN, CLIENT)),
     CREATE_ORDER_COMMAND(new CreateOrderCommand(), EnumSet.of(ADMIN, CLIENT)),
     FIND_ORDER_COMMAND(new FindOrderCommand(), EnumSet.of(ADMIN, CLIENT)),
     SHOW_ORDER_DETAILS_COMMAND(new ShowOrderDetailsCommand(), EnumSet.of(ADMIN, CLIENT)),
@@ -52,6 +54,8 @@ public enum CommandName {
     SAVE_UPDATED_INSTRUMENT_COMMAND(new SaveUpdatedInstrumentCommand(), EnumSet.of(ADMIN)),
     ADD_TO_BUCKET_COMMAND(new AddToCartCommand(), EnumSet.of(ADMIN, CLIENT)),
     BY_NOW_COMMAND(new ByNowCommand(), EnumSet.of(ADMIN, CLIENT)),
+    CHECK_EMAIL_COMMAND(new CheckEmailCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
+    FORGOT_PASSWORD_COMMAND(new ForgotPasswordCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
     WRONG_COMMAND(new WrongCommand());
 
     private Command command;

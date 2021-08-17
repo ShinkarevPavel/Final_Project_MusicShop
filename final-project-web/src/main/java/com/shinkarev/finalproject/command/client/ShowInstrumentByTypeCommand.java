@@ -57,7 +57,7 @@ public class ShowInstrumentByTypeCommand implements Command {
             router.setPagePath(PageName.CLIENT_SHOW_INSTRUMENT_PAGE);
         } catch (ServiceException | NumberFormatException | IllegalStateException ex) {
             logger.log(Level.ERROR, "Error with instrument showing", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE + ex.getMessage(), locale));
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         return router;

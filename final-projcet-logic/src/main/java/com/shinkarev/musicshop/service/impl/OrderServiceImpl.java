@@ -2,7 +2,6 @@ package com.shinkarev.musicshop.service.impl;
 
 import com.shinkarev.musicshop.dao.OrderDao;
 import com.shinkarev.musicshop.dao.impl.OrderDaoImpl;
-import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.OderType;
 import com.shinkarev.musicshop.entity.Order;
 import com.shinkarev.musicshop.exception.DaoException;
@@ -77,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> findAllOrders() throws ServiceException {
-        List<Order> orders= new ArrayList<>();
+        List<Order> orders;
         try {
             orders = orderDao.findAll();
         } catch (DaoException ex) {
@@ -112,13 +111,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> getOderByOrderId(long orderId) throws ServiceException {
-        Order order = null;
         try {
-            orderDao.findEntityById(orderId);
+            return orderDao.findEntityById(orderId);
         } catch (DaoException ex) {
             throw new ServiceException("Fatal. Error of getting order", ex);
         }
-        return Optional.ofNullable(order);
     }
 
     @Override
@@ -145,15 +142,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> findOrderById(long orderId) throws ServiceException {
-        Order order = null;
         try {
-            Optional<Order> optionalOrder = orderDao.findEntityById(orderId);
-            if (optionalOrder.isPresent()) {
-                order = optionalOrder.get();
-            }
+            return orderDao.findEntityById(orderId);
         } catch (DaoException ex) {
             throw new ServiceException("Fatal. Error of changing order status", ex);
         }
-        return Optional.ofNullable(order);
     }
 }
