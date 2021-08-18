@@ -70,7 +70,7 @@ background-size: cover">
                                name="instrument_price"
                                value="${registrationValues.instrument_price}"
                                id="form1Example4"
-                               pattern="^(\d+\.\d+)$"
+                               pattern="^(\d+\.\d{2})$"
                                class="form-control"/>
                         <strong>
                             <p class="text-danger">${errors.instrumentPriceError}</p>
@@ -84,7 +84,7 @@ background-size: cover">
                                name="instrument_rating"
                                value="${registrationValues.instrument_rating}"
                                id="form1Example8"
-                               pattern="^(\d+\.\d+)$"
+                               pattern="[0-5]$"
                                class="form-control"/>
                         <strong>
                             <p class="text-danger">${errors.instrumentRatingError}</p>

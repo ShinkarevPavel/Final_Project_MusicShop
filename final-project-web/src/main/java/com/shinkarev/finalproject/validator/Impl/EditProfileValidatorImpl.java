@@ -6,8 +6,9 @@ import com.shinkarev.finalproject.validator.InputDataValidator;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.shinkarev.finalproject.command.ParamName.NICKNAME_ERROR;
-import static com.shinkarev.finalproject.validator.UserValidator.NICKNAME;
+import static com.shinkarev.finalproject.command.ParamName.*;
+import static com.shinkarev.finalproject.validator.UserValidator.*;
+import static com.shinkarev.finalproject.validator.UserValidator.SURENAME;
 
 /**
  * Edit profile validator validates the data entered by the user to edit profile
@@ -44,7 +45,26 @@ public class EditProfileValidatorImpl implements InputDataValidator {
         if (nickname == null || !nickname.matches(NICKNAME.getRegExp())) {
             result.put(NICKNAME_ERROR, LocaleSetter.getInstance().getMassage(NICKNAME.getMessage(), locale));
         }
-        return result;
 
+        /*
+         *This block checking name on RegEx conformity
+         */
+        String name = values.get(NAME.getFieldName());
+        if (name != null) {
+            if (!name.matches(NAME.getRegExp())) {
+                result.put(NAME_ERROR, LocaleSetter.getInstance().getMassage(NICKNAME.getMessage(), locale));
+            }
+        }
+
+        /*
+         *This block checking surename on RegEx conformity
+         */
+        String surename = values.get(SURENAME.getFieldName());
+        if (surename != null) {
+            if (!surename.matches(SURENAME.getRegExp())) {
+                result.put(SURENAME_ERROR, LocaleSetter.getInstance().getMassage(SURENAME.getMessage(), locale));
+            }
+        }
+        return result;
     }
 }

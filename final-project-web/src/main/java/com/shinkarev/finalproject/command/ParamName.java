@@ -8,6 +8,8 @@ public class ParamName {
     public static final String PASSWORD_ERROR = "passwordError";
     public static final String EMAIL_ERROR = "emailError";
     public static final String NICKNAME_ERROR = "nicknameError";
+    public static final String NAME_ERROR = "nameError";
+    public static final String SURENAME_ERROR = "surenameError";
     public static final String ERRORS_LIST = "errors";
     public static final String ERRORS_ON_ERROR_PAGE = "error";
     public static final String INSTRUMENT_NAME_ERROR = "instrumentNameError";

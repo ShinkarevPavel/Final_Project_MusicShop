@@ -120,9 +120,13 @@ background-size: cover">
             <div class="col-md-9 pe-5">
                 <input type="text"
                        class="form-control form-control-lg"
+                       pattern="[a-zA-Zа-яА-Я]{3,35}"
                        name="name"
                        value="${registrationValues.name}"
                        placeholder="<fmt:message key="page.registration.name"/>">
+                <strong>
+                    <p class="text-danger">${errors.nameError}</p>
+                </strong>
                 <h6 class="mb-0" style="color: #ffffff">
                     <fmt:message key="page.registration.name.requirements"/>
                 </h6>
@@ -138,11 +142,15 @@ background-size: cover">
             <div class="col-md-9 pe-5">
                 <input type="text"
                        class="form-control form-control-lg"
+                       pattern="[a-zA-Zа-яА-Я]{3,35}"
                        name="surename"
                        value="${registrationValues.surename}"
                        placeholder="<fmt:message key="page.registration.surename"/>">
+                <strong>
+                    <p class="text-danger">${errors.surenameError}</p>
+                </strong>
                 <h6 class="mb-0" style="color: #ffffff">
-                    <fmt:message key="page.registration.surename.requirements"/>
+                    <fmt:message key="page.registration.name.requirements"/>
                 </h6>
             </div>
         </div>

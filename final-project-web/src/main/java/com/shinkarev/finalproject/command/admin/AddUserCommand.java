@@ -23,6 +23,7 @@ import java.util.Map;
 
 import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
+import static com.shinkarev.finalproject.command.Router.RouterType.REDIRECT;
 import static com.shinkarev.finalproject.validator.UserValidator.*;
 
 /**
@@ -75,12 +76,13 @@ public class AddUserCommand implements Command {
                     UserService userService = ServiceProvider.USER_SERVICE;
                     String registrationKey = RegistrationConfirmator.setRegistrationToken(email, login);
                     if (userService.addUser(user, password, registrationKey)) {
-                        request.setAttribute(ADMIN_PAGE_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ADMIN_UPDATE, locale));
+                        router.setRouterType(REDIRECT);
+                        router.setPagePath(REDIRECT_ADMIN_PAGE);
                         logger.log(Level.DEBUG, "User was added");
                     } else {
                         request.setAttribute(ADMIN_PAGE_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_DATA, locale));
+                        router.setPagePath(ADMIN_PAGE);
                     }
-                    router.setPagePath(ADMIN_PAGE);
                 }
             } catch (ServiceException ex) {
                 logger.log(Level.ERROR, "Error user creating", ex);

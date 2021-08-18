@@ -55,8 +55,12 @@ background-size: cover">
                         <input type="password"
                                name="password"
                                value="${registrationValues.password}"
+                               pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{12,45}$"
                                id="form1Example6"
                                class="form-control" required/>
+                        <strong>
+                            <p class="text-danger">${errors.passwordError}</p>
+                        </strong>
                     </div>
 
                     <!-- Nickname input -->
@@ -64,10 +68,13 @@ background-size: cover">
                         <label class="form-label" for="form1Example2"><fmt:message key="page.registration.nickname"/></label>
                         <input type="text"
                                name="nickname"
+                               pattern="^[\w@#$%^&+=]{2,30}$"
                                value="${registrationValues.nickname}"
                                id="form1Example3"
                                class="form-control" required/>
-
+                        <strong>
+                            <p class="text-danger">${errors.nicknameError}</p>
+                        </strong>
                     </div>
 
                     <!-- Name input -->
@@ -75,19 +82,27 @@ background-size: cover">
                         <label class="form-label" for="form1Example2"><fmt:message key="page.registration.name"/></label>
                         <input type="text"
                                name="name"
+                               pattern="[a-zA-Zа-яА-Я]{3,35}"
                                value="${registrationValues.name}"
                                id="form1Example4"
                                class="form-control"/>
+                        <strong>
+                            <p class="text-danger">${errors.nameError}</p>
+                        </strong>
                     </div>
 
                     <!-- Surename input -->
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example2"><fmt:message key="page.registration.surename"/></label>
                         <input type="text"
+                               pattern="[a-zA-Zа-яА-Я]{3,35}"
                                name="surename"
                                value="${registrationValues.surename}"
                                id="form1Example8"
                                class="form-control"/>
+                        <strong>
+                            <p class="text-danger">${errors.surenameError}</p>
+                        </strong>
                     </div>
 
                     <br>

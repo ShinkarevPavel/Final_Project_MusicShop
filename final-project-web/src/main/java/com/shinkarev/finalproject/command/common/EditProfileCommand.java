@@ -57,7 +57,6 @@ public class EditProfileCommand implements Command {
         registrationValues.put(NICKNAME.getFieldName(), nickname);
         registrationValues.put(NAME.getFieldName(), name);
         registrationValues.put(SURENAME.getFieldName(), surename);
-
         String method = request.getMethod();
         if (method.equals(METHOD_POST)) {
             InputDataValidator dataValidator = ValidatorProvider.EDIT_PROFILE_VALIDATOR;
@@ -72,7 +71,8 @@ public class EditProfileCommand implements Command {
                     user.setName(name);
                     user.setSurename(surename);
                     if (userService.updateUser(user)) {
-                        router.setPagePath(CABINET_PAGE);
+                        router.setRouterType(Router.RouterType.REDIRECT);
+                        router.setPagePath(REDIRECT_CABINET_PAGE);
                     }
                 }
             } catch (ServiceException ex) {
@@ -80,6 +80,8 @@ public class EditProfileCommand implements Command {
                 request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
                 router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
+        } else {
+            router.setPagePath(EDIT_PROFILE_PAGE);
         }
         return router;
     }

@@ -90,6 +90,27 @@ public class RegistrationValidatorImp implements InputDataValidator {
         if (nickname == null || !nickname.matches(NICKNAME.getRegExp())) {
             result.put(NICKNAME_ERROR, LocaleSetter.getInstance().getMassage(NICKNAME.getMessage(), locale));
         }
+
+        /*
+         *This block checking name on RegEx conformity
+         */
+        String name = values.get(NAME.getFieldName());
+        if (name != null) {
+            if (!name.matches(NAME.getRegExp())) {
+                result.put(NAME_ERROR, LocaleSetter.getInstance().getMassage(NICKNAME.getMessage(), locale));
+            }
+        }
+
+        /*
+         *This block checking surename on RegEx conformity
+         */
+        String surename = values.get(SURENAME.getFieldName());
+        if (surename != null) {
+            if (!surename.matches(SURENAME.getRegExp())) {
+                result.put(SURENAME_ERROR, LocaleSetter.getInstance().getMassage(SURENAME.getMessage(), locale));
+            }
+        }
+
         return result;
     }
 }

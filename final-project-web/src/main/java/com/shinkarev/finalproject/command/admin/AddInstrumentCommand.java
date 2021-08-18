@@ -9,7 +9,6 @@ import com.shinkarev.finalproject.validator.ValidatorProvider;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.InstrumentStatusType;
 import com.shinkarev.musicshop.entity.InstrumentType;
-import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
 import com.shinkarev.musicshop.service.ServiceProvider;
@@ -28,6 +27,7 @@ import java.util.*;
 import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
 
+import static com.shinkarev.finalproject.command.Router.RouterType.*;
 import static com.shinkarev.finalproject.validator.InstrumentValidator.*;
 
 /**
@@ -92,7 +92,8 @@ public class AddInstrumentCommand implements Command {
 
                     InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
                     if (instrumentService.addInstrument(instrument, images)) {
-                        router.setPagePath(ADMIN_PAGE);
+                        router.setRouterType(REDIRECT);
+                        router.setPagePath(REDIRECT_ADMIN_PAGE);
                         logger.log(Level.DEBUG, "Instrument was added");
                     }
                 } else {

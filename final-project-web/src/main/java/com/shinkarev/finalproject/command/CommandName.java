@@ -32,7 +32,7 @@ public enum CommandName {
     SHOW_TYPE_INSTRUMENT(new ShowInstrumentTypeCommand(), EnumSet.of(ADMIN)),
     INSTRUMENT_STATUS_CONTROL_COMMAND(new InstrumentStatusControlCommand(), EnumSet.of(ADMIN)),
     INSTRUMENT_TYPE_CONTROL_COMMAND(new InstrumentTypeControlCommand(), EnumSet.of(ADMIN)),
-    REGISTRATION_CONFIRMATION_COMMAND(new RegistrationConfirmationCommand(), EnumSet.of(GUEST)),
+    REGISTRATION_CONFIRMATION_COMMAND(new RegistrationConfirmationCommand(), EnumSet.of(GUEST, ANONYMOUS)),
     SHOW_ALL_INSTRUMENTS_COMMAND(new ShowAllInstrumentsCommand(), EnumSet.of(ADMIN)),
     FIND_USER_COMMAND(new FindUserCommand(), EnumSet.of(ADMIN)),
     SHOW_INSTRUMENT_BY_TYPE_COMMAND(new ShowInstrumentByTypeCommand()),

@@ -6,8 +6,8 @@ public enum UserValidator {
     NICKNAME("^[\\w@#$%^&+=]{2,30}$", "nickname", "page.registration.errors.nickname_error"),
     PASSWORD("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{12,45}$", "password", "page.registration.errors.password_error"),
     CHECKPASSWORD("checkPassword", "page.registration.errors.confirm_password_error"),
-    NAME("name"),
-    SURENAME("surename");
+    NAME("[a-zA-Zа-яА-Я]{3,35}", "name" , "page.registration.errors.name_surename_error"),
+    SURENAME("[a-zA-Zа-яА-Я]{3,35}", "surename", "");
 
     private String regExp;
     private String fieldName;
@@ -19,9 +19,7 @@ public enum UserValidator {
         this.message = message;
     }
 
-    UserValidator(String fieldName) {
-        this.fieldName = fieldName;
-    }
+
 
     UserValidator(String fieldName, String message) {
         this.fieldName = fieldName;

@@ -87,6 +87,7 @@ public class RegistrationCommand implements Command {
 
                     String registrationKey = RegistrationConfirmator.setRegistrationToken(email, login);
                     if (userService.addUser(user, password, registrationKey)) {
+                        router.setRouterType(Router.RouterType.REDIRECT);
                         router.setPagePath(REGISTRATION_IS_DONE);
                     } else {
                         request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));

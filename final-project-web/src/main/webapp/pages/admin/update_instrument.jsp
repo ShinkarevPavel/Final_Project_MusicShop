@@ -70,7 +70,7 @@ background-size: cover">
                    name="instrument_price"
                    value="${updateValues.instrument_price}"
                    id="form1Example4"
-                   pattern="^(\d+\.\d+)$"
+                   pattern="^(\d+\.\d{2})$"
                    class="form-control"/>
             <strong>
               <p class="text-danger">${errors.instrumentPriceError}</p>
@@ -84,7 +84,7 @@ background-size: cover">
                    name="instrument_description"
                    value="${updateValues.instrument_description}"
                    id="form1Example5"
-                   pattern="^[\w\s,\\.А-Яа-я():;'"*!?@#$%^&\-+=]{2,800}$"
+                   pattern="^[\w\s,\\.А-Яа-я():;'*!?@#$%^&\-+=]{2,800}$"
                    class="form-control"/>
             <strong>
               <p class="text-danger">${errors.instrumentDescriptionError}</p>

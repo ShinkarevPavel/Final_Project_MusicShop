@@ -33,7 +33,6 @@ public class QuantityControlCommand implements Command {
      * @param request the HttpServletRequest
      * @return the {@link Router} that contains information about next page
      * and data that will be display on client's page.
-     *
      * @throws ServiceException if the request could not be handled.
      */
 
@@ -45,10 +44,14 @@ public class QuantityControlCommand implements Command {
         String quantity = request.getParameter(ITEM_QUANTITY);
         String instrumentId = request.getParameter(INSTRUMENT_ID_PARAM);
         InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
+
+        String method = request.getMethod();
         try {
-            if (instrumentService.setInstrumentQuantity(user.getId(), Long.parseLong(instrumentId), Integer.parseInt(quantity))) {
-                router = CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
+            if (method.equals(METHOD_POST)) {
+                instrumentService.setInstrumentQuantity(user.getId(), Long.parseLong(instrumentId), Integer.parseInt(quantity));
+                logger.log(Level.DEBUG, "quantity was set");
             }
+            router = CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
         } catch (ServiceException ex) {
             logger.log(Level.ERROR, "Error with quantity controlling", ex);
             request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
