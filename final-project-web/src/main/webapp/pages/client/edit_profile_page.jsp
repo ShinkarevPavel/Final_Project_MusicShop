@@ -61,7 +61,7 @@
                     <div class="col-md-6">
                         <label class="labels"><fmt:message key="page.registration.name"/></label>
                         <label class="form-control">
-                            <input type="text" pattern="[a-zA-Zа-яА-Я]{3,35}" name="name" value="${sessionScope.user.name}"></label>
+                            <input type="text" pattern="[a-zA-Zа-яА-ЯёЁ]{3,35}" name="name" value="${sessionScope.user.name}"></label>
                         <strong>
                             <p class="text-danger">${errors.nameError}</p>
                         </strong>
@@ -69,7 +69,7 @@
                     <div class="col-md-6">
                         <label class="labels"><fmt:message key="page.registration.surename"/></label>
                         <label class="form-control">
-                            <input type="text" pattern="[a-zA-Zа-яА-Я]{3,35}" name="surename" value="${sessionScope.user.surename}"></label>
+                            <input type="text" pattern="[a-zA-Zа-яА-ЯЁё]{3,35}" name="surename" value="${sessionScope.user.surename}"></label>
                         <strong>
                             <p class="text-danger">${errors.surenameError}</p>
                         </strong>

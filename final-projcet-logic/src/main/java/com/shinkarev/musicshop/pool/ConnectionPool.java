@@ -114,6 +114,7 @@ public class ConnectionPool {
             try {
                 try {
                     freeConnections.take().reallyClose();
+
                 } catch (SQLException ex) {
                     logger.error("Connection closing error ", ex);
                     Thread.currentThread().interrupt();

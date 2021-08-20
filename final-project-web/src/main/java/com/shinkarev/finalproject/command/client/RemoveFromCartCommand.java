@@ -1,6 +1,7 @@
 package com.shinkarev.finalproject.command.client;
 
 import com.shinkarev.finalproject.command.Command;
+import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.CartController;
 import com.shinkarev.finalproject.util.LocaleSetter;
@@ -32,7 +33,6 @@ public class RemoveFromCartCommand implements Command {
      * @param request the HttpServletRequest
      * @return the {@link Router} that contains information about next page
      * and data that will be display on client's page.
-     *
      * @throws ServiceException if the request could not be handled.
      */
     @Override
@@ -42,13 +42,18 @@ public class RemoveFromCartCommand implements Command {
         User user = (User) request.getSession().getAttribute(USER);
         String itemId = request.getParameter(INSTRUMENT_ID_PARAM);
         InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
+        String method = request.getMethod();
         try {
-            if (instrumentService.removeItemFromBucket(user.getId(), Long.parseLong(itemId))) {
-                request.getSession().removeAttribute(itemId);
-                router = CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
+            if (method.equals(METHOD_POST)) {
+                if (instrumentService.removeItemFromBucket(user.getId(), Long.parseLong(itemId))) {
+                    request.getSession().removeAttribute(itemId);
+                    router = CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
+                } else {
+                    request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ADMIN, locale));
+                    router.setErrorCode(HttpServletResponse.SC_NOT_FOUND);
+                }
             } else {
-                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ADMIN, locale));
-                router.setErrorCode(HttpServletResponse.SC_NOT_FOUND);
+                router = CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
             }
         } catch (ServiceException | NumberFormatException ex) {
             logger.log(Level.ERROR, "Error with removing items from cart", ex);

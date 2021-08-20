@@ -5,7 +5,6 @@ import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.InputDataValidator;
 import com.shinkarev.finalproject.validator.ValidatorProvider;
-import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.User;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.ServiceProvider;

@@ -120,7 +120,7 @@ background-size: cover">
             <div class="col-md-9 pe-5">
                 <input type="text"
                        class="form-control form-control-lg"
-                       pattern="[a-zA-Zа-яА-Я]{3,35}"
+                       pattern="[a-zA-Zа-яА-ЯёЁ]{3,35}"
                        name="name"
                        value="${registrationValues.name}"
                        placeholder="<fmt:message key="page.registration.name"/>">
@@ -142,7 +142,7 @@ background-size: cover">
             <div class="col-md-9 pe-5">
                 <input type="text"
                        class="form-control form-control-lg"
-                       pattern="[a-zA-Zа-яА-Я]{3,35}"
+                       pattern="[a-zA-Zа-яА-ЯёЁ]{3,35}"
                        name="surename"
                        value="${registrationValues.surename}"
                        placeholder="<fmt:message key="page.registration.surename"/>">

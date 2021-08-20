@@ -1,6 +1,7 @@
 package com.shinkarev.finalproject.command.common;
 
 import com.shinkarev.finalproject.command.Command;
+import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.LocaleSetter;
 import com.shinkarev.finalproject.validator.InputDataValidator;
@@ -64,7 +65,8 @@ public class ChangePasswordCommand implements Command {
                     UserService userService = ServiceProvider.USER_SERVICE;
                     if (userService.changePassword(user.getId(), password)) {
                         request.getSession().removeAttribute(USER);
-                        router.setPagePath(LOGIN_PAGE);
+                        router.setRouterType(Router.RouterType.REDIRECT);
+                        router.setPagePath(PageName.REDIRECT_LOGIN_PAGE);
                     }
                 }
             } catch (ServiceException | NumberFormatException ex) {

@@ -80,6 +80,7 @@ background-size: cover">
         </c:forEach>
     </div>
 </div>
+
 <c:if test="${not empty instruments}">
     <nav aria-label="Page navigation area">
         <ul class="pagination justify-content-center">

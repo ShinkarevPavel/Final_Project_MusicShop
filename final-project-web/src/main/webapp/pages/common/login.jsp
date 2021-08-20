@@ -9,10 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="abs_path">${pageContext.request.contextPath}</c:set>
-<%--<fmt:setLocale value="${curr_lang}" scope="request"/>--%>
-<%--<fmt:setBundle basename="localization"/>--%>
-<%--<fmt:setBundle basename="localization"/>--%>
-<%--<fmt:message key="locale.lang" var="curr_lang"/>--%>
+
 <html>
 <head>
     <%@include file="/include/header.jsp" %>

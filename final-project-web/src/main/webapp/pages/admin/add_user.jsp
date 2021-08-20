@@ -82,7 +82,7 @@ background-size: cover">
                         <label class="form-label" for="form1Example2"><fmt:message key="page.registration.name"/></label>
                         <input type="text"
                                name="name"
-                               pattern="[a-zA-Zа-яА-Я]{3,35}"
+                               pattern="[a-zA-Zа-яА-ЯёЁ]{3,35}"
                                value="${registrationValues.name}"
                                id="form1Example4"
                                class="form-control"/>
@@ -95,7 +95,7 @@ background-size: cover">
                     <div class="form-outline mb-4">
                         <label class="form-label" for="form1Example2"><fmt:message key="page.registration.surename"/></label>
                         <input type="text"
-                               pattern="[a-zA-Zа-яА-Я]{3,35}"
+                               pattern="[a-zA-Zа-яА-ЯёЁ]{3,35}"
                                name="surename"
                                value="${registrationValues.surename}"
                                id="form1Example8"

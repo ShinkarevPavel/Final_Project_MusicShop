@@ -77,7 +77,7 @@ public class AddUserCommand implements Command {
                     String registrationKey = RegistrationConfirmator.setRegistrationToken(email, login);
                     if (userService.addUser(user, password, registrationKey)) {
                         router.setRouterType(REDIRECT);
-                        router.setPagePath(REDIRECT_ADMIN_PAGE);
+                        router.setPagePath(request.getContextPath() + ADMIN_PAGE);
                         logger.log(Level.DEBUG, "User was added");
                     } else {
                         request.setAttribute(ADMIN_PAGE_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_DATA, locale));

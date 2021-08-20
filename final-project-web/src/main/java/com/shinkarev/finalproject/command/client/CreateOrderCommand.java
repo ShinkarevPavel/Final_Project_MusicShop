@@ -3,6 +3,8 @@ package com.shinkarev.finalproject.command.client;
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.LocaleSetter;
+import com.shinkarev.finalproject.validator.InputDataValidator;
+import com.shinkarev.finalproject.validator.ValidatorProvider;
 import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.entity.OderType;
 import com.shinkarev.musicshop.entity.Order;
@@ -24,6 +26,7 @@ import java.util.Map;
 
 import static com.shinkarev.finalproject.command.PageName.*;
 import static com.shinkarev.finalproject.command.ParamName.*;
+import static com.shinkarev.finalproject.validator.OrderValidator.ADDRESS;
 
 /**
  * Create order command
@@ -40,7 +43,6 @@ public class CreateOrderCommand implements Command {
      * @param request the HttpServletRequest
      * @return the {@link Router} that contains information about next page
      * and data that will be display on client's page.
-     *
      * @throws ServiceException if the request could not be handled.
      */
 
@@ -54,31 +56,50 @@ public class CreateOrderCommand implements Command {
         String[] quantity = request.getParameterValues(ITEM_QUANTITY);
         String total = request.getParameter(TOTAL_CART);
         String payment = request.getParameter(PAYMENT);
+        String method = request.getMethod();
 
-        try {
-            Map<Long, Integer> orderItems = new HashMap<>();
-            for (int i = 0; i < instrumentId.length; i++) {
-                orderItems.put(Long.parseLong(instrumentId[i]), Integer.parseInt(quantity[i]));
-            }
-
-            Order order = new Order(user.getId(), LocalDateTime.now(), Double.parseDouble(total), address, OderType.CREATED, payment);
-            OrderService orderService = ServiceProvider.ORDER_SERVICE;
-            InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
-            if (orderService.addOrder(order, orderItems)) {
-                if (instrumentService.clearUserBucket(user.getId())) {
-                    for (String s : instrumentId) {
-                        request.getSession().removeAttribute(s);
-                    }
+        if (method.equals(METHOD_POST)) {
+            try {
+                Map<Long, Integer> orderItems = new HashMap<>();
+                for (int i = 0; i < instrumentId.length; i++) {
+                    orderItems.put(Long.parseLong(instrumentId[i]), Integer.parseInt(quantity[i]));
                 }
-                EmailServiceImpl.getInstance().sendEmail(user.getEmail(), EMAIL_MESSAGE);
-                request.setAttribute(ADMIN_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ORDER_CREATED , locale));
-                router.setPagePath(CABINET_PAGE);
+                InputDataValidator orderValidator = ValidatorProvider.ORDER_VALIDATOR;
+                Map<String, String> registrationValues = new HashMap<>();
+                registrationValues.put(ADDRESS.getFieldName(), address);
+
+                Map<String, String> errors = orderValidator.checkValues(registrationValues, locale);
+                if (errors.isEmpty()) {
+                    Order order = new Order(user.getId(), LocalDateTime.now(), Double.parseDouble(total), address, OderType.CREATED, payment);
+                    OrderService orderService = ServiceProvider.ORDER_SERVICE;
+                    InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
+                    if (orderService.addOrder(order, orderItems)) {
+                        if (instrumentService.clearUserBucket(user.getId())) {
+                            for (String s : instrumentId) {
+                                request.getSession().removeAttribute(s);
+                            }
+                        }
+                        EmailServiceImpl.getInstance().sendEmail(user.getEmail(), EMAIL_MESSAGE);
+                        request.setAttribute(ADMIN_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ORDER_CREATED, locale));
+                        router.setRouterType(Router.RouterType.REDIRECT);
+                        router.setPagePath(REDIRECT_CABINET_PAGE);
+                    }
+                } else {
+                    request.setAttribute(ADDRESS_ERROR, LocaleSetter.getInstance().getMassage(ADDRESS.getMessage(), locale));
+                    request.setAttribute(ERRORS_LIST, errors);
+                    router.setPagePath(ORDER_PAGE);
+                }
+            } catch (ServiceException | IllegalStateException | NumberFormatException ex) {
+                logger.log(Level.ERROR, "Error of creating instrument", ex);
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
+                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
-        } catch (ServiceException | IllegalStateException | NumberFormatException ex) {
-            logger.log(Level.ERROR, "Error of creating instrument", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
-            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } else {
+            router.setRouterType(Router.RouterType.REDIRECT);
+            router.setPagePath(REDIRECT_ORDER_PAGE);
         }
+
+
         return router;
     }
 }

@@ -58,7 +58,8 @@ public class ForgotPasswordCommand implements Command {
                     UserService userService = ServiceProvider.USER_SERVICE;
                     if (userService.changePassword(Long.parseLong(userId), password)) {
                         request.getSession().removeAttribute(USER_ID_PARAM);
-                        router.setPagePath(LOGIN_PAGE);
+                        router.setRouterType(Router.RouterType.REDIRECT);
+                        router.setPagePath(REDIRECT_LOGIN_PAGE);
                     }
                 }
             } catch (ServiceException | NumberFormatException ex) {

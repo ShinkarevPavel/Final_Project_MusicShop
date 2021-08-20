@@ -212,8 +212,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
-<%--    <link href="${abs_path}/pages/music_css/busket.css" rel="stylesheet"/>--%>
-<%--    <link href="${abs_path}/pages/music_css/cart_input_size.css" id="number1" rel="stylesheet"/>--%>
+    <link href="${abs_path}/music_css/busket.css" rel="stylesheet"/>
+    <link href="${abs_path}/music_css/cart_input_size.css" id="number" rel="stylesheet"/>
 
     <script type="text/javascript" src=""></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -279,7 +279,7 @@
                                         </div>
                                         <div class="cart_item_total cart_info_col">
                                             <div class="cart_item_title"><fmt:message key="page.cart.total"/></div>
-                                            <div class="cart_item_text">$${item.key.price*item.value}</div>
+                                            <div class="cart_item_text">$${(Math.round(item.key.price*item.value * 100) / 100)}</div>
                                         </div>
                                     </div>
                                 </li>

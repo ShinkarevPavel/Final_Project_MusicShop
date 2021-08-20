@@ -31,6 +31,18 @@ public class User extends Entity {
         this.role = role;
     }
 
+    public User(long id, String login, String email, String nickname, String name, String surename, UserStatusType status, UserRoleType role) {
+        this.id = id;
+        this.login = login;
+        this.email = email;
+        this.nickname = nickname;
+        this.name = name;
+        this.surename = surename;
+        this.status = status;
+        this.role = role;
+    }
+
+
 
 
     public long getId() {
@@ -102,23 +114,23 @@ public class User extends Entity {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof User)) {
             return false;
         }
         User user = (User) o;
         if (this.id != user.id) {
             return false;
         }
-        if (this.name.equals(user.getName())) {
+        if (!this.name.equals(user.getName())) {
             return false;
         }
-        if (this.login.equals(user.getLogin())) {
+        if (!this.login.equals(user.getLogin())) {
             return false;
         }
-        if (this.email.equals(user.getEmail())) {
+        if (!this.email.equals(user.getEmail())) {
             return false;
         }
-        if (this.status != user.getStatus()) {
+        if (!this.status.equals(user.getStatus())) {
             return false;
         }
         if (!this.nickname.equals(user.getNickname())) {

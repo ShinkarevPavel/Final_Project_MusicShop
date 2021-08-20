@@ -3,6 +3,7 @@ package com.shinkarev.finalproject.command;
 import com.shinkarev.finalproject.command.client.*;
 import com.shinkarev.finalproject.command.common.*;
 import com.shinkarev.finalproject.command.admin.*;
+import com.shinkarev.finalproject.command.common.ToCabinetPageCommand;
 import com.shinkarev.musicshop.entity.UserRoleType;
 
 import java.util.EnumSet;
@@ -12,6 +13,7 @@ import static com.shinkarev.musicshop.entity.UserRoleType.*;
 
 public enum CommandName {
     LOGIN(new LoginCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
+    TO_REGISTRATION_IS_DONE_PAGE_COMMAND(new ToRegistrationIsDonePage(), EnumSet.of(ANONYMOUS)),
     TO_RESTORE_PASSWORD_COMMAND(new ToRestorePasswordCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
     TO_CABINET_PAGE_COMMAND(new ToCabinetPageCommand(), EnumSet.of(ADMIN, CLIENT)),
     TO_FORGOT_PASSWORD_COMMAND(new ToForgotPasswordPageCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),

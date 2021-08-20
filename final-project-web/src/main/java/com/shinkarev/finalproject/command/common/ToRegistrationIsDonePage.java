@@ -1,19 +1,16 @@
 package com.shinkarev.finalproject.command.common;
 
 import com.shinkarev.finalproject.command.Command;
+import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.Router;
 import jakarta.servlet.http.HttpServletRequest;
 
-import static com.shinkarev.finalproject.command.PageName.ERROR_PAGE;
-import static com.shinkarev.finalproject.command.Router.RouterType.REDIRECT;
-
-public class WrongCommand implements Command {
+public class ToRegistrationIsDonePage implements Command {
 
     @Override
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
-        router.setRouterType(REDIRECT);
-        router.setPagePath(request.getContextPath() + ERROR_PAGE);
+        router.setPagePath(PageName.REGISTRATION_IS_DONE);
         return router;
     }
 }

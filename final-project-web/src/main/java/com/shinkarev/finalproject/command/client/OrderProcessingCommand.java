@@ -49,16 +49,16 @@ public class OrderProcessingCommand implements Command {
             Map<Instrument, Integer> items = instrumentService.getUserBucket(user.getId());
             double total = 0;
             for (Map.Entry<Instrument, Integer> item : items.entrySet()) {
-                total += (item.getKey().getPrice() * item.getValue());
+                total += (Math.round(item.getKey().getPrice() * item.getValue() * 100d) / 100d);
             }
             request.setAttribute(TOTAL_CART, total);
             request.setAttribute(CART_ITEMS, items);
+            router.setPagePath(ORDER_PAGE);
         } catch (ServiceException | NumberFormatException ex) {
             logger.log(Level.ERROR, "Error with order processing", ex);
             request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
             router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-        router.setPagePath(ORDER_PAGE);
         return router;
     }
 }

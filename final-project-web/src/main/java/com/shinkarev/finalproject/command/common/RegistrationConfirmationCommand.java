@@ -45,7 +45,7 @@ public class RegistrationConfirmationCommand implements Command {
     public Router execute(HttpServletRequest request) {
         Router router = new Router();
         String locale = (String) request.getSession().getAttribute(LOCALE);
-        String confirmationKey = request.getParameter(ParamName.CONFIRM_KEY);
+        String confirmationKey = request.getParameter(CONFIRM_KEY);
         UserService userService = ServiceProvider.USER_SERVICE;
         try {
             Optional<User> userOptional = userService.getUserByRegistrationKey(confirmationKey);

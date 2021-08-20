@@ -163,7 +163,7 @@ public class Instrument extends Entity {
         if (this.instrumentStatus != that.instrumentStatus) {
             return false;
         }
-        return this.type != that.type;
+        return this.type.equals(that.type);
     }
 
     @Override

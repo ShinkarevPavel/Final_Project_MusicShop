@@ -105,7 +105,7 @@
                                     width="70">
                                 <div class="d-flex flex-column ml-3">
                                     <span class="business"><fmt:message key="page.orderring.cash"/></span>
-                                    <span class="plan">$100</span>
+                                    <span class="plan">$100$</span>
                                 </div>
                             </div>
 
@@ -119,8 +119,13 @@
                         <h6 class="mt-4 text-secondary"><fmt:message key="page.orderring.address"/></h6>
                         <div class="email mt-2">
                             <input type="text" form="order"  name="address" class="form-control email-text"
-                                                       placeholder="Delivery Address" required>
+                                                       placeholder="<fmt:message key="page.orderring.address"/>" required>
+                            <p style="color: #868686"><fmt:message key="page.order_create.requirements"/></p>
+                            <strong>
+                                <p class="text-danger">${errors.addressError}</p>
+                            </strong>
                         </div>
+
                         <div class="mt-3">
                             <form method="post" id="order" action="${abs_path}/controller?command=create_order_command">
                                 <button class="btn btn-secondary btn-block payment-button"><fmt:message key="page.orderring.done"/>

@@ -47,7 +47,7 @@ public class ShowInstrumentByTypeCommand implements Command {
         try {
             int pageToDisplay = getPage(request);
             instruments = instrumentService.findInstrumentByType(InstrumentType.valueOf(type), pageToDisplay);
-            int userCount = instruments.size();
+            int userCount = instrumentService.getInstrumentCount(InstrumentType.valueOf(type));
             if (instruments.size() != 0) {
                 request.setAttribute(INSTRUMENTS, instruments);
                 request.setAttribute(PAGEABLE, new Page(userCount, pageToDisplay, PAGE_SIZE));
