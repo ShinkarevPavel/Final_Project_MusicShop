@@ -27,4 +27,5 @@ This website proposes for customers to choose and buy their own musical instrume
 - can control order statuses
 - can find user by user id
 
-![sql schema](https://user-images.githubusercontent.com/82198612/129556438-0613720c-8096-43c8-b9b8-19e49b19b16d.jpg)
+![sql schema finished](https://user-images.githubusercontent.com/82198612/130320259-2a9b78ef-ce6f-4e71-9f69-14cebd07dfa2.JPG)
+
