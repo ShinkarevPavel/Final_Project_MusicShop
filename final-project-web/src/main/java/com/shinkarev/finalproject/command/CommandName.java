@@ -14,6 +14,7 @@ import static com.shinkarev.musicshop.entity.UserRoleType.*;
 public enum CommandName {
     LOGIN(new LoginCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
     TO_REGISTRATION_IS_DONE_PAGE_COMMAND(new ToRegistrationIsDonePage(), EnumSet.of(ANONYMOUS)),
+    TO_CART_PAGE_COMMAND(new ToCartPageCommand(), EnumSet.of(ADMIN, CLIENT)),
     TO_RESTORE_PASSWORD_COMMAND(new ToRestorePasswordCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
     TO_CABINET_PAGE_COMMAND(new ToCabinetPageCommand(), EnumSet.of(ADMIN, CLIENT)),
     TO_FORGOT_PASSWORD_COMMAND(new ToForgotPasswordPageCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
@@ -55,7 +56,7 @@ public enum CommandName {
     UPDATE_INSTRUMENT_COMMAND(new UpdateInstrumentCommand(), EnumSet.of(ADMIN)),
     SAVE_UPDATED_INSTRUMENT_COMMAND(new SaveUpdatedInstrumentCommand(), EnumSet.of(ADMIN)),
     ADD_TO_BUCKET_COMMAND(new AddToCartCommand(), EnumSet.of(ADMIN, CLIENT)),
-    BY_NOW_COMMAND(new ByNowCommand(), EnumSet.of(ADMIN, CLIENT)),
+    BY_NOW_COMMAND(new BuyNowCommand(), EnumSet.of(ADMIN, CLIENT)),
     CHECK_EMAIL_COMMAND(new CheckEmailCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
     FORGOT_PASSWORD_COMMAND(new ForgotPasswordCommand(), EnumSet.of(ANONYMOUS, ADMIN, CLIENT)),
     WRONG_COMMAND(new WrongCommand());

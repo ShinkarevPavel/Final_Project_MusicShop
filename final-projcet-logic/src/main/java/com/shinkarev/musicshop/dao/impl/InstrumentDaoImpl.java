@@ -169,32 +169,6 @@ public class InstrumentDaoImpl implements InstrumentDao {
         return flag;
     }
 
-    private void setParameters(Instrument instrument, PreparedStatement statement) throws SQLException {
-        statement.setString(1, instrument.getName());
-        statement.setString(2, instrument.getBrand());
-        statement.setString(3, instrument.getCountry());
-        statement.setDouble(4, instrument.getPrice());
-        statement.setDouble(5, instrument.getRating());
-        statement.setString(6, instrument.getDescription());
-        statement.setInt(7, InstrumentStatusType.ordinal(instrument.getInstrumentStatus()));
-        statement.setInt(8, InstrumentType.ordinal(instrument.getType()));
-    }
-
-    private boolean pinImagesToInstrument(long instrumentId, List<InputStream> images) throws SQLException {
-        int rowsUpdate = 0;
-        try (Connection connection = ConnectionPool.getInstance().getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_SET_INSTRUMENT_IMAGE)) {
-            for (InputStream image : images) {
-                statement.setLong(1, instrumentId);
-                statement.setBlob(2, image);
-                if (statement.executeUpdate() == 1) {
-                    rowsUpdate++;
-                }
-            }
-        }
-        return rowsUpdate == images.size();
-    }
-
     @Override
     public boolean update(Instrument instrument) throws DaoException {
         int rowsUpdate;
@@ -485,5 +459,32 @@ public class InstrumentDaoImpl implements InstrumentDao {
             throw new DaoException("Error. Impossible put image to data base.", ex);
         }
         return rowsUpdate == 1;
+    }
+
+
+    private void setParameters(Instrument instrument, PreparedStatement statement) throws SQLException {
+        statement.setString(1, instrument.getName());
+        statement.setString(2, instrument.getBrand());
+        statement.setString(3, instrument.getCountry());
+        statement.setDouble(4, instrument.getPrice());
+        statement.setDouble(5, instrument.getRating());
+        statement.setString(6, instrument.getDescription());
+        statement.setInt(7, InstrumentStatusType.ordinal(instrument.getInstrumentStatus()));
+        statement.setInt(8, InstrumentType.ordinal(instrument.getType()));
+    }
+
+    private boolean pinImagesToInstrument(long instrumentId, List<InputStream> images) throws SQLException {
+        int rowsUpdate = 0;
+        try (Connection connection = ConnectionPool.getInstance().getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SET_INSTRUMENT_IMAGE)) {
+            for (InputStream image : images) {
+                statement.setLong(1, instrumentId);
+                statement.setBlob(2, image);
+                if (statement.executeUpdate() == 1) {
+                    rowsUpdate++;
+                }
+            }
+        }
+        return rowsUpdate == images.size();
     }
 }

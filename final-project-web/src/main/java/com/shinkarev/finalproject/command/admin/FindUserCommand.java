@@ -55,12 +55,15 @@ public class FindUserCommand implements Command {
                 request.setAttribute(USER, user);
                 router.setPagePath(USER_INFO_PAGE);
             } else {
-                request.setAttribute(ADMIN_MESSAGE,  LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ADMIN, locale));
+                String method = request.getMethod();
+                if (method.equals(METHOD_POST)) {
+                    request.setAttribute(ADMIN_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ADMIN, locale));
+                }
+                router.setPagePath(FIND_USER);
             }
         } catch (ServiceException | NumberFormatException ex) {
             logger.log(Level.ERROR, "Error user finding", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
-            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            request.setAttribute(ADMIN_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ADMIN, locale));
         }
         return router;
     }

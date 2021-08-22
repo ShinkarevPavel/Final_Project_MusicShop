@@ -118,9 +118,9 @@
                         </div>
                         <h6 class="mt-4 text-secondary"><fmt:message key="page.orderring.address"/></h6>
                         <div class="email mt-2">
-                            <input type="text" form="order"  name="address" class="form-control email-text"
+                            <input type="text" form="order" pattern="[\wа-яА-ЯЁё,.\/\s+]{3,45}" name="address" class="form-control email-text"
                                                        placeholder="<fmt:message key="page.orderring.address"/>" required>
-                            <p style="color: #868686"><fmt:message key="page.order_create.requirements"/></p>
+                            <p style="color: #afafaf"><fmt:message key="page.order_create.requirements"/></p>
                             <strong>
                                 <p class="text-danger">${errors.addressError}</p>
                             </strong>

@@ -6,6 +6,7 @@ public interface PageName {
     String REGISTRATION_PAGE = "/pages/common/registration.jsp";
     String REGISTRATION_IS_DONE = "/pages/client/registration_is_done.jsp";
     String ADMIN_PAGE = "/pages/admin/admin.jsp";
+    String REDIRECT_ADMIN_PAGE = "/pages/admin/admin.jsp?data=";
     String LOGIN_PAGE = "/pages/common/login.jsp";
     String SHOW_ALL_USERS = "/pages/admin/show_all_users.jsp";
     String ERROR_PAGE = "/pages/common/error_page.jsp";
@@ -30,5 +31,5 @@ public interface PageName {
     String REDIRECT_REGISTRATION_IS_DONE = "controller?command=to_registration_is_done_page_command";
     String REDIRECT_CABINET_PAGE = "controller?command=to_cabinet_page_command";
     String REDIRECT_LOGIN_PAGE = "controller?command=to_login_page_command";
-    String REDIRECT_ORDER_PAGE = "controller?command=order_processing_command";
+    String REDIRECT_TO_CART_PAGE = "controller?command=to_cart_page_command";
 }

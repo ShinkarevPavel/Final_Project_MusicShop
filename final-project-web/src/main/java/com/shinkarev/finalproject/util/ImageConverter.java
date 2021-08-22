@@ -1,6 +1,7 @@
 package com.shinkarev.finalproject.util;
 
 import com.shinkarev.finalproject.command.ParamName;
+import com.shinkarev.finalproject.command.admin.AddInstrumentCommand;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
@@ -9,6 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * This util class used by {@link AddInstrumentCommand}
+ */
 
 public class ImageConverter {
 

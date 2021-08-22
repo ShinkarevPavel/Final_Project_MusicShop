@@ -54,7 +54,6 @@ background-size: cover">
                         <label class="form-label" for="form1Example2"><fmt:message key="page.registration.password"/></label>
                         <input type="password"
                                name="password"
-                               value="${registrationValues.password}"
                                pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{12,45}$"
                                id="form1Example6"
                                class="form-control" required/>

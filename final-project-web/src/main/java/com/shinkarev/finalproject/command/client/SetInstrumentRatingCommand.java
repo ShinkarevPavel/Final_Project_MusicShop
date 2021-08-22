@@ -45,25 +45,29 @@ public class SetInstrumentRatingCommand implements Command {
         User user = (User) request.getSession().getAttribute(USER);
         Instrument instrument = (Instrument) request.getSession().getAttribute(INSTRUMENT_PARAM);
         InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
-        try {
-            if (user != null && instrument != null) {
-                if (instrumentService.isInBucket(user.getId(), instrument.getInstrument_id())) {
-                    request.setAttribute(Long.toString(instrument.getInstrument_id()), instrument.getInstrument_id());
-                }
-                if (instrumentService.isRated(user.getId(), instrument.getInstrument_id())) {
-                    request.setAttribute(RATING_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_RATING , locale));
+        String method = request.getMethod();
+        if (method.equals(METHOD_POST)) {
+            try {
+                if (user != null && instrument != null) {
+                    if (instrumentService.isInBucket(user.getId(), instrument.getInstrument_id())) {
+                        request.setAttribute(Long.toString(instrument.getInstrument_id()), instrument.getInstrument_id());
+                    }
+                    if (instrumentService.isRated(user.getId(), instrument.getInstrument_id())) {
+                        request.setAttribute(RATING_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_RATING , locale));
+                    } else {
+                        instrumentService.addInstrumentRating(user.getId(), instrument.getInstrument_id(), Integer.parseInt(mark));
+                        request.setAttribute(RATING_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_RATING_DONE , locale));
+                    }
                 } else {
-                    instrumentService.addInstrumentRating(user.getId(), instrument.getInstrument_id(), Integer.parseInt(mark));
-                    request.setAttribute(RATING_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_RATING_DONE , locale));
+                    request.setAttribute(RATING_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_RATING_ERROR , locale));
                 }
-            } else {
-                request.setAttribute(RATING_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_RATING_ERROR , locale));
+            } catch (ServiceException ex) {
+                logger.log(Level.ERROR, "Error with setting items rating", ex);
+                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
+                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             }
-        } catch (ServiceException ex) {
-            logger.log(Level.ERROR, "Error with setting items rating", ex);
-            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
-            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+
         router.setPagePath(CLIENT_SHOW_INSTRUMENT_DETAILS);
         return router;
     }

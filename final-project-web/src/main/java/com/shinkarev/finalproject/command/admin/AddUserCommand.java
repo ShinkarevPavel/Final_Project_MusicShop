@@ -71,13 +71,14 @@ public class AddUserCommand implements Command {
                 if (!errors.isEmpty()) {
                     request.setAttribute(REGISTRATION_VALUES, registrationValues);
                     request.setAttribute(ERRORS_LIST, errors);
+                    router.setPagePath(ADD_USER);
                 } else {
                     User user = new User(login, email, nickname, name, surename, UserStatusType.ACTIVE, UserRoleType.GUEST);
                     UserService userService = ServiceProvider.USER_SERVICE;
                     String registrationKey = RegistrationConfirmator.setRegistrationToken(email, login);
                     if (userService.addUser(user, password, registrationKey)) {
                         router.setRouterType(REDIRECT);
-                        router.setPagePath(request.getContextPath() + ADMIN_PAGE);
+                        router.setPagePath(request.getContextPath() + REDIRECT_ADMIN_PAGE + ADD_ADMIN);
                         logger.log(Level.DEBUG, "User was added");
                     } else {
                         request.setAttribute(ADMIN_PAGE_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_DATA, locale));
@@ -88,7 +89,6 @@ public class AddUserCommand implements Command {
                 logger.log(Level.ERROR, "Error user creating", ex);
                 request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ADD_DATA, locale));
                 router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                ;
             }
         } else {
             router.setPagePath(ADD_USER);

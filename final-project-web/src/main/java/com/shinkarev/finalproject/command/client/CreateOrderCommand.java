@@ -2,7 +2,9 @@ package com.shinkarev.finalproject.command.client;
 
 import com.shinkarev.finalproject.command.Command;
 import com.shinkarev.finalproject.command.Router;
+import com.shinkarev.finalproject.util.CartController;
 import com.shinkarev.finalproject.util.LocaleSetter;
+import com.shinkarev.finalproject.util.OrderController;
 import com.shinkarev.finalproject.validator.InputDataValidator;
 import com.shinkarev.finalproject.validator.ValidatorProvider;
 import com.shinkarev.musicshop.entity.Instrument;
@@ -57,27 +59,22 @@ public class CreateOrderCommand implements Command {
         String total = request.getParameter(TOTAL_CART);
         String payment = request.getParameter(PAYMENT);
         String method = request.getMethod();
+        try {
+            if (method.equals(METHOD_POST)) {
 
-        if (method.equals(METHOD_POST)) {
-            try {
-                Map<Long, Integer> orderItems = new HashMap<>();
-                for (int i = 0; i < instrumentId.length; i++) {
-                    orderItems.put(Long.parseLong(instrumentId[i]), Integer.parseInt(quantity[i]));
-                }
                 InputDataValidator orderValidator = ValidatorProvider.ORDER_VALIDATOR;
                 Map<String, String> registrationValues = new HashMap<>();
                 registrationValues.put(ADDRESS.getFieldName(), address);
 
                 Map<String, String> errors = orderValidator.checkValues(registrationValues, locale);
                 if (errors.isEmpty()) {
-                    Order order = new Order(user.getId(), LocalDateTime.now(), Double.parseDouble(total), address, OderType.CREATED, payment);
                     OrderService orderService = ServiceProvider.ORDER_SERVICE;
                     InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
+                    Order order = new Order(user.getId(), LocalDateTime.now(), Double.parseDouble(total), address, OderType.CREATED, payment);
+                    Map<Long, Integer> orderItems = OrderController.orderItemCreat(instrumentId, quantity);
                     if (orderService.addOrder(order, orderItems)) {
                         if (instrumentService.clearUserBucket(user.getId())) {
-                            for (String s : instrumentId) {
-                                request.getSession().removeAttribute(s);
-                            }
+                            OrderController.removeCartFromSession(request, instrumentId);
                         }
                         EmailServiceImpl.getInstance().sendEmail(user.getEmail(), EMAIL_MESSAGE);
                         request.setAttribute(ADMIN_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ORDER_CREATED, locale));
@@ -87,19 +84,18 @@ public class CreateOrderCommand implements Command {
                 } else {
                     request.setAttribute(ADDRESS_ERROR, LocaleSetter.getInstance().getMassage(ADDRESS.getMessage(), locale));
                     request.setAttribute(ERRORS_LIST, errors);
+                    CartController.cartQuantityControl(request, user.getId());
                     router.setPagePath(ORDER_PAGE);
                 }
-            } catch (ServiceException | IllegalStateException | NumberFormatException ex) {
-                logger.log(Level.ERROR, "Error of creating instrument", ex);
-                request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
-                router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            } else {
+                CartController.cartQuantityControl(request, user.getId());
+                router.setPagePath(ORDER_PAGE);
             }
-        } else {
-            router.setRouterType(Router.RouterType.REDIRECT);
-            router.setPagePath(REDIRECT_ORDER_PAGE);
+        } catch (ServiceException | IllegalStateException | NumberFormatException ex) {
+            logger.log(Level.ERROR, "Error of creating instrument", ex);
+            request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
+            router.setErrorCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
-
-
         return router;
     }
 }

@@ -9,12 +9,14 @@ import com.shinkarev.musicshop.entity.Instrument;
 import com.shinkarev.musicshop.exception.ServiceException;
 import com.shinkarev.musicshop.service.InstrumentService;
 import com.shinkarev.musicshop.service.ServiceProvider;
+import com.shinkarev.musicshop.util.PasswordHashGenerator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,8 +75,8 @@ public class SaveUpdatedInstrumentCommand implements Command {
                             instrumentDescription);
                     InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
                     if (instrumentService.update(instrument)) {
-                        router.setPagePath(ADMIN_PAGE);
-                        request.setAttribute(ADMIN_MESSAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ADMIN_UPDATE, locale));
+                        router.setRouterType(Router.RouterType.REDIRECT);
+                        router.setPagePath(request.getContextPath() + REDIRECT_ADMIN_PAGE + UPDATE_ADMIN);
                         logger.log(Level.DEBUG, "Instrument was updated");
                     }
                 } else {

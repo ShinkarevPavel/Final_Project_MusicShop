@@ -67,6 +67,8 @@ public interface ParamName {
     String ORDER_PARAM = "orderId";
     String UPDATE_INSTRUMENT_PARAM = "updateValues";
     String MARK = "mark";
+    String UPDATE_ADMIN = "update";
+    String ADD_ADMIN = "add";
     String ADDRESS_ERROR = "addressError";
     String ERROR_CODE = "error_code";
     String ERROR_NAME = "error_name";
@@ -78,7 +80,6 @@ public interface ParamName {
     String PAGE_ERROR_ADD_IMAGE = "page.errors.on_error_page.add_image";
     String PAGE_ERROR_CHANGE_DATA = "page.errors.on_error_page.change_data";
     String PAGE_MESSAGE_ADMIN = "page.errors.on_admin_page";
-    String PAGE_MESSAGE_ADMIN_UPDATE = "page.errors.on_admin_update";
     String PAGE_MESSAGE_ORDER_CREATED = "page.order_created";
     String PAGE_MESSAGE_RATING = "page.rating";
     String PAGE_MESSAGE_RATING_DONE = "page.rating_done";

@@ -51,7 +51,8 @@ public class CheckCartCommand implements Command {
         try {
             itemsFromBucket = instrumentService.getUserBucket(user.getId());
             request.setAttribute(CART_ITEMS, itemsFromBucket);
-            CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
+            CartController.cartQuantityControl(request, user.getId());
+            router.setPagePath(PageName.CLIENT_BUCKET_PAGE);
         } catch (ServiceException ex) {
             logger.log(Level.ERROR, "Error of cart checking", ex);
             request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));

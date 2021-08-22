@@ -11,12 +11,28 @@
 <html>
 <head>
 </head>
-<body style="background-image: url(https://wallpapercave.com/wp/wp8202724.jpg);
+<body style="background-image: url(https://cdn.mos.cms.futurecdn.net/XHkXFNDFEruxCuAX2ZGRcT.jpg);
 background-repeat: no-repeat;
 background-position: center center;
 background-size: cover">
 <%@include file="/include/admin_header.jsp" %>
 
-<h5><span style="color: white">${message}</span></h5>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-5">
+                <c:choose>
+                    <c:when test="${param.data=='update'}">
+                        <h5><span style="color: white"><fmt:message key="page.errors.on_admin_update"/></span></h5>
+                    </c:when>
+                    <c:when test="${param.data=='add'}">
+                        <h5><span style="color: white"><fmt:message key="page.errors.on_admin_add"/></span></h5>
+                    </c:when>
+                </c:choose>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

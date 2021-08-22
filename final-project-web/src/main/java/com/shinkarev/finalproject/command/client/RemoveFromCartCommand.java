@@ -47,14 +47,15 @@ public class RemoveFromCartCommand implements Command {
             if (method.equals(METHOD_POST)) {
                 if (instrumentService.removeItemFromBucket(user.getId(), Long.parseLong(itemId))) {
                     request.getSession().removeAttribute(itemId);
-                    router = CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
+                    CartController.cartQuantityControl(request, user.getId());
                 } else {
                     request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_MESSAGE_ADMIN, locale));
                     router.setErrorCode(HttpServletResponse.SC_NOT_FOUND);
                 }
             } else {
-                router = CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
+                CartController.cartQuantityControl(request, user.getId());
             }
+            router.setPagePath(PageName.CLIENT_BUCKET_PAGE);
         } catch (ServiceException | NumberFormatException ex) {
             logger.log(Level.ERROR, "Error with removing items from cart", ex);
             request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));

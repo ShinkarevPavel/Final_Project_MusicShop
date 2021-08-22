@@ -26,7 +26,7 @@ import static com.shinkarev.finalproject.command.ParamName.*;
  * @see com.shinkarev.finalproject.command.Command
  */
 
-public class ByNowCommand implements Command {
+public class BuyNowCommand implements Command {
     private static Logger logger = LogManager.getLogger();
 
     /**
@@ -48,15 +48,16 @@ public class ByNowCommand implements Command {
             if (user != null) {
                 if (!instrumentService.isInBucket(user.getId(), Long.parseLong(instrumentId))) {
                     if (instrumentService.addItemToBucket(user.getId(), Long.parseLong(instrumentId))) {
+                        request.setAttribute(instrumentId, instrumentId);
+                        CartController.cartQuantityControl(request, user.getId());
                         router.setPagePath(PageName.CLIENT_BUCKET_PAGE);
-                        CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
                     } else {
                         request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
                         router.setErrorCode(HttpServletResponse.SC_BAD_REQUEST);
                     }
                 } else {
+                    CartController.cartQuantityControl(request, user.getId());
                     router.setPagePath(PageName.CLIENT_BUCKET_PAGE);
-                    CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
                 }
             }
         } catch (ServiceException | NumberFormatException ex) {

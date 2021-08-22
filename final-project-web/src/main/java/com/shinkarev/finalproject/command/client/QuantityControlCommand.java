@@ -1,6 +1,7 @@
 package com.shinkarev.finalproject.command.client;
 
 import com.shinkarev.finalproject.command.Command;
+import com.shinkarev.finalproject.command.PageName;
 import com.shinkarev.finalproject.command.Router;
 import com.shinkarev.finalproject.util.CartController;
 import com.shinkarev.finalproject.util.LocaleSetter;
@@ -51,7 +52,8 @@ public class QuantityControlCommand implements Command {
                 instrumentService.setInstrumentQuantity(user.getId(), Long.parseLong(instrumentId), Integer.parseInt(quantity));
                 logger.log(Level.DEBUG, "quantity was set");
             }
-            router = CartController.cartQuantityControl(request, instrumentService.getUserBucket(user.getId()));
+            CartController.cartQuantityControl(request, user.getId());
+            router.setPagePath(PageName.CLIENT_BUCKET_PAGE);
         } catch (ServiceException ex) {
             logger.log(Level.ERROR, "Error with quantity controlling", ex);
             request.setAttribute(ERRORS_ON_ERROR_PAGE, LocaleSetter.getInstance().getMassage(PAGE_ERROR_ERROR_PAGE, locale));
