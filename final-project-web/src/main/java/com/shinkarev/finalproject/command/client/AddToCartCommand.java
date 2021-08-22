@@ -57,7 +57,7 @@ public class AddToCartCommand implements Command {
                 }
             } else {
                 if (instrumentService.addItemToBucket(user.getId(), instrument.getInstrument_id())) {
-                    request.setAttribute(Long.toString(instrument.getInstrument_id()), instrument.getInstrument_id());
+                    request.getSession().setAttribute(Long.toString(instrument.getInstrument_id()), instrument.getInstrument_id());
                     request.setAttribute(INSTRUMENT_PARAM, instrument);
                     router.setPagePath(CLIENT_SHOW_INSTRUMENT_DETAILS);
                 }

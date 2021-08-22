@@ -314,12 +314,12 @@
                             <form method="post" action="${abs_path}/controller?command=by_now_command&instrumentId=${instrument.instrument_id}">
                                 <button class="btn btn-outline-dark"><fmt:message key="page.item.details.by_now"/></button>
                             </form>
-                            <c:if test="${not requestScope.containsValue(instrument.instrument_id)}">
+                            <c:if test="${not sessionScope.containsValue(instrument.instrument_id)}">
                                 <form method="post" action="${abs_path}/controller?command=add_to_bucket_command">
                                     <button class="btn btn-dark"><fmt:message key="page.item.details.add_to_cart"/></button>
                                 </form>
                             </c:if>
-                            <c:if test="${requestScope.containsValue(instrument.instrument_id)}">
+                            <c:if test="${sessionScope.containsValue(instrument.instrument_id)}">
                                 <form method="post" action="${abs_path}/controller?command=add_to_bucket_command">
                                     <button class="btn btn-success"><fmt:message key="page.item.details.add_to_cart"/></button>
                                 </form>

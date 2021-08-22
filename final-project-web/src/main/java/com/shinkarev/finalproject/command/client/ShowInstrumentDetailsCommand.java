@@ -51,7 +51,7 @@ public class ShowInstrumentDetailsCommand implements Command {
                 User user = (User) request.getSession().getAttribute(USER);
                 if (user != null) {
                     if (instrumentService.isInBucket(user.getId(), instrument.getInstrument_id())) {
-                        request.setAttribute(instrumentId, instrument.getInstrument_id());
+                        request.getSession().setAttribute(instrumentId, instrument.getInstrument_id());
                     }
                     request.setAttribute(INSTRUMENT_PARAM, instrument);
                 }

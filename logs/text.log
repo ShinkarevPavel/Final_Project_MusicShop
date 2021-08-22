@@ -271,3 +271,11 @@ java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check th
 	at com.shinkarev.musicshop.Main.main(Main.java:98) [classes/:?]
 2021-08-15 16:13 INFO  PoolChecker -Service mode was switched on
 2021-08-15 16:13 INFO  PoolChecker -Service mode was switched off
+2021-08-22 01:24 DEBUG InstrumentCreator -Instrument was created
+2021-08-22 01:24 INFO  OrderDaoImpl -Were found 1 instruments
+2021-08-22 10:19 INFO  PoolChecker -Service mode was switched on
+2021-08-22 10:19 INFO  PoolChecker -Service mode was switched off
+2021-08-22 11:19 INFO  PoolChecker -Service mode was switched on
+2021-08-22 11:19 INFO  PoolChecker -Service mode was switched off
+2021-08-22 14:25 INFO  PoolChecker -Service mode was switched on
+2021-08-22 14:25 INFO  PoolChecker -Service mode was switched off
