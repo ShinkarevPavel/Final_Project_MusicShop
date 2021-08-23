@@ -93,7 +93,7 @@ public class AddInstrumentCommand implements Command {
                     InstrumentService instrumentService = ServiceProvider.INSTRUMENT_SERVICE;
                     if (instrumentService.addInstrument(instrument, images)) {
                         router.setRouterType(REDIRECT);
-                        router.setPagePath(request.getContextPath() + ADMIN_PAGE);
+                        router.setPagePath(request.getContextPath() + REDIRECT_ADMIN_PAGE + ADD_ADMIN);
                         logger.log(Level.DEBUG, "Instrument was added");
                     }
                 } else {
