@@ -4,15 +4,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.shinkarev</groupId>
+    <parent>
+        <artifactId>Final_Progect_MusicShop</artifactId>
+        <groupId>com.shinkarev</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <artifactId>final-project-web</artifactId>
-    <version>1.0-SNAPSHOT</version>
+
     <name>final-project-web</name>
     <packaging>war</packaging>
 
     <properties>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.source>16</maven.compiler.source>
     </properties>
 
     <dependencies>
@@ -35,7 +40,7 @@
         </dependency>
         <dependency>
             <groupId>com.shinkarev</groupId>
-            <artifactId>final-projcet-logic</artifactId>
+            <artifactId>final-project-logic</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
