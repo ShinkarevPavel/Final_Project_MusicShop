@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$/final-project-web" libraries="{@popperjs/core, ace, adsbygoogle, all, beacon, bootstrap, bootstrap-icons, bootstrap.bundle, boxicons, clarity, context, ec, font-awesome, jquery, jquery-3.5.1, js-beautify, moatframe, popper.js, tag, widget}" />
-  </component>
-</project>
